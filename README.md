@@ -15,7 +15,9 @@ THIS IS A WORK IN PROGRESS
 
 * **Python 3.7+ compatible.**
 
-* **Fully documented [API](http://htmlpreview.github.io/?https://github.com/MrYsLab/pymata-express/blob/master/documentation/api/index.html)**
+* **Fully documented [API.](http://htmlpreview.github.io/?https://github.com/MrYsLab/pymata-express/blob/master/documentation/api/index.html)**
+
+* **User's Guide, Including Examples.**
 
 * **Implements 100% of the StandardFirmata Protocol (StandardFirmata 2.5.8).**
 
