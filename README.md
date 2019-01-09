@@ -15,7 +15,7 @@ THIS IS A WORK IN PROGRESS
 
 * **Python 3.7+ compatible.**
 
-* **Fully documented [API.](http://htmlpreview.github.io/?https://github.com/MrYsLab/pymata-express/blob/master/documentation/api/index.html)**
+* **Fully documented [API.](https://github.com/MrYsLab/pymata-express/blob/master/documentation/api/api.md)**
 
 * **User's Guide, Including Examples.**
 
