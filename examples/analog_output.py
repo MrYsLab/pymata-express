@@ -16,14 +16,18 @@
 """
 
 import asyncio
-import signal
 import sys
 
 from pymata_express.pymata_express import PymataExpress
 
+# Setup a pin for analog (PWM) output and output
+# some different values.
+
 
 async def set_intensity(my_board, pin):
     """
+    This function will set an LED and set it to
+    several PWM intensities.
 
     :param my_board: an PymataExpress instance
     :param pin: pin to be controlled
@@ -33,6 +37,7 @@ async def set_intensity(my_board, pin):
     print('analog_output example')
     await my_board.set_pin_mode_pwm(pin)
 
+    # set the intensities with analog_write
     print('Maximum Intensity')
     await my_board.analog_write(pin, 255)
     await asyncio.sleep(.5)
@@ -46,6 +51,8 @@ loop = asyncio.get_event_loop()
 board = PymataExpress()
 try:
     loop.run_until_complete(set_intensity(board, 9))
+
+    # here we clean up after the program completes.
     loop.run_until_complete(board.shutdown())
 except KeyboardInterrupt:
     loop.run_until_complete(board.shutdown())

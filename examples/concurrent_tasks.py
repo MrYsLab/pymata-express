@@ -21,7 +21,7 @@ from pymata_express.pymata_express import PymataExpress
 
 
 # noinspection PyTypeChecker
-class MultiTask:
+class ConcurrentTasks:
     """
 
     This program will run 3 concurrent asyncio tasks:
@@ -54,7 +54,7 @@ class MultiTask:
         # analog pin
         self.potentiometer = 2
 
-        # continue with init using an async method
+        # continue with init and run using an async method
         loop.run_until_complete(self.async_init_and_run())
 
     async def potentiometer_change_callback(self, data):
@@ -70,7 +70,7 @@ class MultiTask:
 
     async def async_init_and_run(self):
         """
-        Initialize pin modes, create tasks and run the tasks
+        Initialize pin modes, create tasks and then run the tasks
         """
 
         await self.board.set_pin_mode_digital_output(self.white_led)
@@ -121,7 +121,7 @@ my_board = PymataExpress()
 try:
     # Instantiate this class, passing in the
     # PymataExpress instance.
-    MultiTask(my_board)
+    ConcurrentTasks(my_board)
 except (KeyboardInterrupt, RuntimeError):
     # cleanup
     loop.run_until_complete(my_board.shutdown())
