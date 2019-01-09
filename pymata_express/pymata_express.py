@@ -1289,7 +1289,7 @@ class PymataExpress:
         differential = abs(value - self.analog_pins[pin].current_value)
         if differential >= self.analog_pins[pin].differential:
             self.analog_pins[pin].current_value = value
-            time_stamp = self.loop.time()
+            time_stamp = time.time()
             self.digital_pins[pin].event_time = time_stamp
 
             # append pin number, pin value, and pin type to return value and return as a list
@@ -1331,7 +1331,7 @@ class PymataExpress:
 
             # set the current value in the pin structure
             self.digital_pins[pin].current_value = value
-            time_stamp = self.loop.time()
+            time_stamp = time.time()
             self.digital_pins[pin].event_time = time_stamp
 
             # append pin number, pin value, and pin type to return value and return as a list
