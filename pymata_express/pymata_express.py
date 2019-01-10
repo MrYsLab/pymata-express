@@ -23,7 +23,6 @@ from serial.tools import list_ports
 # noinspection PyPackageRequirements
 from serial.serialutil import SerialException
 
-
 from pymata_express.pin_data import PinData
 from pymata_express.private_constants import PrivateConstants
 from pymata_express.pymata_express_serial import PymataExpressSerial
@@ -79,8 +78,7 @@ class PymataExpress:
             if python_version[1] >= 7:
                 pass
             else:
-                print(
-                    "ERROR: Python 3.7 or greater is required for use of this program.")
+                raise RuntimeError("ERROR: Python 3.7 or greater is required for use of this program.")
 
         # save input parameters
         self.com_port = com_port
@@ -1002,7 +1000,7 @@ class PymataExpress:
         await self._send_sysex(PrivateConstants.SERVO_CONFIG, command)
 
     async def set_pin_mode_sonar(self, trigger_pin, echo_pin,
-                                 cb=None,timeout=20000 ):
+                                 cb=None, timeout=20000):
         """
         Configure the pins,ping interval and maximum distance for an HC-SR04
         type device. Distance is expressed in centimeters
