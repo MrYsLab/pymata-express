@@ -23,7 +23,7 @@ THIS IS A WORK IN PROGRESS
 
 * **Advanced auto-detection of Arduino devices (when using FirmataExpress).**
 
-* **FirmataExpress (enhanced StandardFirmata sketch) included with distribution. It adds support for:**
+* **[FirmataExpress](https://github.com/MrYsLab/FirmataExpress) (enhanced StandardFirmata sketch) adds support for:**
      * **HC-SR04 Ultrasonic Distance Sensors using a single pin.**
      * **Stepper Motors.**
      * **Piezo Tone Generation.**
