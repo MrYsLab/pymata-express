@@ -20,8 +20,15 @@ import sys
 
 from pymata_express.pymata_express import PymataExpress
 
+# This example retrieves the Firmata sketch protocol number.
+
 
 async def retrieve_protocol_version(my_board):
+    """
+    Retrieve and print the protocol version
+
+    :param my_board: pymata_express instance
+    """
     version = await my_board.get_protocol_version()
     print(version)
 

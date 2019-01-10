@@ -20,8 +20,17 @@ import sys
 from pymata_express.pymata_express import PymataExpress
 
 
+# This example sets up and control an ADXL345 i2c
+# accelerometer. It will continuously print data
+# the raw xyz data from the device.
+
 # the call back function to print the adxl345 data
 async def the_callback(data):
+    """
+
+    :param data: [Device address, x data pair, y data pair, z data pair]
+    :return:
+    """
     print(data)
 
 

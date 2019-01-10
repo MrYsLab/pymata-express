@@ -16,23 +16,42 @@
 """
 
 import asyncio
+import time
 import sys
 from pymata_express.pymata_express import PymataExpress
 
 
+# Setup a pin for digital pin input and monitor its changes
+
 async def the_callback(data):
-    print(data)
+    """
+    A callback function to report data changes.
+    This will print the pin number, its reported value and
+    the date and time when the change occurred
+
+    :param data: [pin, current reported value, pin_mode, timestamp]
+    """
+    date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
+    print('Pin: {} Value: {} Time Stamp: {}'.format(data[0], data[1], date))
 
 
 async def digital_in_pullup(my_board, pin):
+    """
+     This function establishes the pin as a
+     digital input. Any changes on this pin will
+     be reported through the call back function.
 
+     :param my_board: a pymata_express instance
+     :param pin: Arduino pin number
+     """
+
+    # start monitoring the pin by setting its mode
     await my_board.set_pin_mode_digital_input_pullup(pin, callback=the_callback)
-    print(await my_board.get_pin_state(pin))
 
+    # get pin changes forever
     while True:
-        value = await my_board.digital_read(pin)
-        # print(value)
         await asyncio.sleep(.5)
+
 
 loop = asyncio.get_event_loop()
 board = PymataExpress()

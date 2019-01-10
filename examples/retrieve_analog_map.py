@@ -21,9 +21,17 @@ import sys
 from pymata_express.pymata_express import PymataExpress
 
 
+# This example will retrieve the Firmata analog map and display
+# the raw data. The pins are displayed in order. A value of 127
+# indicates a digital only pin, and other values indicate the
+# analog input pin number.
+
+# Retrieve and print the map
+
 async def retrieve_analog_map(my_board):
     analog_map = await my_board.get_analog_map()
     print(analog_map)
+
 
 loop = asyncio.get_event_loop()
 board = PymataExpress()

@@ -20,8 +20,16 @@ import sys
 
 from pymata_express.pymata_express import PymataExpress
 
+# This example retrieves the Firmata version, which consists
+# of a version number and name of the file.
+
 
 async def retrieve_firmware_version(my_board):
+    """
+
+    :param my_board: pymata_express instance
+    :return: the firmware version
+    """
     version = await my_board.get_firmware_version()
     print(version)
 

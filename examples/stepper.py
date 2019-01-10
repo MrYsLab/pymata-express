@@ -19,11 +19,20 @@ import asyncio
 import sys
 from pymata_express.pymata_express import PymataExpress
 
+# This example demonstrates running a stepper motor
+
 
 async def stepper(my_board, steps_per_rev, pins):
+    """
+    Set the motor control control pins to stepper mode.
+    Rotate the motor.
+
+    :param my_board: pymata_express instance
+    :param steps_per_rev: Number of steps per motor revolution
+    :param pins: A list of the motor control pins
+    """
 
     await my_board.set_pin_mode_stepper(steps_per_rev, pins)
-    print(await my_board.get_pin_state(8))
     await asyncio.sleep(1)
     await my_board.stepper_write(20, 500)
 

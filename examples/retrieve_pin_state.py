@@ -21,7 +21,19 @@ import sys
 from pymata_express.pymata_express import PymataExpress
 
 
+# This example manipulates a PWM pin and retrieves its pin
+# state after each manipulation
+
+
 async def retrieve_pin_state(my_board):
+    """
+    Establish a pin as a PWM pin. Set its value
+    to 127 and get the pin state. Then set the pin's
+    value to zero and get the pin state again.
+
+    :param my_board: pymata_aio instance
+    :return: No values returned by results are printed to console
+    """
     await my_board.set_pin_mode_pwm(9)
     await my_board.analog_write(9, 127)
     pin_state = await my_board.get_pin_state(9)

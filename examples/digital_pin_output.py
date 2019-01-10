@@ -21,8 +21,14 @@ import sys
 from pymata_express.pymata_express import PymataExpress
 
 
+# Setup a pin for digital output and output
+# and toggle the pin using the digital_pin_output
+# pin mode.
+
+
 async def blink(my_board, pin):
     """
+    This function will to toggle a digital pin.
 
     :param my_board: an PymataExpress instance
     :param pin: pin to be controlled
@@ -31,6 +37,7 @@ async def blink(my_board, pin):
     # set the pin mode
     await my_board.set_pin_mode_digital_output(pin)
 
+    # toggle the pin 4 times and exit
     for x in range(4):
         print('ON')
         await my_board.digital_pin_write(pin, 1)

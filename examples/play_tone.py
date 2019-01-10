@@ -19,6 +19,8 @@ import asyncio
 import sys
 from pymata_express.pymata_express import PymataExpress
 
+# This is a demonstration of the tone methods
+
 # retrieve the event loop
 loop = asyncio.get_event_loop()
 
@@ -26,21 +28,21 @@ loop = asyncio.get_event_loop()
 board = PymataExpress()
 
 try:
-    # specify pin, frequency and duration and play tone
+    # set a pin's mode for tone operations
     loop.run_until_complete(board.set_pin_mode_tone(3))
-    print(loop.run_until_complete(board.get_pin_state(3)))
 
+    # specify pin, frequency and duration and play tone
     loop.run_until_complete(board.play_tone(3, 1000, 500))
     loop.run_until_complete(asyncio.sleep(2))
 
     # specify pin and frequency and play continuously
     loop.run_until_complete(board.play_tone_continuously(3, 2000))
     loop.run_until_complete(asyncio.sleep(2))
-    print(loop.run_until_complete(board.get_pin_state(3)))
 
     # specify pin to turn pin off
     loop.run_until_complete(board.play_tone_off(3))
 
+    # clean up
     loop.run_until_complete(board.shutdown())
 except KeyboardInterrupt:
     loop.run_until_complete(board.shutdown())

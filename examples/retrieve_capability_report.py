@@ -20,8 +20,9 @@ import sys
 
 from pymata_express.pymata_express import PymataExpress
 
-# This is a demo of retrieving an Firmata capability report and
-# printing a formatted report to the console
+
+# This is a demo of retrieving a Firmata capability report and
+# printing a formatted version of the report to the console
 
 def format_capability_report(data):
     """
@@ -58,6 +59,7 @@ def format_capability_report(data):
 
 async def retrieve_capability_report(my_board):
     """
+    Retrieve the report.
 
     :param my_board: a pymata-express instance
     """
@@ -66,6 +68,7 @@ async def retrieve_capability_report(my_board):
 
     # print a human readable version
     format_capability_report(report)
+
 
 # Get the loop
 loop = asyncio.get_event_loop()
