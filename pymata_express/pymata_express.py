@@ -1005,7 +1005,7 @@ class PymataExpress:
                                  cb=None,timeout=20000 ):
         """
         Configure the pins,ping interval and maximum distance for an HC-SR04
-        type device.
+        type device. Distance is expressed in centimeters
         Single pin configuration may be used. To do so, set both the trigger
         and echo pins to the same value.
         Up to a maximum of 6 SONAR devices is supported
@@ -1096,7 +1096,8 @@ class PymataExpress:
         if callback:
             if pin_state == PrivateConstants.INPUT:
                 self.digital_pins[pin_number].cb = callback
-                # self.digital_pins[pin_number].cb_type = callback_type
+            elif pin_state == PrivateConstants.PULLUP:
+                self.digital_pins[pin_number].cb = callback
             elif pin_state == PrivateConstants.ANALOG:
                 self.analog_pins[pin_number].cb = callback
                 self.analog_pins[pin_number].differential = differential
