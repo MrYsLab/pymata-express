@@ -200,8 +200,8 @@ class PymataExpress:
 
     def start(self):
         """
-        This method may be called directly, but first set the autostart
-        parameter to false.
+        This method may be called directly, if the autostart
+        parameter in __init__ is set to false.
 
         This method instantiates the serial interface and then performs auto pin
         discovery.
@@ -250,8 +250,8 @@ class PymataExpress:
 
     async def start_aio(self):
         """
-        This method may be called directly, but first set the autostart
-        parameter to false.
+        This method may be called directly, if the autostart
+        parameter in __init__ is set to false.
 
         This method instantiates the serial interface and then performs auto pin
         discovery.
@@ -462,7 +462,7 @@ class PymataExpress:
         """
         Set the specified pin to the specified value directly without port manipulation.
 
-        :param pin: pin number
+        :param pin: arduino pin number
 
         :param value: pin value
 
@@ -476,7 +476,7 @@ class PymataExpress:
         """
         Set the specified pin to the specified value.
 
-        :param pin: pin number
+        :param pin: arduino pin number
 
         :param value: pin value (1 or 0)
 
@@ -608,7 +608,7 @@ class PymataExpress:
     async def get_protocol_version(self):
         """
         This method returns the major and minor values for the protocol
-        version, i.e. 2.4
+        version, i.e. 2.5
 
         :returns: Firmata protocol version
         """
@@ -653,9 +653,9 @@ class PymataExpress:
     # noinspection PyMethodMayBeStatic
     async def get_pymata_version(self):
         """
-        This method retrieves the PyMata version number
+        This method retrieves the PyMata Express version number
 
-        :returns: PyMata version number.
+        :returns: PyMata Express version number.
         """
         return PrivateConstants.PYMATA_EXPRESS_VERSION
 
@@ -665,7 +665,7 @@ class PymataExpress:
 
         :param address: I2C device address
 
-        :returns: Last cached value read
+        :returns: Last cached value reported
 
         """
         if address in self.i2c_map:
@@ -794,11 +794,12 @@ class PymataExpress:
 
     async def keep_alive(self, period=1, margin=.3):
         """
+        This is a FirmataExpress feature.
+
         Periodically send a keep alive message to the Arduino.
 
-        If your arduino board type supports the feature, if the Arduino
-        does not received a keep alive, the Arduino will physically reset
-        itself.
+        If the Arduino does not received a keep alive, the Arduino
+        will physically reset itself.
 
         Frequency of keep alive transmission is calculated as follows:
         keep_alive_sent = period - (period * margin)
@@ -833,6 +834,9 @@ class PymataExpress:
 
     async def play_tone(self, pin_number, frequency, duration):
         """
+
+        This is FirmataExpress feature
+
         Play a tone at the specified frequency for the specified duration.
 
         :param pin_number: arduino pin number
@@ -847,6 +851,9 @@ class PymataExpress:
 
     async def play_tone_continuously(self, pin_number, frequency):
         """
+
+        This is a FirmataExpress feature
+
         This method plays a tone continuously until play_tone_off is called.
 
         :param pin_number: arduino pin number
@@ -860,8 +867,10 @@ class PymataExpress:
 
     async def play_tone_off(self, pin_number):
         """
+        This is a FirmataExpress Feature
+
         This method turns tone off for the specified pin.
-        :param pin_number:
+        :param pin_number: arduino pin number
 
         """
 
@@ -879,7 +888,7 @@ class PymataExpress:
         Else, if the tone command is TONE_NO_TONE, then any currently
         playing tone will be disabled.
 
-        :param pin: Pin number
+        :param pin: arduino pin number
 
         :param tone_command: Either TONE_TONE, or TONE_NO_TONE
 
@@ -918,7 +927,7 @@ class PymataExpress:
         """
         Set a pin as an analog input.
 
-        :param pin_number: Arduino Pin Number
+        :param pin_number: arduino pin number
 
         :param callback: async callback function
 
@@ -933,7 +942,7 @@ class PymataExpress:
         """
         Set a pin as a digital input.
 
-        :param pin_number: Arduino Pin Number
+        :param pin_number: arduino pin number
 
         :param callback: async callback function
 
@@ -944,7 +953,7 @@ class PymataExpress:
         """
         Set a pin as a digital input with pullup enabled.
 
-        :param pin_number: Arduino Pin Number
+        :param pin_number: arduino pin number
 
         :param callback: async callback function
 
@@ -955,8 +964,7 @@ class PymataExpress:
         """
         Set a pin as a digital output pin.
 
-        :param pin_number: Arduino Pin Number
-
+        :param pin_number: arduino pin number
         """
 
         await self._set_pin_mode(pin_number, PrivateConstants.OUTPUT)
@@ -978,7 +986,7 @@ class PymataExpress:
         """
         Set a pin as a pwm (analog output) pin.
 
-        :param pin_number:Arduino Pin Number
+        :param pin_number:arduino pin number
 
         """
         await self._set_pin_mode(pin_number, PrivateConstants.PWM)
@@ -1002,6 +1010,8 @@ class PymataExpress:
     async def set_pin_mode_sonar(self, trigger_pin, echo_pin,
                                  cb=None, timeout=20000):
         """
+        This is a FirmataExpress feature.
+
         Configure the pins,ping interval and maximum distance for an HC-SR04
         type device. Distance is expressed in centimeters
         Single pin configuration may be used. To do so, set both the trigger
@@ -1043,6 +1053,8 @@ class PymataExpress:
 
     async def set_pin_mode_stepper(self, steps_per_revolution, stepper_pins):
         """
+        This is a FirmataExpress feature.
+
         Configure stepper motor prior to operation.
         This is a FirmataPlus feature.
 
@@ -1059,6 +1071,8 @@ class PymataExpress:
 
     async def set_pin_mode_tone(self, pin_number):
         """
+        This is FirmataExpress feature.
+
         Set the analog pin to tone mode.
 
         :param pin_number: arduino pin number
@@ -1069,11 +1083,10 @@ class PymataExpress:
 
     async def _set_pin_mode(self, pin_number, pin_state, callback=None,
                             differential=1):
-
         """
         A private method to set the various pin modes.
 
-        :param pin_number: Arduino Pin Number
+        :param pin_number: arduino pin number
 
         :param pin_state: INPUT/OUTPUT/ANALOG/PWM/PULLUP - for SERVO use
                           servo_config()
@@ -1136,9 +1149,9 @@ class PymataExpress:
         """
         This is an alias for analog_write to set
         the position of a servo that has been
-        previously configured.
+        previously configured using set_pin_mode_servo.
 
-        :param pin: Arduino Pin Number
+        :param pin: arduino pin number
 
         :param position: servo position
 
@@ -1149,7 +1162,7 @@ class PymataExpress:
     async def shutdown(self):
         """
         This method attempts an orderly shutdown
-        If any exceptions are thrown, just ignore them.
+        If any exceptions are thrown, they are ignored.
 
         """
 
@@ -1172,6 +1185,8 @@ class PymataExpress:
 
     async def sonar_read(self, trigger_pin):
         """
+        This is a FirmataExpress feature
+
         Retrieve Ping (HC-SR04 type) data. The data is presented as a
         dictionary.
         The 'key' is the trigger pin specified in sonar_config()
@@ -1189,6 +1204,8 @@ class PymataExpress:
 
     async def stepper_write(self, motor_speed, number_of_steps):
         """
+        This is a FirmataExpress feature
+
         Move a stepper motor for the number of steps at the specified speed
         This is a FirmataPlus feature.
 
