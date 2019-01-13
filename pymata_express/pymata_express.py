@@ -166,7 +166,7 @@ class PymataExpress:
                                  PrivateConstants.ANALOG_MAPPING_RESPONSE: None,
                                  PrivateConstants.PIN_STATE_RESPONSE: None}
 
-        print('{}{}{}'.format('\n', 'pymata_aio Version ' +
+        print('{}{}{}'.format('\n', 'Pymata Express Version ' +
                               PrivateConstants.PYMATA_EXPRESS_VERSION,
                               '\tCopyright (c) 2018-2019 Alan Yorinks All '
                               'rights reserved.\n'))
