@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>About - Pymata Express</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "About";
+    var mkdocs_page_input_path = "about.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pymata Express</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">User's Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../install_pymata_express/">Installing Pymata Express</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../guidelines/">Pymata Express Application Development</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../firmata_express/">FirmataExpress Installation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../examples/">Example Applications/Tests</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../api/">Pymata Express API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../python_3_7.install/">Verifying/Installing Python 3.7</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">About</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#reporting-issues">REPORTING ISSUES</a></li>
+    
+
+    <li class="toctree-l2"><a href="#troubleshooting-tips">TROUBLESHOOTING TIPS</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../license/">License</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pymata Express</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>About</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="reporting-issues">REPORTING ISSUES</h1>
+<p>If you wish to report an issue with Pymata Express please use
+<a href="https://github.com/MrYsLab/pymata-express/issues">this link</a>.
+For FirmataExpress, please use <a href="https://github.com/MrYsLab/FirmataExpress/issues">this link</a>.</p>
+<p>When filing an issue, please provide any console output, a description
+of the issue, and a some code so that the problem can be reproduced.</p>
+<p>If you have any questions about Pymata Express or FirmataExpress, you
+may also use the issues links to do that as well.</p>
+<h1 id="troubleshooting-tips">TROUBLESHOOTING TIPS</h1>
+<p>Powering both Arduino connected devices (such as motors) and the Arduino micro-controller
+from your computer's USB connector
+may exceed the maximum current capabilities of the USB port.
+In those cases, use a separate power supply for the
+connected device.</p>
+<p>When insufficient power is available, you may see
+an exception traceback that looks similar to the following:</p>
+<pre><code>Traceback (most recent call last):
+  File &quot;/home/afy/PycharmProjects/pymata-express/examples/pymata_express/servo.py&quot;, line 44, in &lt;module&gt;
+    loop.run_until_complete(servo(board, 5))
+  File &quot;/usr/local/lib/python3.7/asyncio/base_events.py&quot;, line 584, in run_until_complete
+    return future.result()
+concurrent.futures._base.CancelledError
+</code></pre>
+
+<p>This exception was caused while operating a servo motor. Connecting an external
+supply for the motor solved the issue.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../license/" class="btn btn-neutral float-right" title="License">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../python_3_7.install/" class="btn btn-neutral" title="Verifying/Installing Python 3.7"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../python_3_7.install/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../license/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

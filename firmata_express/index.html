@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>FirmataExpress Installation - Pymata Express</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "FirmataExpress Installation";
+    var mkdocs_page_input_path = "firmata_express.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pymata Express</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">User's Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../install_pymata_express/">Installing Pymata Express</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../guidelines/">Pymata Express Application Development</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">FirmataExpress Installation</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#installation-instructions">INSTALLATION INSTRUCTIONS</a></li>
+    
+
+    <li class="toctree-l2"><a href="#setting-the-firmataexpress-instance-id">SETTING THE FirmataExpress INSTANCE ID</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../examples/">Example Applications/Tests</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../api/">Pymata Express API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../python_3_7.install/">Verifying/Installing Python 3.7</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../about/">About</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../license/">License</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pymata Express</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>FirmataExpress Installation</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="installation-instructions">INSTALLATION INSTRUCTIONS</h1>
+<p>Open the Arduino IDE, and select Tools/Manage Libraries</p>
+<p>1. Open the Arduino IDE, and select Tools/Manage Libraries.</p>
+
+<p><center><img align="middle" src="../images/manage_libraries.png"></center></p>
+<p>2. Enter "FirmataExpress in the search box.</p>
+
+<p><center><img align="middle" src="../images/install_firmata_express.png"></center></p>
+<p>3. Click on the Install button.</p>
+
+<p>4. FirmataExpress also requires that the <a "https://github.com/ErickSimoes/Ultrasonic"> Ultrasonic library</a>
+by Erick Simões be installed.
+Using the Arduino IDE install the ultrasonic library. Click on Tools/Manage Libraries
+and select Ultrasonic and then click Install.</p>
+
+<p><center><img align="middle" src="../images/Ultrasonic.png"></center></p>
+<h1 id="setting-the-firmataexpress-instance-id">SETTING THE FirmataExpress INSTANCE ID</h1>
+<p>FirmataExpress, in conjunction with PyMata Express has the ability to automatically
+associate a Pymata Express application with a specific Arduino board that is
+plugged into your computer.</p>
+<p>If you only have a single Arduino connected at a time, you do not need to do anything. However
+if you have multiple Arduinos connected to your computer, to associate a Pymata Express application
+with a specific board, you must set matching ID numbers in both the FirmataExpress sketch, and specify
+that number when instantiating PymataExpress. The Pymata Express parameter is discussed
+<a href="/guidelines/#parameter-arduino_instance_id">here</a>.</p>
+<p>To set the ID number in FirmataExpress, load the FirmataExpress sketch into the Arduino IDE
+and look for the following line:</p>
+<pre><code>#define ARDUINO_INSTANCE_ID         1
+</code></pre>
+
+<p>Modify the value of 1 to the matching number you will use with Pymata Express.</p>
+<p><img alt="" src="../images/i_am_here.png" /></p>
+<p>You may then compile and upload FirmataExpress to your Arduino.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../examples/" class="btn btn-neutral float-right" title="Example Applications/Tests">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../guidelines/" class="btn btn-neutral" title="Pymata Express Application Development"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../guidelines/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../examples/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

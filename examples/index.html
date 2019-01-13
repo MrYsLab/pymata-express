@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Example Applications/Tests - Pymata Express</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Example Applications/Tests";
+    var mkdocs_page_input_path = "examples.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pymata Express</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">User's Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../install_pymata_express/">Installing Pymata Express</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../guidelines/">Pymata Express Application Development</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../firmata_express/">FirmataExpress Installation</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Example Applications/Tests</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#a-word-about-unit-tests">A WORD ABOUT UNIT TESTS</a></li>
+    
+
+    <li class="toctree-l2"><a href="#example-applications">EXAMPLE APPLICATIONS</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#analog_input">analog_input</a></li>
+        
+            <li><a class="toctree-l3" href="#analog_output">analog_output</a></li>
+        
+            <li><a class="toctree-l3" href="#concurrent_tasks">concurrent_tasks</a></li>
+        
+            <li><a class="toctree-l3" href="#digital_input">digital_input</a></li>
+        
+            <li><a class="toctree-l3" href="#digital_input_pullup">digital_input_pullup</a></li>
+        
+            <li><a class="toctree-l3" href="#digital_output">digital_output</a></li>
+        
+            <li><a class="toctree-l3" href="#digital_pin_ouput">digital_pin_ouput</a></li>
+        
+            <li><a class="toctree-l3" href="#hc-sr04_distance_sensor">hc-sr04_distance_sensor</a></li>
+        
+            <li><a class="toctree-l3" href="#i2c_adxl345_accelerometer">i2c_adxl345_accelerometer</a></li>
+        
+            <li><a class="toctree-l3" href="#play_tone">play_tone</a></li>
+        
+            <li><a class="toctree-l3" href="#retrieve_analog_map">retrieve_analog_map</a></li>
+        
+            <li><a class="toctree-l3" href="#retrieve_capbaility_report">retrieve_capbaility_report</a></li>
+        
+            <li><a class="toctree-l3" href="#retrieve_firmware_version">retrieve_firmware_version</a></li>
+        
+            <li><a class="toctree-l3" href="#retrieve_pin_state">retrieve_pin_state</a></li>
+        
+            <li><a class="toctree-l3" href="#retrieve_protocol_version">retrieve_protocol_version</a></li>
+        
+            <li><a class="toctree-l3" href="#servo">servo</a></li>
+        
+            <li><a class="toctree-l3" href="#stepper">stepper</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../api/">Pymata Express API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../python_3_7.install/">Verifying/Installing Python 3.7</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../about/">About</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../license/">License</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pymata Express</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Example Applications/Tests</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="a-word-about-unit-tests">A WORD ABOUT UNIT TESTS</h1>
+<p>You may have noticed that this distribution does not come with a set of
+unit tests.</p>
+<p>The reason for this is simple. To truly test the Pymata Express library
+requires that hardware devices be connected to the Arduino, and interaction
+of Pymata Express with these devices needs to be physically observed.</p>
+<p>Therefore, in lieu of the traditional unit tests, the examples provided
+with the distribution act as unit tests. They interact with the hardware
+and the results of this
+interaction may be easily observed and verified.</p>
+<p>If changes need to be made to the library, the example programs will be re-run to
+ ensure that the hardware and the library behave as expected.
+If additional features are required in the future, additional
+examples will be provided to test those new features.</p>
+<h1 id="example-applications">EXAMPLE APPLICATIONS</h1>
+<h2 id="analog_input"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/analog_input.py">analog_input</a></h2>
+<h2 id="analog_output"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/analog_output.py">analog_output</a></h2>
+<h2 id="concurrent_tasks"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/concurrent_tasks.py">concurrent_tasks</a></h2>
+<h2 id="digital_input"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/digital_input.py">digital_input</a></h2>
+<h2 id="digital_input_pullup"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/digital_input_pullup.py">digital_input_pullup</a></h2>
+<h2 id="digital_output"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/digital_output.py">digital_output</a></h2>
+<h2 id="digital_pin_ouput"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/digital_pin_output.py">digital_pin_ouput</a></h2>
+<h2 id="hc-sr04_distance_sensor"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/hc-sr04_distance_sensor.py">hc-sr04_distance_sensor</a></h2>
+<h2 id="i2c_adxl345_accelerometer"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/i2c_adxl345_accelerometer.py">i2c_adxl345_accelerometer</a></h2>
+<h2 id="play_tone"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/play_tone.py">play_tone</a></h2>
+<h2 id="retrieve_analog_map"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/retrieve_analog_map.py">retrieve_analog_map</a></h2>
+<h2 id="retrieve_capbaility_report"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/retrieve_capability_report.py">retrieve_capbaility_report</a></h2>
+<h2 id="retrieve_firmware_version"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/retrieve_firmware_version.py">retrieve_firmware_version</a></h2>
+<h2 id="retrieve_pin_state"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/retrieve_pin_state.py">retrieve_pin_state</a></h2>
+<h2 id="retrieve_protocol_version"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/retrieve_protocol_version.py">retrieve_protocol_version</a></h2>
+<h2 id="servo"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/servo.py">servo</a></h2>
+<h2 id="stepper"><a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/stepper.py">stepper</a></h2>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api/" class="btn btn-neutral float-right" title="Pymata Express API">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../firmata_express/" class="btn btn-neutral" title="FirmataExpress Installation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../firmata_express/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../api/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
