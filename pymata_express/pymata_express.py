@@ -168,7 +168,7 @@ class PymataExpress:
 
         print('{}{}{}'.format('\n', 'Pymata Express Version ' +
                               PrivateConstants.PYMATA_EXPRESS_VERSION,
-                              '\tCopyright (c) 2018-2019 Alan Yorinks All '
+                              '\nCopyright (c) 2018-2019 Alan Yorinks All '
                               'rights reserved.\n'))
         if not self.com_port:
             # user did not specify a com_port
