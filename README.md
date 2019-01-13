@@ -1,5 +1,5 @@
-![logo](https://raw.github.com/MrYsLab/pymata-express/master/documentation/images/pymata_express.png)
-======
+![logo](https://raw.github.com/MrYsLab/pymata-express/master/documentation/images/pymata_express2.png)
+======================================================================================================
 
 
 THIS IS A WORK IN PROGRESS
@@ -15,9 +15,9 @@ THIS IS A WORK IN PROGRESS
 
 * **Python 3.7+ compatible.**
 
-* **Fully documented [API.](https://github.com/MrYsLab/pymata-express/blob/master/documentation/api/api.md)**
+* **Fully documented [API.](https://mryslab.github.io/pymata-express/api/)**
 
-* **User's Guide, Including Examples.**
+* **[User's Guide](https://mryslab.github.io/pymata-express/), Including Examples.**
 
 * **Implements 100% of the StandardFirmata Protocol (StandardFirmata 2.5.8).**
 
