@@ -47,7 +47,6 @@ async def analog_in(my_board, pin):
     """
     await my_board.set_pin_mode_analog_input(pin,
                                              callback=the_callback,
-
                                              differential=5)
     # run forever waiting for input changes
     while True:
