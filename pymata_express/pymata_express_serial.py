@@ -19,6 +19,7 @@
 import asyncio
 import sys
 import serial
+import time
 
 LF = 0x0a
 
@@ -47,6 +48,9 @@ class PymataExpressSerial:
 
         self.com_port = com_port
         self.sleep_tune = sleep_tune
+
+        # used by read_until
+        self.start_time = None
 
     async def get_serial(self):
         """
@@ -135,7 +139,7 @@ class PymataExpressSerial:
                     # future is done, so return the character
                     return future.result()
 
-    async def read_until(self, expected=LF, size=None):
+    async def read_until(self, expected=LF, size=None, timeout = 1):
         """
         This is an asyncio adapted version of pyserial read
         that provides non-blocking read.
@@ -150,6 +154,9 @@ class PymataExpressSerial:
         # create a flag to indicate when data becomes available
         data_available = False
 
+        if timeout:
+            self.start_time = time.time()
+
         # wait for a character to become available and read from
         # the serial port
         while True:
@@ -158,6 +165,10 @@ class PymataExpressSerial:
                 # if not, relinquish control back to the event loop through the
                 # short sleep
                 if not self.my_serial.in_waiting:
+                    if timeout:
+                        elapsed_time = time.time() - self.start_time
+                        if elapsed_time > timeout:
+                            return None
                     await asyncio.sleep(self.sleep_tune)
                 # data is available.
                 # set the flag to true so that the future can "wait" until the
