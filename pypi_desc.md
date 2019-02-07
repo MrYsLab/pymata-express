@@ -9,7 +9,7 @@
 
 * **Python 3.7+ compatible.**
 
-* **Fully documented [API.](https://mryslab.github.io/pymata-express/api/)**
+* **Fully documented [API.](http://htmlpreview.github.io/?https://github.com/MrYsLab/pymata-express/blob/gh-pages/documentation/api/pymata_express.html)**
 
 * **[User's Guide](https://mryslab.github.io/pymata-express/), Including Examples.**
 
