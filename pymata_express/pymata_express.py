@@ -20,7 +20,7 @@ import sys
 import time
 # noinspection PyPackageRequirements
 from serial.tools import list_ports
-# noinspection PyPackageRequirements
+# noinspection PyPackageRequirementscd
 from serial.serialutil import SerialException
 
 from pymata_express.pin_data import PinData
@@ -78,7 +78,8 @@ class PymataExpress:
             if python_version[1] >= 7:
                 pass
             else:
-                raise RuntimeError("ERROR: Python 3.7 or greater is required for use of this program.")
+                raise RuntimeError("ERROR: Python 3.7 or greater is "
+                                   "required for use of this program.")
 
         # save input parameters
         self.com_port = com_port
@@ -163,7 +164,8 @@ class PymataExpress:
                                  PrivateConstants.STRING_DATA: '',
                                  PrivateConstants.REPORT_FIRMWARE: '',
                                  PrivateConstants.CAPABILITY_RESPONSE: None,
-                                 PrivateConstants.ANALOG_MAPPING_RESPONSE: None,
+                                 PrivateConstants.ANALOG_MAPPING_RESPONSE:
+                                     None,
                                  PrivateConstants.PIN_STATE_RESPONSE: None}
 
         print('{}{}{}'.format('\n', 'Pymata Express Version ' +
@@ -186,7 +188,8 @@ class PymataExpress:
                     self.loop.run_until_complete(self.shutdown())
 
         if self.com_port:
-            print('{}{}\n'.format('\nArduino found and connected to ', self.com_port))
+            print('{}{}\n'.format('\nArduino found and connected to ',
+                                  self.com_port))
 
         # no com_port found - raise a runtime exception
         else:
@@ -203,24 +206,29 @@ class PymataExpress:
         This method may be called directly, if the autostart
         parameter in __init__ is set to false.
 
-        This method instantiates the serial interface and then performs auto pin
-        discovery.
+        This method instantiates the serial interface and then performs
+         auto pin discovery.
+
         Use this method if you wish to start PymataExpress manually from
         a non-asyncio function - it used by __init__.
 
         """
-        self.the_task = self.loop.create_task(self._arduino_report_dispatcher())
+        self.the_task = self.loop.create_task(
+            self._arduino_report_dispatcher())
 
         # get arduino firmware version and print it
         try:
             print('Retrieving Arduino Firmware ID...')
-            firmware_version = self.loop.run_until_complete(self.get_firmware_version())
+            firmware_version = self.loop.run_until_complete(
+                self.get_firmware_version())
 
             print("Arduino Firmware ID: " + firmware_version)
         except TypeError:
-            print('\nIs your serial cable plugged in and do you have the correct Firmata sketch loaded?')
+            print('\nIs your serial cable plugged in and do you have the '
+                  'correct Firmata sketch loaded?')
             print('Is the COM port correct?')
-            print('To see a list of serial ports, type: "list_serial_ports" in your console.')
+            print('To see a list of serial ports, type: "list_serial_ports" '
+                  'in your console.')
             raise RuntimeError
 
         # try to get an analog pin map. if it comes back as none - shutdown
@@ -270,7 +278,8 @@ class PymataExpress:
             print('\nDo you have Arduino connectivity and do you have a ')
             print('Firmata sketch uploaded to the board and are connected')
             print('to the correct serial port.\n')
-            print('To see a list of serial ports, type: "list_serial_ports" in your console.')
+            print('To see a list of serial ports, type: '
+                  '"list_serial_ports" in your console.')
             if self.shutdown_on_exception:
                 await self.shutdown()
             raise RuntimeError
@@ -344,7 +353,8 @@ class PymataExpress:
               'reset...'.format(self.arduino_wait))
         await asyncio.sleep(self.arduino_wait)
 
-        print('\nSearching for an Arduino configured with an arduino_instance = ', self.arduino_instance_id)
+        print('\nSearching for an Arduino configured with an arduino_instance = ',
+              self.arduino_instance_id)
 
         for serial_port in serial_ports:
             self.serial_port = serial_port
@@ -381,7 +391,8 @@ class PymataExpress:
         print('Opening {} ...'.format(self.com_port))
         self.serial_port = PymataExpressSerial(self.com_port, self.baud_rate)
 
-        print('Waiting {} seconds for the Arduino To Reset.'.format(self.arduino_wait))
+        print('Waiting {} seconds for the Arduino To Reset.'
+              .format(self.arduino_wait))
         await asyncio.sleep(self.arduino_wait)
         if self.baud_rate == 115200:
             await self._send_sysex(PrivateConstants.ARE_YOU_THERE)
@@ -444,7 +455,8 @@ class PymataExpress:
 
         :returns: No return value
         """
-        analog_data = [pin, data & 0x7f, (data >> 7) & 0x7f, (data >> 14) & 0x7f]
+        analog_data = [pin, data & 0x7f, (data >> 7) & 0x7f,
+                       (data >> 14) & 0x7f]
         await self._send_sysex(PrivateConstants.EXTENDED_ANALOG, analog_data)
 
     async def digital_read(self, pin):
@@ -496,7 +508,8 @@ class PymataExpress:
         # Assemble the command
         command = (calculated_command,
                    PrivateConstants.DIGITAL_OUTPUT_PORT_PINS[port] & 0x7f,
-                   (PrivateConstants.DIGITAL_OUTPUT_PORT_PINS[port] >> 7) & 0x7f)
+                   (PrivateConstants.DIGITAL_OUTPUT_PORT_PINS[port] >> 7)
+                   & 0x7f)
 
         await self._send_command(command)
 
@@ -551,7 +564,8 @@ class PymataExpress:
 
     async def get_analog_map(self):
         """
-        This method requests a Firmata analog map query and returns the results.
+        This method requests a Firmata analog map query and returns the
+        results.
 
         :returns: An analog map response or None if a timeout occurs
         """
@@ -625,14 +639,23 @@ class PymataExpress:
         Pin modes reported:
 
         INPUT   = 0x00  # digital input mode
+
         OUTPUT  = 0x01  # digital output mode
+
         ANALOG  = 0x02  # analog input mode
+
         PWM     = 0x03  # digital pin in PWM output mode
+
         SERVO   = 0x04  # digital pin in Servo output mode
+
         I2C     = 0x06  # pin included in I2C setup
+
         STEPPER = 0x08  # digital pin in stepper mode
+
         PULLUP  = 0x0b  # digital pin in input pullup mode
+
         SONAR   = 0x0c  # digital pin in SONAR mode
+
         TONE    = 0x0d  # digital pin in tone mode
 
         :param pin: Pin of interest
@@ -716,9 +739,11 @@ class PymataExpress:
         """
 
         await self._i2c_read_request(address, register, number_of_bytes,
-                                     PrivateConstants.I2C_READ_CONTINUOUSLY, callback)
+                                     PrivateConstants.I2C_READ_CONTINUOUSLY,
+                                     callback)
 
-    async def i2c_read_restart_transmission(self, address, register, number_of_bytes,
+    async def i2c_read_restart_transmission(self, address, register,
+                                            number_of_bytes,
                                             callback=None):
         """
         Read the specified number of bytes from the specified register for
@@ -738,21 +763,31 @@ class PymataExpress:
         """
 
         await self._i2c_read_request(address, register, number_of_bytes,
-                                     PrivateConstants.I2C_READ | PrivateConstants.I2C_END_TX_MASK,
+                                     PrivateConstants.I2C_READ
+                                     | PrivateConstants.I2C_END_TX_MASK,
                                      callback)
 
     async def _i2c_read_request(self, address, register, number_of_bytes, read_type,
                                 callback=None):
-
         """
         This method requests the read of an i2c device. Results are retrieved
         by a call to i2c_get_read_data(). or by callback.
 
         If a callback method is provided, when data is received from the
         device it will be sent to the callback method.
+
         Some devices require that transmission be restarted
         (e.g. MMA8452Q accelerometer).
-        Use PrivateConstants.I2C_READ | PrivateConstants.I2C_END_TX_MASK for those cases.
+
+        I2C_READ | I2C_END_TX_MASK values for the read_type in those cases.
+
+        I2C_READ = 0B00001000
+
+        I2C_READ_CONTINUOUSLY = 0B00010000
+
+        I2C_STOP_READING = 0B00011000
+
+        I2C_END_TX_MASK = 0B01000000
 
         :param address: i2c device address
 
@@ -901,7 +936,8 @@ class PymataExpress:
         if tone_command == PrivateConstants.TONE_TONE:
             # duration is specified
             if duration:
-                data = [tone_command, pin, frequency & 0x7f, (frequency >> 7) & 0x7f,
+                data = [tone_command, pin, frequency & 0x7f,
+                        (frequency >> 7) & 0x7f,
                         duration & 0x7f, (duration >> 7) & 0x7f]
 
             else:
@@ -935,7 +971,8 @@ class PymataExpress:
                              to be invoked.
 
         """
-        await self._set_pin_mode(pin_number, PrivateConstants.ANALOG, callback=callback,
+        await self._set_pin_mode(pin_number, PrivateConstants.ANALOG,
+                                 callback=callback,
                                  differential=differential)
 
     async def set_pin_mode_digital_input(self, pin_number, callback=None):
@@ -972,6 +1009,8 @@ class PymataExpress:
     # noinspection PyIncorrectDocstring
     async def set_pin_mode_i2c(self, read_delay_time=0):
         """
+        Establish the standard Arduino i2c pins for i2c utilization.
+
         NOTE: THIS METHOD MUST BE CALLED BEFORE ANY I2C REQUEST IS MADE
         This method initializes Firmata for I2c operations.
 
@@ -1002,7 +1041,8 @@ class PymataExpress:
         :param max_pulse: Max pulse width in ms.
 
         """
-        command = [pin, min_pulse & 0x7f, (min_pulse >> 7) & 0x7f, max_pulse & 0x7f,
+        command = [pin, min_pulse & 0x7f, (min_pulse >> 7) & 0x7f,
+                   max_pulse & 0x7f,
                    (max_pulse >> 7) & 0x7f]
 
         await self._send_sysex(PrivateConstants.SERVO_CONFIG, command)
@@ -1013,12 +1053,15 @@ class PymataExpress:
         This is a FirmataExpress feature.
 
         Configure the pins,ping interval and maximum distance for an HC-SR04
-        type device. Distance is expressed in centimeters
+        type device.
+
         Single pin configuration may be used. To do so, set both the trigger
         and echo pins to the same value.
-        Up to a maximum of 6 SONAR devices is supported
+
+        Up to a maximum of 6 SONAR devices is supported.
         If the maximum is exceeded a message is sent to the console and the
         request is ignored.
+
         NOTE: data is measured in centimeters
 
         :param trigger_pin: The pin number of for the trigger (transmitter).
@@ -1031,7 +1074,8 @@ class PymataExpress:
 
 
         """
-        # if there is an entry for the trigger pin in existence, ignore the duplicate request
+        # if there is an entry for the trigger pin in existence,
+        # ignore the duplicate request.
         if trigger_pin in self.active_sonar_map:
             return
 
@@ -1040,8 +1084,10 @@ class PymataExpress:
         data = [trigger_pin, echo_pin, timeout_lsb,
                 timeout_msb]
 
-        await self._set_pin_mode(trigger_pin, PrivateConstants.SONAR, PrivateConstants.INPUT)
-        await self._set_pin_mode(echo_pin, PrivateConstants.SONAR, PrivateConstants.INPUT)
+        await self._set_pin_mode(trigger_pin, PrivateConstants.SONAR,
+                                 PrivateConstants.INPUT)
+        await self._set_pin_mode(echo_pin, PrivateConstants.SONAR,
+                                 PrivateConstants.INPUT)
         # update the ping data map for this pin
         if len(self.active_sonar_map) > 6:
             print('sonar_config: maximum number of devices assigned'
@@ -1063,7 +1109,8 @@ class PymataExpress:
         :param stepper_pins: a list of control pin numbers - either 4 or 2
 
         """
-        data = [PrivateConstants.STEPPER_CONFIGURE, steps_per_revolution & 0x7f,
+        data = [PrivateConstants.STEPPER_CONFIGURE,
+                steps_per_revolution & 0x7f,
                 (steps_per_revolution >> 7) & 0x7f]
         for pin in range(len(stepper_pins)):
             data.append(stepper_pins[pin])
@@ -1078,7 +1125,8 @@ class PymataExpress:
         :param pin_number: arduino pin number
 
         """
-        command = [PrivateConstants.SET_PIN_MODE, pin_number, PrivateConstants.TONE]
+        command = [PrivateConstants.SET_PIN_MODE, pin_number,
+                   PrivateConstants.TONE]
         await self._send_command(command)
 
     async def _set_pin_mode(self, pin_number, pin_state, callback=None,
@@ -1135,6 +1183,7 @@ class PymataExpress:
     async def set_sampling_interval(self, interval):
         """
         This method sends the desired sampling interval to Firmata.
+
         Note: Standard Firmata  will ignore any interval less than
               10 milliseconds
 
@@ -1189,6 +1238,7 @@ class PymataExpress:
 
         Retrieve Ping (HC-SR04 type) data. The data is presented as a
         dictionary.
+
         The 'key' is the trigger pin specified in sonar_config()
         and the 'data' is the current measured distance (in centimeters)
         for that pin. If there is no data, the value is set to None.
@@ -1206,7 +1256,7 @@ class PymataExpress:
         """
         This is a FirmataExpress feature
 
-        Move a stepper motor for the number of steps at the specified speed
+        Move a stepper motor for the number of steps at the specified speed.
         This is a FirmataPlus feature.
 
         :param motor_speed: 21 bits of data to set motor speed
@@ -1222,7 +1272,8 @@ class PymataExpress:
         abs_number_of_steps = abs(number_of_steps)
         data = [PrivateConstants.STEPPER_STEP, motor_speed & 0x7f,
                 (motor_speed >> 7) & 0x7f, (motor_speed >> 14) & 0x7f,
-                abs_number_of_steps & 0x7f, (abs_number_of_steps >> 7) & 0x7f, direction]
+                abs_number_of_steps & 0x7f, (abs_number_of_steps >> 7) & 0x7f,
+                direction]
         await self._send_sysex(PrivateConstants.STEPPER_DATA, data)
 
     async def _arduino_report_dispatcher(self):
@@ -1438,11 +1489,14 @@ class PymataExpress:
     async def _report_firmware(self, sysex_data):
         """
         This is a private message handler method.
+
         This method handles the sysex 'report firmware' command sent by
         Firmata (0x79).
+
         It assembles the firmware version by concatenating the major and
-         minor version number components and
-        the firmware identifier into a string.
+        minor version number components and the firmware identifier into
+        a string.
+
         e.g. "2.3 StandardFirmata.ino"
 
         :param sysex_data: Sysex data sent from Firmata
@@ -1480,8 +1534,10 @@ class PymataExpress:
     async def _report_version(self):
         """
         This is a private message handler method.
+
         This method reads the following 2 bytes after the report version
         command (0xF9 - non sysex).
+
         The first byte is the major number and the second byte is the
         minor number.
 
@@ -1589,6 +1645,7 @@ class PymataExpress:
         This is a private message handler method.
         It is the message handler for String data messages that will be
         printed to the console.
+
         :param data:  message
 
         """
