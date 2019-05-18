@@ -1173,7 +1173,7 @@ class PymataExpress:
         await self._send_command(command)
         if pin_state == PrivateConstants.ANALOG:
             await self.enable_analog_reporting(pin_number)
-        elif pin_state == PrivateConstants.INPUT:
+        elif pin_state == PrivateConstants.INPUT or pin_state == PrivateConstants.PULLUP:
             await self.enable_digital_reporting(pin_number)
         else:
             pass
