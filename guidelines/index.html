@@ -336,7 +336,7 @@ here is a list of mode types:</p>
 Arduino reporting data, but you may optionally poll for data changes as well.
 Each time a data change is reported for an input pin,
 the pin, value, mode and timestamp are stored internally within PymataExpress.
-You may retrieve those values any time using one of the <em>read</em> methods.</p>
+You may retrieve those values any time using one of the <em>read</em> methods:</p>
 <ul>
 <li>analog_read</li>
 <li>digital_read</li>
@@ -344,7 +344,9 @@ You may retrieve those values any time using one of the <em>read</em> methods.</
 <li>i2c_read_saved_data</li>
 <li>sonar_read</li>
 </ul>
-<p>You many utilize both callbacks and polling within the same application.</p>
+<p>You many utilize both callbacks and polling within the same application.
+An example of utilizing a <em>read</em> method for digial_read may be seen
+<a href="https://github.com/MrYsLab/pymata-express/blob/9d3d7f5976e70d55d4dd9b8cf4577f4d42751bcb/examples/digital_input.py#L55">here.</a></p>
 <h1 id="examining-some-of-the-examples">EXAMINING SOME OF THE EXAMPLES</h1>
 <p>To illustrate different approaches that may be used in coding Pymata Express applications,
  we will look explore a few of the <a href="https://mryslab.github.io/pymata-express/examples/">examples</a> provided with the distribution.</p>
