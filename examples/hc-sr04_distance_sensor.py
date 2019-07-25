@@ -49,7 +49,7 @@ async def sonar(my_board, trigger_pin, echo_pin, callback):
     # wait forever
     while True:
         try:
-            await asyncio.sleep(.002)
+            await asyncio.sleep(.1)
         except KeyboardInterrupt:
             await my_board.shutdown()
 
