@@ -1048,7 +1048,7 @@ class PymataExpress:
         await self._send_sysex(PrivateConstants.SERVO_CONFIG, command)
 
     async def set_pin_mode_sonar(self, trigger_pin, echo_pin,
-                                 cb=None, timeout=20000):
+                                 cb=None, timeout=80000):
         """
         This is a FirmataExpress feature.
 
@@ -1580,10 +1580,7 @@ class PymataExpress:
                     reply_data.append(val)
                     if sonar_pin_entry[1]:
                         await sonar_pin_entry[0](reply_data)
-                    else:
-                        # sonar_pin_entry[0]([pin_number, val])
-                        loop = self.loop
-                        loop.call_soon(sonar_pin_entry[0], reply_data)
+
         # update the data in the table with latest value
         else:
             sonar_pin_entry[1] = val
