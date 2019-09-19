@@ -1070,7 +1070,7 @@ class PymataExpress:
 
         :param cb: optional callback function to report sonar data changes
 
-        :param timeout: a tuning parameter. 40000UL equals 40ms.
+        :param timeout: a tuning parameter. 80000UL equals 80ms.
 
 
         """
