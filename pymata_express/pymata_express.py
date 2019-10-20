@@ -338,7 +338,10 @@ class PymataExpress:
             if port.pid is None:
                 continue
             # print('\nChecking {}'.format(port.device))
-            self.serial_port = PymataExpressSerial(port.device, self.baud_rate)
+            try:
+                self.serial_port = PymataExpressSerial(port.device, self.baud_rate)
+            except SerialException:
+                continue
             # create a list of serial ports that we opened
             serial_ports.append(self.serial_port)
 

@@ -1,9 +1,9 @@
 
-### Pymata-express is a high performance, non-blocking, Python asyncio client for the Arduino Firmata Protocol.
+## Pymata-express is a high performance, non-blocking, Python asyncio client for the Arduino Firmata Protocol.
 
-### It supports the complete StandardFirmata protocol in addition to an enhanced version of StandardFirmata called FirmataExpress.
+## It supports the complete StandardFirmata protocol in addition to an enhanced version of StandardFirmata called FirmataExpress.
 
-<h2><u>Major features</u></h2>
+### Major Features
 
 * **Python 3.7+ compatible.**
 
