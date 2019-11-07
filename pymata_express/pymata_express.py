@@ -523,9 +523,8 @@ class PymataExpress:
         :param pin: Analog pin number. For example for A0, the number is 0.
 
         """
-        command = [PrivateConstants.REPORT_ANALOG + pin,
-                   PrivateConstants.REPORTING_DISABLE]
-        await self._send_command(command)
+        pin = pin + self.first_analog_pin
+        await self.set_pin_mode_digital_input(pin)
 
     async def disable_digital_reporting(self, pin):
         """
@@ -540,16 +539,18 @@ class PymataExpress:
                    PrivateConstants.REPORTING_DISABLE]
         await self._send_command(command)
 
-    async def enable_analog_reporting(self, pin):
+    async def enable_analog_reporting(self, pin, callback=None, differential=1):
         """
-        Enables analog reporting. By turning reporting on for a single pin,
+        Enables analog reporting. This is an alias for set_pin_mode_analog
 
         :param pin: Analog pin number. For example for A0, the number is 0.
 
+        :param callback: async callback function
+
+        :param differential: This value needs to be met for a callback
+                             to be invoked.
         """
-        command = [PrivateConstants.REPORT_ANALOG + pin,
-                   PrivateConstants.REPORTING_ENABLE]
-        await self._send_command(command)
+        await self.set_pin_mode_analog_input(pin, callback, differential)
 
     async def enable_digital_reporting(self, pin):
         """
@@ -1174,9 +1175,8 @@ class PymataExpress:
 
         command = [PrivateConstants.SET_PIN_MODE, pin_number, pin_mode]
         await self._send_command(command)
-        if pin_state == PrivateConstants.ANALOG:
-            await self.enable_analog_reporting(pin_number)
-        elif pin_state == PrivateConstants.INPUT or pin_state == PrivateConstants.PULLUP:
+
+        if pin_state == PrivateConstants.INPUT or pin_state == PrivateConstants.PULLUP:
             await self.enable_digital_reporting(pin_number)
         else:
             pass
