@@ -377,7 +377,10 @@ class PymataExpress:
             if port.pid is None:
                 continue
             # print(&#39;\nChecking {}&#39;.format(port.device))
-            self.serial_port = PymataExpressSerial(port.device, self.baud_rate)
+            try:
+                self.serial_port = PymataExpressSerial(port.device, self.baud_rate)
+            except SerialException:
+                continue
             # create a list of serial ports that we opened
             serial_ports.append(self.serial_port)
 
@@ -559,9 +562,8 @@ class PymataExpress:
         :param pin: Analog pin number. For example for A0, the number is 0.
 
         &#34;&#34;&#34;
-        command = [PrivateConstants.REPORT_ANALOG + pin,
-                   PrivateConstants.REPORTING_DISABLE]
-        await self._send_command(command)
+        pin = pin + self.first_analog_pin
+        await self.set_pin_mode_digital_input(pin)
 
     async def disable_digital_reporting(self, pin):
         &#34;&#34;&#34;
@@ -576,16 +578,18 @@ class PymataExpress:
                    PrivateConstants.REPORTING_DISABLE]
         await self._send_command(command)
 
-    async def enable_analog_reporting(self, pin):
+    async def enable_analog_reporting(self, pin, callback=None, differential=1):
         &#34;&#34;&#34;
-        Enables analog reporting. By turning reporting on for a single pin,
+        Enables analog reporting. This is an alias for set_pin_mode_analog
 
         :param pin: Analog pin number. For example for A0, the number is 0.
 
+        :param callback: async callback function
+
+        :param differential: This value needs to be met for a callback
+                             to be invoked.
         &#34;&#34;&#34;
-        command = [PrivateConstants.REPORT_ANALOG + pin,
-                   PrivateConstants.REPORTING_ENABLE]
-        await self._send_command(command)
+        await self.set_pin_mode_analog_input(pin, callback, differential)
 
     async def enable_digital_reporting(self, pin):
         &#34;&#34;&#34;
@@ -1210,9 +1214,8 @@ class PymataExpress:
 
         command = [PrivateConstants.SET_PIN_MODE, pin_number, pin_mode]
         await self._send_command(command)
-        if pin_state == PrivateConstants.ANALOG:
-            await self.enable_analog_reporting(pin_number)
-        elif pin_state == PrivateConstants.INPUT or pin_state == PrivateConstants.PULLUP:
+
+        if pin_state == PrivateConstants.INPUT or pin_state == PrivateConstants.PULLUP:
             await self.enable_digital_reporting(pin_number)
         else:
             pass
@@ -2060,7 +2063,10 @@ receiving a KeyboardInterrupt exception</p></section>
             if port.pid is None:
                 continue
             # print(&#39;\nChecking {}&#39;.format(port.device))
-            self.serial_port = PymataExpressSerial(port.device, self.baud_rate)
+            try:
+                self.serial_port = PymataExpressSerial(port.device, self.baud_rate)
+            except SerialException:
+                continue
             # create a list of serial ports that we opened
             serial_ports.append(self.serial_port)
 
@@ -2242,9 +2248,8 @@ receiving a KeyboardInterrupt exception</p></section>
         :param pin: Analog pin number. For example for A0, the number is 0.
 
         &#34;&#34;&#34;
-        command = [PrivateConstants.REPORT_ANALOG + pin,
-                   PrivateConstants.REPORTING_DISABLE]
-        await self._send_command(command)
+        pin = pin + self.first_analog_pin
+        await self.set_pin_mode_digital_input(pin)
 
     async def disable_digital_reporting(self, pin):
         &#34;&#34;&#34;
@@ -2259,16 +2264,18 @@ receiving a KeyboardInterrupt exception</p></section>
                    PrivateConstants.REPORTING_DISABLE]
         await self._send_command(command)
 
-    async def enable_analog_reporting(self, pin):
+    async def enable_analog_reporting(self, pin, callback=None, differential=1):
         &#34;&#34;&#34;
-        Enables analog reporting. By turning reporting on for a single pin,
+        Enables analog reporting. This is an alias for set_pin_mode_analog
 
         :param pin: Analog pin number. For example for A0, the number is 0.
 
+        :param callback: async callback function
+
+        :param differential: This value needs to be met for a callback
+                             to be invoked.
         &#34;&#34;&#34;
-        command = [PrivateConstants.REPORT_ANALOG + pin,
-                   PrivateConstants.REPORTING_ENABLE]
-        await self._send_command(command)
+        await self.set_pin_mode_analog_input(pin, callback, differential)
 
     async def enable_digital_reporting(self, pin):
         &#34;&#34;&#34;
@@ -2893,9 +2900,8 @@ receiving a KeyboardInterrupt exception</p></section>
 
         command = [PrivateConstants.SET_PIN_MODE, pin_number, pin_mode]
         await self._send_command(command)
-        if pin_state == PrivateConstants.ANALOG:
-            await self.enable_analog_reporting(pin_number)
-        elif pin_state == PrivateConstants.INPUT or pin_state == PrivateConstants.PULLUP:
+
+        if pin_state == PrivateConstants.INPUT or pin_state == PrivateConstants.PULLUP:
             await self.enable_digital_reporting(pin_number)
         else:
             pass
@@ -3542,9 +3548,8 @@ receiving a KeyboardInterrupt exception</p></section>
     :param pin: Analog pin number. For example for A0, the number is 0.
 
     &#34;&#34;&#34;
-    command = [PrivateConstants.REPORT_ANALOG + pin,
-               PrivateConstants.REPORTING_DISABLE]
-    await self._send_command(command)</code></pre>
+    pin = pin + self.first_analog_pin
+    await self.set_pin_mode_digital_input(pin)</code></pre>
 </details>
 </dd>
 <dt id="pymata_express.pymata_express.PymataExpress.disable_digital_reporting"><code class="name flex">
@@ -3571,23 +3576,28 @@ Reporting is disabled for all 8 bits in the "port"</p>
 </details>
 </dd>
 <dt id="pymata_express.pymata_express.PymataExpress.enable_analog_reporting"><code class="name flex">
-<span>async def <span class="ident">enable_analog_reporting</span></span>(<span>self, pin)</span>
+<span>async def <span class="ident">enable_analog_reporting</span></span>(<span>self, pin, callback=None, differential=1)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Enables analog reporting. By turning reporting on for a single pin,</p>
-<p>:param pin: Analog pin number. For example for A0, the number is 0.</p></section>
+<section class="desc"><p>Enables analog reporting. This is an alias for set_pin_mode_analog</p>
+<p>:param pin: Analog pin number. For example for A0, the number is 0.</p>
+<p>:param callback: async callback function</p>
+<p>:param differential: This value needs to be met for a callback
+to be invoked.</p></section>
 <details class="source">
 <summary>Source code</summary>
-<pre><code class="python">async def enable_analog_reporting(self, pin):
+<pre><code class="python">async def enable_analog_reporting(self, pin, callback=None, differential=1):
     &#34;&#34;&#34;
-    Enables analog reporting. By turning reporting on for a single pin,
+    Enables analog reporting. This is an alias for set_pin_mode_analog
 
     :param pin: Analog pin number. For example for A0, the number is 0.
 
+    :param callback: async callback function
+
+    :param differential: This value needs to be met for a callback
+                         to be invoked.
     &#34;&#34;&#34;
-    command = [PrivateConstants.REPORT_ANALOG + pin,
-               PrivateConstants.REPORTING_ENABLE]
-    await self._send_command(command)</code></pre>
+    await self.set_pin_mode_analog_input(pin, callback, differential)</code></pre>
 </details>
 </dd>
 <dt id="pymata_express.pymata_express.PymataExpress.enable_digital_reporting"><code class="name flex">
