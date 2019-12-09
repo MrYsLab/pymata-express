@@ -91,6 +91,8 @@ class PymataExpress:
 
         # set the event loop
         if loop is None:
+            if sys.platform == 'win32':
+                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
             self.loop = asyncio.get_event_loop()
         else:
             self.loop = loop
@@ -268,7 +270,10 @@ class PymataExpress:
          """
 
         # start the command dispatcher loop
-        self.loop = asyncio.get_event_loop()
+        if not self.loop:
+            if sys.platform == 'win32':
+                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+            self.loop = asyncio.get_event_loop()
         self.the_task = self.loop.create_task(self._arduino_report_dispatcher())
 
         # get arduino firmware version and print it
@@ -1368,9 +1373,6 @@ class PymataExpress:
             if self.analog_pins[pin].cb:
                 # if self.analog_pins[pin].cb_type:
                 await self.analog_pins[pin].cb(message)
-                # else:
-                #     loop = self.loop
-                #     loop.call_soon(self.analog_pins[pin].cb, message)
 
     async def _capability_response(self, data):
         """
