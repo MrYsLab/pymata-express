@@ -58,17 +58,22 @@
           
             <li class="toctree-l1">
 		
+    <a class="" href="python_3_7.install/">Verifying/Installing Python 3.7</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
     <a class="" href="install_pymata_express/">Installing Pymata Express</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="guidelines/">Pymata Express Application Development</a>
+    <a class="" href="firmata_express/">FirmataExpress Installation</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="firmata_express/">FirmataExpress Installation</a>
+    <a class="" href="guidelines/">Pymata Express Application Development</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -79,11 +84,6 @@
             <li class="toctree-l1">
 		
     <a class="" href="api/">Pymata Express API</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="python_3_7.install/">Verifying/Installing Python 3.7</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -128,25 +128,33 @@
           <div role="main">
             <div class="section">
               
-                <p><center><img align="middle" src="./images/pymata_express.png"></center></p>
-<p><center><span style="color:#990033; font-family:Georgia; font-size:5em;">Pymata Express</span></center></p>
-<p><center><span style="color:#990033; font-family:Georgia; font-size:4em;"> <em>The User's Guide</em> </span></center></p>
-<hr />
+                <p><img align="middle" src="./images/pymata_express.png"></p>
+<p style="color:#990033; text-align:center; font-family:Georgia; font-size:5em;">Pymata Express</p>
+
+<p><br>
+<br></p>
+<p style="color:#990033; text-align:center; font-family:Georgia; font-size:3.5em;"> The User's Guide</p>
+
+<p><br></p>
 <p><a href="https://github.com/MrYsLab/pymata-express">Pymata Express</a> is a fast and streamlined Firmata client used
 to control Arduino micro-controllers
-remotely from a Windows, Linux (including Raspberry Pi) or macOS computer.</p>
-<p>It is implemented using the Python 3.7 <a href="https://docs.python.org/3/library/asyncio.html">asyncio library</a> library.
-Pymata Express supports concurrency (running multiple things simultaneously) by taking
- advantage of asyncio tasks, simplifying program design.</p>
+remotely from a Windows, Linux (including Raspberry Pi), or a macOS computer.</p>
+<p>It uses the Python 3.7 <a href="https://docs.python.org/3/library/asyncio.html">asyncio library</a>
+to support concurrency (running multiple things simultaneously)
+by taking advantage of asyncio tasks, which simplifies program design.</p>
 <p>When used with the <a href="https://github.com/MrYsLab/FirmataExpress">FirmataExpress</a> Arduino sketch,
-data is transmitted over the serial link at 115200 baud, twice as fast as StandardFirmata, as well as supporting
-stepper motors, tone generation, HC-SRO4 distance sensors, and auto-detection of Arduino boards. FirmataExpress is
-based on StandardFirmata 2.5.8 and Pymata Express implements the full
-<a href="https://github.com/firmata/protocol/blob/master/protocol.md">StandardFirmata 2.5.8 protocol</a>.</p>
+the serial data rate is 115200 baud, twice the speed of StandardFirmata. FirmataExpress,
+based on <a href="https://github.com/firmata/protocol/blob/master/protocol.md">StandardFirmata 2.5.8 protocol</a>,
+ adds support for
+stepper motors, tone generation, HC-SRO4 distance sensors, and the auto-detection of Arduino boards.</p>
 <p>If you prefer to work with StandardFirmata or other slower sketches, Pymata Express is compatible with those
 slower versions as well.</p>
-<p>Both <a href="https://mryslab.github.io/pymata-express/api/">full API documentation</a>
-and a set of <a href="https://mryslab.github.io/pymata-express/examples/">working examples</a> are provided as part of this documentation.</p>
+<p>Included with the distribution are <a href="https://mryslab.github.io/pymata-express/api/">full API documentation</a>
+and a set of <a href="https://github.com/MrYsLab/pymata-express/tree/master/examples">working examples.</a></p>
+<p><br>
+<br></p>
+<p>Last updated 10 January 2020</p>
+<p>Copyright (C) 2019-2020 Alan Yorinks. All Rights Reserved.</p>
               
             </div>
           </div>
@@ -154,7 +162,7 @@ and a set of <a href="https://mryslab.github.io/pymata-express/examples/">workin
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="install_pymata_express/" class="btn btn-neutral float-right" title="Installing Pymata Express">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="python_3_7.install/" class="btn btn-neutral float-right" title="Verifying/Installing Python 3.7">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
     </div>
@@ -182,7 +190,7 @@ and a set of <a href="https://mryslab.github.io/pymata-express/examples/">workin
       
       
       
-        <span style="margin-left: 15px"><a href="install_pymata_express/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="python_3_7.install/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
@@ -195,5 +203,5 @@ and a set of <a href="https://mryslab.github.io/pymata-express/examples/">workin
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-09-19 18:37:09
+Build Date UTC : 2020-01-10 21:07:55
 -->

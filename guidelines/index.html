@@ -55,7 +55,17 @@
           
             <li class="toctree-l1">
 		
+    <a class="" href="../python_3_7.install/">Verifying/Installing Python 3.7</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
     <a class="" href="../install_pymata_express/">Installing Pymata Express</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../firmata_express/">FirmataExpress Installation</a>
 	    </li>
           
             <li class="toctree-l1 current">
@@ -122,22 +132,12 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../firmata_express/">FirmataExpress Installation</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
     <a class="" href="../examples/">Example Applications/Tests</a>
 	    </li>
           
             <li class="toctree-l1">
 		
     <a class="" href="../api/">Pymata Express API</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../python_3_7.install/">Verifying/Installing Python 3.7</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -186,8 +186,8 @@
 <p>In most cases, when you create an instance of the PymataExpress
 class, you can accept the default parameters offered in its
 __init__ method.</p>
-<p>However, it is important to understand what those parameters do, so that
-you can customize the behavior of the class to best fit your needs.</p>
+<p>However, it is essential to understand what those parameters do so that
+you can customize the behavior of the class to fit your needs best.</p>
 <p>To aid in this discussion, here is the signature for the PymataExpress class:</p>
 <pre><code>class PymataExpress:
     &quot;&quot;&quot;
@@ -208,62 +208,65 @@ you can customize the behavior of the class to best fit your needs.</p>
 <p>These 2 parameters are used in tandem to specify how Pymata Express
 performs serial port connectivity and Arduino auto-discovery.</p>
 <h3 id="accepting-the-default-values">Accepting The Default Values</h3>
-<p>By accepting the defaults, PymataExpress will attempt its auto-discovery
-procedures to locate and connect to an Arduino. This assumes that you have
-the FirmataExpress sketch uploaded to the Arduino.</p>
+<p>By accepting the defaults, PymataExpress attempts to perform its auto-discovery
+procedures to locate and connect to the Arduino using FirmataExpress features.</p>
 <h3 id="specifying-the-com-port-explicitly-with-a-baud-rate-of-115200">Specifying The Com Port Explicitly With A Baud Rate of 115200</h3>
 <p>This configuration assumes that the FirmataExpress sketch has been uploaded
 to the Arduino.</p>
-<p>Auto-discovery is bypassed, however the arduino_instance_id value is still
-validated to be a match with the value specified in the FirmataExpress sketch.
+<p>Auto-discovery is bypassed; however, the arduino_instance_id value is still
+validated to match the value specified in the FirmataExpress sketch.
 See the <a href="#parameter-arduino_instance_id">arudino_instance_id</a> discussion below.</p>
-<p>If the instance id match is successful, the connection succeeds. If not, a RuntimeError
+<p>If the instance-id match is successful, the connection succeeds. If not, a RuntimeError
 exception is raised.</p>
 <h3 id="using-firmata-sketches-that-run-at-57600">Using Firmata Sketches That Run At 57600</h3>
-<p>When using these sketches, you must specify both com_port and baudrate
+<p>When using these sketches, you must specify both com_port and baud rate
 explicitly. No auto-discovery is performed, and a connection will be attempted using
 the values specified.</p>
 <h2 id="parameter-arduino_instance_id">PARAMETER: arduino_instance_id</h2>
 <p>If the baud rate is set to 115200, it is assumed that FirmataExpress
 has been uploaded to the Arduino.</p>
-<p>To verify that the correct com port was either chosen by auto-discovery,
-or that it was correctly specified using the com_port parameter, Pymata Express,
-will send a query message to the Arduino to return its "ARDUINO INSTANCE" id number.
-Pymata Express compares the 2 values and if they match, instantiation proceeds.</p>
+<p>To verify that there is a working connection to the
+Arduino, Pymata Express sends a query message to the Arduino.
+The Arduino, in turn, returns its "ARDUINO INSTANCE" id number.
+Pymata Express compares the 2 values, and if they match, instantiation proceeds.</p>
 <p>If you change the value of this parameter from its default of a value of 1,
 you must also modify the FirmataPlus sketch to provide a matching value.
-Instructions to do this are provided <a href="https://mryslab.github.io/pymata-express/firmata_express/#setting-the-firmataexpress-instance-id">here</a>.</p>
+You may find the instructions to
+set the instance-id <a href="https://mryslab.github.io/pymata-express/firmata_express/#setting-the-firmataexpress-instance-id">here</a>.</p>
 <p>If the baud rate is set to a value other than 115200, this parameter is ignored.</p>
 <h2 id="parameter-arduino_wait">PARAMETER: arduino_wait</h2>
-<p>This is the amount of time allowed for an Arduino and the uploaded Firmata sketch to
-complete its reset cycle. If you are having problems connecting to the
-Arduino, and you are certain that you both have a serial USB cable properly
-connected and have specified both com_port and baud_rate correctly, you may
-wish to increase this value.</p>
+<p>This parameter is the amount of time allowed for an Arduino and the uploaded Firmata sketch to
+complete its reset cycle. Adjust this parameter to a higher value
+if you experience connection problems with the Arduino.
+Before doing so, make sure that the serial USB cable is
+connected correctly and that the com_port and baud_rate are correctly specified.</p>
 <h2 id="parameter-sleep_tune">PARAMETER: sleep_tune</h2>
-<p>In general, you should not adjust this value. It is used to set a very
-short asyncio.sleep time to allow critical portions of Pymata Express
-to pass control back to the event loop.</p>
+<p>In general, you should not adjust this value. The purpose of sleep_tune is to set a
+very short asyncio.sleep time to allow critical portions of Pymata
+Express to pass control back to the event loop.</p>
 <h2 id="parameter-autostart">PARAMETER: autostart</h2>
-<p>When set to True (the default), the __init__ method will call the
+<p>When set to True (the default), the __init__ method calls the
 start() method automatically.</p>
-<p>The start() method establishes and connects to the serial port, starts an asyncio
-task to receive serial data from the Arduino, performs a pin discovery
-function to determine the total number of digital and analog pins
-supported by the connected Arduino device, and then accepts both serial
+<p>The start() method is responsible for:</p>
+<ul>
+<li>establishing a serial connection to the Arduino.</li>
+<li>performing pin discovery to determine the total number of digital and analog pins
+supported by the connected Arduino device.</li>
+<li>starting a task to accept serial
 reporting data
-from the Arduino while processing Pymata Express API calls from your application.</p>
+from the Arduino.</li>
+</ul>
 <p>If you set this parameter to False, it allows you to determine when the
 functionality listed in the previous paragraph begins.</p>
 <p>The start() method is a non-asyncio method. If you require an asyncio
 method, the start-aio() method performs the same functionality as start().</p>
 <h2 id="parameter-loop">PARAMETER: loop</h2>
-<p>If you wish to provide your own asyncio event loop, you may specify it
-using this parameter.</p>
+<p>If you wish to provide an asyncio event loop of your own,
+you may specify it using this parameter.</p>
 <h2 id="parameter-shutdown_on_exception">PARAMETER: shutdown_on_exception</h2>
 <p>By accepting the default of True, when Pymata Express raises a RunTimeError
-exception, the shutdown() method is called. This will stop the asyncio
-event loop, disable all Arduino port reporting, and close the serial port.</p>
+exception, the shutdown() method is called. The shutdown() method stops
+the asyncio event loop, disables all Arduino port reporting, and closes the serial port.</p>
 <p>If you prefer to handle the RunTimeError exceptions totally within your
 application, set this parameter to False.</p>
 <h1 id="some-application-guidelines">SOME APPLICATION GUIDELINES</h1>
@@ -274,8 +277,8 @@ look at some coding guidelines you may wish to employ.</p>
 <p>The Arduino reports data changes
 to
 PymataExpress asynchronously as they occur.</p>
-<p>To receive these notifications, you application provides
-its own callback function or method. This method is specified
+<p>For your application to receive data change notifications from the Arduino,
+it must provide a callback function or method. This method is specified
  when you set the pin mode for an input type
 pin. The callback function or method you create must be of async type and
 must provide a <em>data</em> parameter.</p>
@@ -316,7 +319,7 @@ must provide a <em>data</em> parameter.</p>
 <p>When the value change notification is sent from the Arduino, this function
 will print the pin number, value change, and the time that the change occurred in
 a human readable format.</p>
-<p>You may have one or more callback function defined to handle the callbacks.</p>
+<p>You may have one or more callback functions defined to handle the callbacks.</p>
 <p>If you need to determine the pin mode in your callback function or method,
 here is a list of mode types:</p>
 <pre><code>    INPUT   = 0x00  # pin set as input
@@ -326,17 +329,17 @@ here is a list of mode types:</p>
     SERVO   = 0x04  # digital pin in Servo output mode
     I2C     = 0x06  # pin included in I2C setup
     STEPPER = 0x08  # any pin in stepper mode
-    PULLUP  = 0x0b  # Any pin in pullup mode
+    PULLUP  = 0x0b  # Any pin in pull-up mode
     SONAR   = 0x0c  # Any pin in SONAR mode
     TONE    = 0x0d  # Any pin in tone mode
 </code></pre>
 
 <h2 id="polling">Polling</h2>
 <p>Using a callback is the preferred method of receiving
-Arduino reporting data, but you may optionally poll for data changes as well.
+Arduino reporting data; however, you may optionally poll for data changes as well.
 Each time a data change is reported for an input pin,
-the pin, value, mode and timestamp are stored internally within PymataExpress.
-You may retrieve those values any time using one of the <em>read</em> methods:</p>
+the pin, value, mode, and timestamp are stored internally within PymataExpress.
+You may retrieve those values at any time using one of the <em>read</em> methods:</p>
 <ul>
 <li>analog_read</li>
 <li>digital_read</li>
@@ -344,12 +347,14 @@ You may retrieve those values any time using one of the <em>read</em> methods:</
 <li>i2c_read_saved_data</li>
 <li>sonar_read</li>
 </ul>
-<p>You many utilize both callbacks and polling within the same application.
-An example of utilizing a <em>read</em> method for digial_read may be seen
-<a href="https://github.com/MrYsLab/pymata-express/blob/9d3d7f5976e70d55d4dd9b8cf4577f4d42751bcb/examples/digital_input.py#L55">here.</a></p>
+<p>You may utilize both callbacks and polling within the same application.
+Here is an example of utilizing a <em>read</em> method for
+<a href="https://github.com/MrYsLab/pymata-express/blob/9d3d7f5976e70d55d4dd9b8cf4577f4d42751bcb/examples/digital_input.py#L55">digital_read.</a></p>
 <h1 id="examining-some-of-the-examples">EXAMINING SOME OF THE EXAMPLES</h1>
-<p>To illustrate different approaches that may be used in coding Pymata Express applications,
- we will look explore a few of the <a href="https://mryslab.github.io/pymata-express/examples/">examples</a> provided with the distribution.</p>
+<p>To illustrate different approaches that commonly used in coding
+Pymata Express applications, let's explore a few of
+the <a href="https://mryslab.github.io/pymata-express/examples/">examples</a>
+provided with the distribution.</p>
 <p>Before we look at the examples, let's discuss a generalized
 coding template that is used by all of the examples.</p>
 <h2 id="an-application-coding-template">An Application Coding Template</h2>
@@ -379,8 +384,7 @@ a Pymata Express application.</p>
 <p>It begins by importing both <em>asyncio</em> and the <em>PymataExpress</em> class. The template
 imports <em>sys</em> as well, so that <em>sys.exit(0)</em> can be called when either
 the program finishes or the user presses a Control-C. This is shown at the bottom of the template.</p>
-<p>Your application code follows the imports. We will see illustrations of this when
-we cover the examples below.</p>
+<p>Your application code follows the imports. Illustrations of this are covered in the examples below.</p>
 <p>Next, the current running asyncio event loop is retrieved:</p>
 <pre><code>loop = asyncio.get_event_loop()
 
@@ -415,14 +419,14 @@ the program if an exception should be thrown.</p>
 <h2 id="a-word-about-calling-shutdown">A Word About Calling <em>shutdown()</em></h2>
 <p>It is considered good practice to call shutdown when exiting
 your application. Shutdown not only gracefully closes the
-asyncio event loop and serial port, but also disables all reporting
-from the arduino.</p>
+asyncio event loop and serial port but also disables all reporting
+from the Arduino.</p>
 <p>If you have a set a pin mode to one of the input modes, the Arduino
-will continue to supply pin data changes even after your program
-is halted. If reports are not disabled, then the next time you start
-your program, the reporting data from the previous run can be received
-and incorrectly interrupted, resulting in an exception to be thrown.</p>
-<p>Calling shutdown explicitly prevents this from happening.</p>
+continues to supply pin data changes even after your program
+is halted. If reports are not disabled, and you restart
+your application, reporting data from the previous run may still be streaming.
+The unexpected data may result in an exception to be thrown.</p>
+<p>Explicitly calling shutdown prevents this from happening.</p>
 <h2 id="a-word-of-caution-about-using-the-asynciorun-method">A Word Of Caution About Using The <em>asyncio.run()</em> Method</h2>
 <p>Python 3.7 provides a new way of starting an asyncio program using
 the asyncio.run() method.</p>
@@ -442,16 +446,16 @@ asyncio.run(main())
 you look at <a href="https://docs.python.org/3/library/asyncio-task.html#id3">the documentation for this method</a>,
 it explicitly states:</p>
 <p><em>This function cannot be called when another asyncio event loop is running in the same thread.</em></p>
-<p>When you instantiate the PymataExpress class, an event loop will be running. Using
+<p>When you instantiate the PymataExpress class, an event loop will be running — using the
 the asyncio.run() method will invoke a second event loop, and your program most likely
 will not run properly.</p>
 <p>So what is the proper way to start a PymataExpress application?</p>
 <p>Let's look at some examples.</p>
 <h2 id="calling-pymata-express-async-methods-from-a-non-async-function">Calling Pymata Express Async Methods From A Non-Async Function</h2>
-<p>The simplest form of a PymataExpress application simply calls
+<p>The simplest form of a PymataExpress application calls
 PymataExpress API methods directly from the main application file.</p>
 <p>Since the API methods are asyncio methods, we need to make the call
-"asyncio" compatible from a non-asyncio main. Let's look at
+"asyncio" compatible from within a non-asyncio main. Let's look at
 the <a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/play_tone.py">play_tone.py</a> example
 to illustrate this.</p>
 <pre><code>import asyncio
@@ -508,13 +512,13 @@ loop.run_until_complete(board.set_pin_mode_tone(3))
 <p>The line above sets pin 3's mode to <em>tone mode</em>.</p>
 <p>The <em>loop_run_until_complete</em> method schedules the
 method to be run. When that method completes, the next line of code
-in the script executes. This is very similar to coding a non-asyncio application.</p>
-<p>NOTE: If the method you are calling contains, a <em>while True:</em>
-loop, the method will never return.</p>
-<p>After performing several direct calls to the APIa graceful shutdown of the application
-is performed.</p>
+in the script executes, similar to coding a non-asyncio application.</p>
+<p>NOTE: If the method you are calling contains a <em>while True:</em>
+loop, the method never returns.</p>
+<p>After performing several direct calls to the API, a graceful shutdown of the application
+ is performed.</p>
 <h2 id="creating-your-own-asyncio-functions-that-call-the-pymataexpress-api">Creating Your Own Asyncio Functions That Call The PymataExpress API</h2>
-<p>Another method of creating a PymataExpress application, is to create
+<p>Another method of creating a PymataExpress application is to create
 your own asyncio functions that will call the API methods within themselves.</p>
 <p>Let's look at the <a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/analog_input.py">analog_input.py</a>
 example to illustrate.</p>
@@ -542,7 +546,7 @@ async def analog_in(my_board, pin):
 
     Also, the differential parameter is being used.
     The callback will only be called when there is
-    difference of 5 or more between the current and
+    a difference of 5 or more between the current and
     last value reported.
 
     :param my_board: a pymata_express instance
@@ -583,7 +587,7 @@ board = PymataExpress()
 
 </code></pre>
 
-<p>Next it invokes our <em>main</em> asyncio method, <em>analog_in</em>:</p>
+<p>Next, it invokes our <em>main</em> asyncio method, <em>analog_in</em>:</p>
 <pre><code># start the main function
     loop.run_until_complete(analog_in(board, 2))
 </code></pre>
@@ -618,17 +622,17 @@ an analog input pin. We pass <em>set_pin_mode_analog_input</em>, a
 PymataExpress API method, three parameters - the pin number,
 a callback method, and a differential value.</p>
 <h3 id="the-differential-value-parameter">The <em>differential</em> Value Parameter</h3>
-<p>When a pin's mode is set to analog input, the Arduino will immediately
-begin streaming the data value for that pin. It does this continuously
+<p>When a pin's mode is set to analog input, the Arduino immediately
+begins streaming the data value for that pin. It does this continuously
 whether the value changes or not.</p>
 <p>We may wish to throttle when the callback function or method is called
 by comparing the current value sent by the Arduino and the difference between the last
 and the current values. If the differential threshold value is exceeded,
 the callback will be invoked.</p>
-<p>So for example, let's say we wish to only have the callback function
+<p>So, for example, let's say we wish only to have the callback function
 invoked when there is a value difference of 5 between the latest value and the
-previous one. To do so, we set the differential parameter to 5,
-and if the last value for example was 1020, the callback
+previous one. To do so, we set the differential parameter to 5.
+If the last value, for example, was 1020, the callback
 will be invoked if the latest value exceeds either 1015 or 1020.</p>
 <p>The default differential value is 1, but if you wish to receive all
 streaming data, set it to 0.</p>
@@ -649,7 +653,7 @@ up and running, allowing all other asyncio functions to run.</p>
 latest data value.</p>
 <h2 id="creating-an-application-that-consists-of-a-set-of-concurrent-tasks">Creating An Application That Consists Of A Set Of Concurrent Tasks</h2>
 <p>One of the main reasons to use asyncio is to have the ability to build an
-application requiring concurrency, in a simple and direct way.</p>
+application requiring concurrency, simply and directly.</p>
 <p>This is illustrated in the <a href="https://github.com/MrYsLab/pymata-express/blob/master/examples/concurrent_tasks.py">concurrent_tasks.py</a>
 example.</p>
 <pre><code>import asyncio
@@ -768,7 +772,7 @@ except (KeyboardInterrupt, RuntimeError):
 <p>Let's look at it in some detail:</p>
 <p>As in the previous examples discussed, the <a href="#an-application-coding-template">coding template</a>
 is used as a basis.</p>
-<p>At the top of of the file, modules are imported and the definition of the <em>ConcurrentTasks</em>
+<p>At the top of the file, modules are imported, and the definition of the <em>ConcurrentTasks</em>
 class is specified.</p>
 <h3 id="concurrenttasks-class">ConcurrentTasks Class</h3>
 <pre><code>class ConcurrentTasks:
@@ -923,7 +927,7 @@ with <em>run_until_complete</em>:</p>
 </code></pre>
 
 <p>This method receives the latest changes to the potentiometer values reported
-by the Arduino, and then scales the reported value to be between 0 and 127 so
+by the Arduino. It  then scales the reported value to be between 0 and 127 so
 that it can control the intensity of the green LED.</p>
 <p>This is one of the 3 concurrent tasks that run simultaneously</p>
 <h3 id="the-two-additional-task-methods">The Two Additional Task Methods</h3>
@@ -935,9 +939,9 @@ blink an LED at an independent rate.
 These 2 tasks will run in
 tandem with the callback task.</p>
 <h3 id="the-main-method">The <em>Main</em> Method</h3>
-<p>The <em>main</em> method of this class is named <em>async_init_and_run</em>.</p>
-<p>It sets the pin modes for the various pins, and for potentiometer
-pin, specifies the callback method for the potentiometer pin.</p>
+<p>The <em>main</em> method of this class is named <em>async_init_and_run</em>, and
+it sets the pin modes for the various pins in addition to setting the
+callback method for the potentiometer pin.</p>
 <p><strong>NOTE:</strong> When the callback method is passed as a parameter to
 <em>set_pin_mode_analog_input</em>, only its name is used and not the parentheses.</p>
 <pre><code>await self.board.set_pin_mode_analog_input(self.potentiometer,
@@ -991,6 +995,9 @@ except (KeyboardInterrupt, RuntimeError):
 report for the potentiometer, it will be processed as well.</p>
 <p>This program runs very efficiently. On a Linux computer running
 an Intel Core i5-2500K CPU at 3.30GHz, CPU utilization is 5%.</p>
+<p><br>
+<br></p>
+<p>Copyright (C) 2019-2020 Alan Yorinks. All Rights Reserved.</p>
               
             </div>
           </div>
@@ -998,10 +1005,10 @@ an Intel Core i5-2500K CPU at 3.30GHz, CPU utilization is 5%.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../firmata_express/" class="btn btn-neutral float-right" title="FirmataExpress Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../examples/" class="btn btn-neutral float-right" title="Example Applications/Tests">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../install_pymata_express/" class="btn btn-neutral" title="Installing Pymata Express"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../firmata_express/" class="btn btn-neutral" title="FirmataExpress Installation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -1027,10 +1034,10 @@ an Intel Core i5-2500K CPU at 3.30GHz, CPU utilization is 5%.</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../install_pymata_express/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../firmata_express/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../firmata_express/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../examples/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
