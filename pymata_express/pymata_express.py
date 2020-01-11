@@ -344,7 +344,8 @@ class PymataExpress:
                 continue
             # print('\nChecking {}'.format(port.device))
             try:
-                self.serial_port = PymataExpressSerial(port.device, self.baud_rate)
+                self.serial_port = PymataExpressSerial(port.device, self.baud_rate,
+                                                       express_instance=self)
             except SerialException:
                 continue
             # create a list of serial ports that we opened
@@ -397,7 +398,8 @@ class PymataExpress:
         """
         # if port is not found, a serial exception will be thrown
         print('Opening {} ...'.format(self.com_port))
-        self.serial_port = PymataExpressSerial(self.com_port, self.baud_rate)
+        self.serial_port = PymataExpressSerial(self.com_port, self.baud_rate,
+                                               express_instance=self)
 
         print('Waiting {} seconds for the Arduino To Reset.'
               .format(self.arduino_wait))
@@ -1237,6 +1239,7 @@ class PymataExpress:
             await self.send_reset()
             await self.serial_port.reset_input_buffer()
             await self.serial_port.close()
+            self.loop.close()
         except (RuntimeError, SerialException):
             pass
 

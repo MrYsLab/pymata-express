@@ -32,13 +32,15 @@ class PymataExpressSerial:
     It provides a 'futures' interface to make Pyserial compatible with asyncio
     """
 
-    def __init__(self, com_port='/dev/ttyACM0', baud_rate=115200, sleep_tune=.001):
+    def __init__(self, com_port='/dev/ttyACM0', baud_rate=115200, sleep_tune=.001,
+                 express_instance=None):
 
         """
         This is the constructor for the aio serial handler
 
         :param com_port: Com port designator
         :param baud_rate: UART baud rate
+        :param express_instance: the pymata-express class instance
         :return: None
         """
         # print('Initializing Arduino - Please wait...', end=" ")
@@ -48,6 +50,7 @@ class PymataExpressSerial:
 
         self.com_port = com_port
         self.sleep_tune = sleep_tune
+        self.express_instance = express_instance
 
         # used by read_until
         self.start_time = None
@@ -76,15 +79,15 @@ class PymataExpressSerial:
         try:
             result = self.my_serial.write(bytes([ord(data)]))
         except serial.SerialException:
-            # self.my_serial.close()
             # noinspection PyBroadException
             await self.close()
             future.cancel()
             loop = asyncio.get_event_loop()
-            for t in asyncio.Task.all_tasks(loop):
-                t.cancel()
-            await asyncio.sleep(.1)
             loop.stop()
+
+            if self.express_instance.the_task:
+                self.express_instance.the_task.cancel()
+            await asyncio.sleep(1)
             loop.close()
 
         if result:
@@ -139,7 +142,7 @@ class PymataExpressSerial:
                     # future is done, so return the character
                     return future.result()
 
-    async def read_until(self, expected=LF, size=None, timeout = 1):
+    async def read_until(self, expected=LF, size=None, timeout=1):
         """
         This is an asyncio adapted version of pyserial read
         that provides non-blocking read.
