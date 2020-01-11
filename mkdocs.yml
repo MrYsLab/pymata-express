@@ -1,0 +1,12 @@
+site_name: Pymata Express
+nav:
+    - User's Guide: index.md
+    - Verifying/Installing Python 3.7: python_3_7.install.md
+    - Installing Pymata Express: install_pymata_express.md
+    - FirmataExpress Installation: firmata_express.md
+    - Pymata Express Application Development: guidelines.md
+    - Example Applications/Tests: examples.md
+    - Pymata Express API: api.md
+    - About: about.md
+    - License: license.md
+theme: readthedocs
