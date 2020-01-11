@@ -1,12 +1,11 @@
 from setuptools import setup
 
-with open('pypi_desc.md') as f:
+with open('pypi_desc.md', "r") as f:
     long_description = f.read()
-
 
 setup(
     name='pymata-express',
-    version='1.2',
+    version='1.9',
     packages=['pymata_express'],
     install_requires=['pyserial'],
     url='https://mryslab.github.io/pymata-express/',

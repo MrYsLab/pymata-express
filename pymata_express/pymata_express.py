@@ -91,6 +91,8 @@ class PymataExpress:
 
         # set the event loop
         if loop is None:
+            if sys.platform == 'win32':
+                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
             self.loop = asyncio.get_event_loop()
         else:
             self.loop = loop
@@ -268,7 +270,10 @@ class PymataExpress:
          """
 
         # start the command dispatcher loop
-        self.loop = asyncio.get_event_loop()
+        if not self.loop:
+            if sys.platform == 'win32':
+                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+            self.loop = asyncio.get_event_loop()
         self.the_task = self.loop.create_task(self._arduino_report_dispatcher())
 
         # get arduino firmware version and print it
@@ -338,7 +343,11 @@ class PymataExpress:
             if port.pid is None:
                 continue
             # print('\nChecking {}'.format(port.device))
-            self.serial_port = PymataExpressSerial(port.device, self.baud_rate)
+            try:
+                self.serial_port = PymataExpressSerial(port.device, self.baud_rate,
+                                                       express_instance=self)
+            except SerialException:
+                continue
             # create a list of serial ports that we opened
             serial_ports.append(self.serial_port)
 
@@ -389,7 +398,8 @@ class PymataExpress:
         """
         # if port is not found, a serial exception will be thrown
         print('Opening {} ...'.format(self.com_port))
-        self.serial_port = PymataExpressSerial(self.com_port, self.baud_rate)
+        self.serial_port = PymataExpressSerial(self.com_port, self.baud_rate,
+                                               express_instance=self)
 
         print('Waiting {} seconds for the Arduino To Reset.'
               .format(self.arduino_wait))
@@ -520,9 +530,8 @@ class PymataExpress:
         :param pin: Analog pin number. For example for A0, the number is 0.
 
         """
-        command = [PrivateConstants.REPORT_ANALOG + pin,
-                   PrivateConstants.REPORTING_DISABLE]
-        await self._send_command(command)
+        pin = pin + self.first_analog_pin
+        await self.set_pin_mode_digital_input(pin)
 
     async def disable_digital_reporting(self, pin):
         """
@@ -537,16 +546,18 @@ class PymataExpress:
                    PrivateConstants.REPORTING_DISABLE]
         await self._send_command(command)
 
-    async def enable_analog_reporting(self, pin):
+    async def enable_analog_reporting(self, pin, callback=None, differential=1):
         """
-        Enables analog reporting. By turning reporting on for a single pin,
+        Enables analog reporting. This is an alias for set_pin_mode_analog
 
         :param pin: Analog pin number. For example for A0, the number is 0.
 
+        :param callback: async callback function
+
+        :param differential: This value needs to be met for a callback
+                             to be invoked.
         """
-        command = [PrivateConstants.REPORT_ANALOG + pin,
-                   PrivateConstants.REPORTING_ENABLE]
-        await self._send_command(command)
+        await self.set_pin_mode_analog_input(pin, callback, differential)
 
     async def enable_digital_reporting(self, pin):
         """
@@ -1048,7 +1059,7 @@ class PymataExpress:
         await self._send_sysex(PrivateConstants.SERVO_CONFIG, command)
 
     async def set_pin_mode_sonar(self, trigger_pin, echo_pin,
-                                 cb=None, timeout=20000):
+                                 cb=None, timeout=80000):
         """
         This is a FirmataExpress feature.
 
@@ -1070,7 +1081,7 @@ class PymataExpress:
 
         :param cb: optional callback function to report sonar data changes
 
-        :param timeout: a tuning parameter. 40000UL equals 40ms.
+        :param timeout: a tuning parameter. 80000UL equals 80ms.
 
 
         """
@@ -1171,9 +1182,8 @@ class PymataExpress:
 
         command = [PrivateConstants.SET_PIN_MODE, pin_number, pin_mode]
         await self._send_command(command)
-        if pin_state == PrivateConstants.ANALOG:
-            await self.enable_analog_reporting(pin_number)
-        elif pin_state == PrivateConstants.INPUT:
+
+        if pin_state == PrivateConstants.INPUT or pin_state == PrivateConstants.PULLUP:
             await self.enable_digital_reporting(pin_number)
         else:
             pass
@@ -1229,6 +1239,7 @@ class PymataExpress:
             await self.send_reset()
             await self.serial_port.reset_input_buffer()
             await self.serial_port.close()
+            self.loop.close()
         except (RuntimeError, SerialException):
             pass
 
@@ -1357,7 +1368,7 @@ class PymataExpress:
         if differential >= self.analog_pins[pin].differential:
             self.analog_pins[pin].current_value = value
             time_stamp = time.time()
-            self.digital_pins[pin].event_time = time_stamp
+            self.analog_pins[pin].event_time = time_stamp
 
             # append pin number, pin value, and pin type to return value and return as a list
             message = [pin, value, PrivateConstants.ANALOG, time_stamp]
@@ -1365,9 +1376,6 @@ class PymataExpress:
             if self.analog_pins[pin].cb:
                 # if self.analog_pins[pin].cb_type:
                 await self.analog_pins[pin].cb(message)
-                # else:
-                #     loop = self.loop
-                #     loop.call_soon(self.analog_pins[pin].cb, message)
 
     async def _capability_response(self, data):
         """
@@ -1580,10 +1588,7 @@ class PymataExpress:
                     reply_data.append(val)
                     if sonar_pin_entry[1]:
                         await sonar_pin_entry[0](reply_data)
-                    else:
-                        # sonar_pin_entry[0]([pin_number, val])
-                        loop = self.loop
-                        loop.call_soon(sonar_pin_entry[0], reply_data)
+
         # update the data in the table with latest value
         else:
             sonar_pin_entry[1] = val
