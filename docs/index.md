@@ -33,6 +33,6 @@ and a set of [working examples.](https://github.com/MrYsLab/pymata-express/tree/
 <br>
 
 
-Last updated 10 January 2020 For Release v1.9
+Last updated 10 January 2020 For Release v1.10
 
 Copyright (C) 2019-2020 Alan Yorinks. All Rights Reserved.
