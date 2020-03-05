@@ -1,8 +1,8 @@
 <img align="middle" src="./images/pymata_express.png">
 
-<p style="color:#990033; text-align:center; font-family:Georgia; font-size:5em;">Pymata Express</p>
+<div style="text-align:center;color:#990033; font-family:times, serif; font-size:5.0em">Pymata Express</div>
 <br>
-<br>
+
 
 <p style="color:#990033; text-align:center; font-family:Georgia; font-size:3.5em;"> The User's Guide</p>
 
