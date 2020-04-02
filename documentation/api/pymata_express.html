@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.6.3" />
+<meta name="generator" content="pdoc 0.7.5.dev2+gfcc2b1b" />
 <title>pymata_express.pymata_express API documentation</title>
 <meta name="description" content="Copyright (c) 2018-2019 Alan Yorinks All rights reserved …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
-<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase;cursor:pointer}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
 <style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
 </head>
@@ -36,7 +36,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301
 USA</p>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">&#34;&#34;&#34;
  Copyright (c) 2018-2019 Alan Yorinks All rights reserved.
 
@@ -75,7 +77,7 @@ class PymataExpress:
 
     &#34;&#34;&#34;
 
-    # noinspection PyPep8
+    # noinspection PyPep8,PyPep8
     def __init__(self, com_port=None, baud_rate=115200,
                  arduino_instance_id=1, arduino_wait=4,
                  sleep_tune=0.0001, autostart=True,
@@ -109,7 +111,6 @@ class PymataExpress:
         :param shutdown_on_exception: call shutdown before raising
                                       a RunTimeError exception, or
                                       receiving a KeyboardInterrupt exception
-
         &#34;&#34;&#34;
         # check to make sure that Python interpreter is version 3.7 or greater
         python_version = sys.version_info
@@ -127,9 +128,12 @@ class PymataExpress:
         self.arduino_wait = arduino_wait
         self.sleep_tune = sleep_tune
         self.autostart = autostart
+        # self.legacy_mode = legacy_mode
 
         # set the event loop
         if loop is None:
+            if sys.platform == &#39;win32&#39;:
+                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
             self.loop = asyncio.get_event_loop()
         else:
             self.loop = loop
@@ -145,26 +149,26 @@ class PymataExpress:
         self.serial_port = None
 
         # An i2c_map entry consists of a device i2c address as the key, and
-        #  the value of the key consists of a dictionary containing 3 entries.
+        #  the value of the key consists of a dictionary containing 2 entries.
         #  The first entry. &#39;value&#39; contains the last value reported, and
-        # the second, &#39;callback&#39; contains a reference to a callback function.
-        # the third, callback_type contains the callback type selector
-        #  (None = Direct, 1 = await)
+        # the second, &#39;callback&#39; contains a reference to a callback function,
+        # and the third, a time-stamp
         # For example:
-        # {12345: {&#39;value&#39;: 23, &#39;callback&#39;: None, &#39;callback_type: None}}
+        # {12345: {&#39;value&#39;: 23, &#39;callback&#39;: None, time_stamp:None}}
         self.i2c_map = {}
 
-        # the active_sonar_map maps the sonar trigger pin number (the key)
+        # The active_sonar_map maps the sonar trigger pin number (the key)
         # to the current data value returned
         # if a callback was specified, it is stored in the map as well.
-        # an entry in the map consists of:
-        #   pin: [callback, current_data_returned]
+        # A map entry consists of:
+        #   pin: [callback, current_data_returned, time_stamp]
         self.active_sonar_map = {}
 
         # keep alive variables
-        self.keep_alive_interval = 0
+        self.keep_alive_interval = []
         self.period = 0
         self.margin = 0
+        self.keep_alive_task = None
 
         # first analog pin number
         self.first_analog_pin = None
@@ -307,7 +311,10 @@ class PymataExpress:
          &#34;&#34;&#34;
 
         # start the command dispatcher loop
-        self.loop = asyncio.get_event_loop()
+        if not self.loop:
+            if sys.platform == &#39;win32&#39;:
+                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+            self.loop = asyncio.get_event_loop()
         self.the_task = self.loop.create_task(self._arduino_report_dispatcher())
 
         # get arduino firmware version and print it
@@ -378,7 +385,8 @@ class PymataExpress:
                 continue
             # print(&#39;\nChecking {}&#39;.format(port.device))
             try:
-                self.serial_port = PymataExpressSerial(port.device, self.baud_rate)
+                self.serial_port = PymataExpressSerial(port.device, self.baud_rate,
+                                                       express_instance=self)
             except SerialException:
                 continue
             # create a list of serial ports that we opened
@@ -431,7 +439,8 @@ class PymataExpress:
         &#34;&#34;&#34;
         # if port is not found, a serial exception will be thrown
         print(&#39;Opening {} ...&#39;.format(self.com_port))
-        self.serial_port = PymataExpressSerial(self.com_port, self.baud_rate)
+        self.serial_port = PymataExpressSerial(self.com_port, self.baud_rate,
+                                               express_instance=self)
 
         print(&#39;Waiting {} seconds for the Arduino To Reset.&#39;
               .format(self.arduino_wait))
@@ -472,19 +481,19 @@ class PymataExpress:
 
     async def analog_write(self, pin, value):
         &#34;&#34;&#34;
+        This is an alias for PWM_write
+
+        It may be removed in the future.
+
         Set the selected pin to the specified value.
 
-        :param pin: PWM pin number
+        :param pin: Analog output pin number
 
         :param value: Pin value (0 - 0x4000)
 
         &#34;&#34;&#34;
-        if PrivateConstants.ANALOG_MESSAGE + pin &lt; 0xf0:
-            command = [PrivateConstants.ANALOG_MESSAGE + pin, value &amp; 0x7f,
-                       (value &gt;&gt; 7) &amp; 0x7f]
-            await self._send_command(command)
-        else:
-            await self._analog_write_extended(pin, value)
+
+        await self.pwm_write(pin, value)
 
     async def _analog_write_extended(self, pin, data):
         &#34;&#34;&#34;
@@ -593,6 +602,7 @@ class PymataExpress:
 
     async def enable_digital_reporting(self, pin):
         &#34;&#34;&#34;
+        Enables digital reporting. By turning reporting on for all 8 bits
         Enables digital reporting. By turning reporting on for all 8 bits
         in the &#34;port&#34; - this is part of Firmata&#39;s protocol specification.
 
@@ -731,7 +741,7 @@ class PymataExpress:
 
         :param address: I2C device address
 
-        :returns: Last cached value reported
+        :returns data: [raw data returned from i2c device, time-stamp]
 
         &#34;&#34;&#34;
         if address in self.i2c_map:
@@ -757,6 +767,12 @@ class PymataExpress:
         :param callback: Optional callback function to report i2c data as a
                    result of read command
 
+        callback returns a data list:
+
+        [pin_type, i2c_device_address, i2c_read_register, data_bytes returned, time_stamp]
+
+        The pin_type for i2c = 6
+
         &#34;&#34;&#34;
 
         await self._i2c_read_request(address, register, number_of_bytes,
@@ -778,6 +794,12 @@ class PymataExpress:
 
         :param callback: Optional callback function to report i2c data as a
                    result of read command
+
+        callback returns a data list:
+
+        [pin_type, i2c_device_address, i2c_read_register, data_bytes returned, time_stamp]
+
+        The pin_type for i2c = 6
 
         &#34;&#34;&#34;
 
@@ -802,6 +824,12 @@ class PymataExpress:
 
         :param callback: Optional callback function to report i2c data as a
                    result of read command
+
+        callback returns a data list:
+
+        [pin_type, i2c_device_address, i2c_read_register, data_bytes returned, time_stamp]
+
+        The pin_type for i2c = 6
 
         &#34;&#34;&#34;
 
@@ -889,26 +917,23 @@ class PymataExpress:
         :param margin: Safety margin to assure keepalives are sent before
                     period expires. Range is 0.1 to 0.9
         &#34;&#34;&#34;
+
+        self.period = period
+        self.margin = margin
         if period &lt; 0:
             period = 0
-        if period &gt; 10:
-            period = 10
-        self.period = period
-        if margin &lt; .1:
-            margin = .1
-        if margin &gt; .9:
-            margin = .9
-        self.margin = margin
-        self.keep_alive_interval = [period &amp; 0x7f, (period &gt;&gt; 7) &amp; 0x7f]
-        await self._send_sysex(PrivateConstants.SAMPLING_INTERVAL,
-                               self.keep_alive_interval)
-        while True:
-            if self.period:
-                await asyncio.sleep(period - (period - (period * margin)))
-                await self._send_sysex(PrivateConstants.KEEP_ALIVE,
-                                       self.keep_alive_interval)
-            else:
-                break
+
+        # if there is a currently running keep alive task
+        # and the the period is 0, kill the task and return
+        if period == 0 and self.keep_alive_task:
+            self.keep_alive_task.cancel()
+            return
+
+        self.keep_alive_interval = period &amp; 0x7f, (period &gt;&gt; 7) &amp; 0x7f
+        # if there is no keep alive task, start one
+        if not self.keep_alive_task:
+            self.keep_alive_task = self.loop.create_task(
+                self._send_keep_alive())
 
     async def play_tone(self, pin_number, frequency, duration):
         &#34;&#34;&#34;
@@ -991,6 +1016,23 @@ class PymataExpress:
             data = [tone_command, pin]
         await self._send_sysex(PrivateConstants.TONE_DATA, data)
 
+    async def pwm_write(self, pin, value):
+        &#34;&#34;&#34;
+        is an alias for PWM_write
+        Set the selected pin to the specified value.
+
+        :param pin: PWM pin number
+
+        :param value: Pin value (0 - 0x4000)
+
+        &#34;&#34;&#34;
+        if PrivateConstants.ANALOG_MESSAGE + pin &lt; 0xf0:
+            command = [PrivateConstants.ANALOG_MESSAGE + pin, value &amp; 0x7f,
+                       (value &gt;&gt; 7) &amp; 0x7f]
+            await self._send_command(command)
+        else:
+            await self._analog_write_extended(pin, value)
+
     async def send_reset(self):
         &#34;&#34;&#34;
         Send a Sysex reset command to the arduino
@@ -1004,6 +1046,10 @@ class PymataExpress:
     async def set_pin_mode_analog_input(self, pin_number, callback=None,
                                         differential=1):
         &#34;&#34;&#34;
+
+        This is an alias for set_pin_mode_pwm.
+
+        It may be removed in a future release.
         Set a pin as an analog input.
 
         :param pin_number: arduino pin number
@@ -1012,6 +1058,12 @@ class PymataExpress:
 
         :param differential: This value needs to be met for a callback
                              to be invoked.
+
+        callback returns a data list:
+
+        [pin_type, pin_number, pin_value, raw_time_stamp]
+
+        The pin_type for analog input pins = 2
 
         &#34;&#34;&#34;
         await self._set_pin_mode(pin_number, PrivateConstants.ANALOG,
@@ -1026,6 +1078,12 @@ class PymataExpress:
 
         :param callback: async callback function
 
+        callback returns a data list:
+
+        [pin_type, pin_number, pin_value, raw_time_stamp]
+
+        The pin_type for digital input pins = 0
+
         &#34;&#34;&#34;
         await self._set_pin_mode(pin_number, PrivateConstants.INPUT, callback)
 
@@ -1036,6 +1094,12 @@ class PymataExpress:
         :param pin_number: arduino pin number
 
         :param callback: async callback function
+
+        callback returns a data list:
+
+        [pin_type, pin_number, pin_value, raw_time_stamp]
+
+        The pin_type for digital input pins with pullups enabled = 11
 
         &#34;&#34;&#34;
         await self._set_pin_mode(pin_number, PrivateConstants.PULLUP, callback)
@@ -1065,6 +1129,18 @@ class PymataExpress:
         await self._send_sysex(PrivateConstants.I2C_CONFIG, data)
 
     async def set_pin_mode_pwm(self, pin_number):
+        &#34;&#34;&#34;
+
+        This is an alias for set_pint_mode_pwm_output.
+
+        Set a pin as a pwm (analog output) pin.
+
+        :param pin_number:arduino pin number
+
+        &#34;&#34;&#34;
+        await self.set_pin_mode_pwm_output(pin_number)
+
+    async def set_pin_mode_pwm_output(self, pin_number):
         &#34;&#34;&#34;
         Set a pin as a pwm (analog output) pin.
 
@@ -1115,6 +1191,12 @@ class PymataExpress:
 
         :param timeout: a tuning parameter. 80000UL equals 80ms.
 
+        callback returns a data list:
+
+        [pin_type, trigger_pin_number, distance_value (in cm), raw_time_stamp]
+
+        The pin_type for sonar pins = 12
+
 
         &#34;&#34;&#34;
         # if there is an entry for the trigger pin in existence,
@@ -1136,7 +1218,7 @@ class PymataExpress:
             print(&#39;sonar_config: maximum number of devices assigned&#39;
                   &#39; - ignoring request&#39;)
         else:
-            self.active_sonar_map[trigger_pin] = [cb, 0]
+            self.active_sonar_map[trigger_pin] = [cb, 0, 0]
 
         await self._send_sysex(PrivateConstants.SONAR_CONFIG, data)
 
@@ -1222,6 +1304,19 @@ class PymataExpress:
 
         await asyncio.sleep(.05)
 
+    async def _send_keep_alive(self):
+        &#34;&#34;&#34;
+        This is a the task to continuously send keep alive messages
+        &#34;&#34;&#34;
+        while not self.shutdown_flag:
+            if self.period:
+                await self._send_sysex(PrivateConstants.KEEP_ALIVE,
+                                       self.keep_alive_interval)
+
+                # wait the requested amount of time before sending the next
+                # keep alive to the Arduino
+                await asyncio.sleep(self.period - self.margin)
+
     async def set_sampling_interval(self, interval):
         &#34;&#34;&#34;
         This method sends the desired sampling interval to Firmata.
@@ -1238,7 +1333,7 @@ class PymataExpress:
 
     async def servo_write(self, pin, position):
         &#34;&#34;&#34;
-        This is an alias for analog_write to set
+        This is an alias for pwm_write to set
         the position of a servo that has been
         previously configured using set_pin_mode_servo.
 
@@ -1248,7 +1343,7 @@ class PymataExpress:
 
         &#34;&#34;&#34;
 
-        await self.analog_write(pin, position)
+        await self.pwm_write(pin, position)
 
     async def shutdown(self):
         &#34;&#34;&#34;
@@ -1271,6 +1366,7 @@ class PymataExpress:
             await self.send_reset()
             await self.serial_port.reset_input_buffer()
             await self.serial_port.close()
+            self.loop.close()
         except (RuntimeError, SerialException):
             pass
 
@@ -1287,12 +1383,13 @@ class PymataExpress:
 
         :param trigger_pin: key into sonar data map
 
-        :returns: active_sonar_map
+        :returns: [last distance, raw time stamp]
         &#34;&#34;&#34;
 
         sonar_pin_entry = self.active_sonar_map.get(trigger_pin)
-        value = sonar_pin_entry[1]
-        return value
+        return [sonar_pin_entry[1], sonar_pin_entry[2]]
+        # value = sonar_pin_entry[1]
+        # return value
 
     async def stepper_write(self, motor_speed, number_of_steps):
         &#34;&#34;&#34;
@@ -1332,7 +1429,10 @@ class PymataExpress:
         while True:
             if self.shutdown_flag:
                 break
-            next_command_byte = await self.serial_port.read()
+            try:
+                next_command_byte = await self.serial_port.read()
+            except TypeError:
+                continue
             # if this is a SYSEX command, then assemble the entire
             # command process it
             if next_command_byte == PrivateConstants.START_SYSEX:
@@ -1399,17 +1499,14 @@ class PymataExpress:
         if differential &gt;= self.analog_pins[pin].differential:
             self.analog_pins[pin].current_value = value
             time_stamp = time.time()
-            self.digital_pins[pin].event_time = time_stamp
+            self.analog_pins[pin].event_time = time_stamp
 
             # append pin number, pin value, and pin type to return value and return as a list
-            message = [pin, value, PrivateConstants.ANALOG, time_stamp]
+            message = [PrivateConstants.ANALOG, pin, value,  time_stamp]
 
             if self.analog_pins[pin].cb:
                 # if self.analog_pins[pin].cb_type:
                 await self.analog_pins[pin].cb(message)
-                # else:
-                #     loop = self.loop
-                #     loop.call_soon(self.analog_pins[pin].cb, message)
 
     async def _capability_response(self, data):
         &#34;&#34;&#34;
@@ -1430,7 +1527,7 @@ class PymataExpress:
 
         &#34;&#34;&#34;
         port = data[0]
-        # noinspection PyPep8
+        # noinspection PyPep8,PyPep8
         port_data = (data[PrivateConstants.MSB] &lt;&lt; 7) + \
                     data[PrivateConstants.LSB]
         pin = port * 8
@@ -1444,43 +1541,18 @@ class PymataExpress:
             self.digital_pins[pin].event_time = time_stamp
 
             # append pin number, pin value, and pin type to return value and return as a list
-            message = [pin, value, PrivateConstants.INPUT, time_stamp]
+            # if self.legacy_mode:
+            #     message = [pin, value, PrivateConstants.INPUT, time_stamp]
+            # else:
+            if self.digital_pins[pin].pull_up:
+                message = [PrivateConstants.PULLUP, pin, value, time_stamp]
+            else:
+                message = [PrivateConstants.INPUT, pin, value, time_stamp]
 
             if self.digital_pins[pin].cb:
                 await self.digital_pins[pin].cb(message)
 
             port_data &gt;&gt;= 1
-
-    async def _encoder_data(self, data):
-        &#34;&#34;&#34;
-        This is a private message handler method.
-        It handles encoder data messages.
-
-        :param data: encoder data
-
-        &#34;&#34;&#34;
-        # strip off sysex start and end
-        data = data[1:-1]
-        pin = data[0]
-        val = int((data[PrivateConstants.MSB] &lt;&lt; 7) +
-                  data[PrivateConstants.LSB])
-        # set value so that it shows positive and negative values
-        if val &gt; 8192:
-            val -= 16384
-        # if this value is different that is what is already in the
-        # table store it and check for callback
-        if val != self.digital_pins[pin].current_value:
-            self.digital_pins[pin].current_value = val
-            if self.digital_pins[pin].cb:
-                # self.digital_pins[pin].cb([pin, val])
-                if self.digital_pins[pin].cb_type:
-                    await self.digital_pins[pin].cb(val)
-                else:
-                    # self.digital_pins[pin].cb(data)
-                    loop = self.loop
-                    loop.call_soon(self.digital_pins[pin].cb, val)
-
-    # noinspection PyDictCreation
 
     async def _i2c_reply(self, data):
         &#34;&#34;&#34;
@@ -1496,7 +1568,7 @@ class PymataExpress:
         &#34;&#34;&#34;
         # remove the start and end sysex commands from the data
         data = data[1:-1]
-        reply_data = []
+        reply_data = [PrivateConstants.I2C]
         # reassemble the data from the firmata 2 byte format
         address = (data[0] &amp; 0x7f) + (data[1] &lt;&lt; 7)
 
@@ -1507,10 +1579,14 @@ class PymataExpress:
                 combined_data = (data[i] &amp; 0x7f) + (data[i + 1] &lt;&lt; 7)
                 reply_data.append(combined_data)
 
+            current_time = time.time()
+            reply_data.append(current_time)
+
             # place the data in the i2c map without storing the address byte or
             #  register byte (returned data only)
             map_entry = self.i2c_map.get(address)
             map_entry[&#39;value&#39;] = reply_data[2:]
+            map_entry[&#39;time_stamp&#39;] = current_time
             self.i2c_map[address] = map_entry
             cb = map_entry.get(&#39;callback&#39;)
             if cb:
@@ -1614,12 +1690,15 @@ class PymataExpress:
             # check if value changed since last reading
             if sonar_pin_entry[1] != val:
                 sonar_pin_entry[1] = val
+                time_stamp = time.time()
+                sonar_pin_entry[2] = time_stamp
                 self.active_sonar_map[pin_number] = sonar_pin_entry
                 # Do a callback if one is specified in the table
                 if sonar_pin_entry[0]:
-                    # if this is an asyncio callback type
                     reply_data.append(pin_number)
                     reply_data.append(val)
+                    reply_data.append(time_stamp)
+
                     if sonar_pin_entry[1]:
                         await sonar_pin_entry[0](reply_data)
 
@@ -1752,7 +1831,9 @@ your application, then set this to False.</p>
 a RunTimeError exception, or
 receiving a KeyboardInterrupt exception</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">class PymataExpress:
     &#34;&#34;&#34;
     This class exposes and implements the PymataExpress API.
@@ -1761,7 +1842,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
     &#34;&#34;&#34;
 
-    # noinspection PyPep8
+    # noinspection PyPep8,PyPep8
     def __init__(self, com_port=None, baud_rate=115200,
                  arduino_instance_id=1, arduino_wait=4,
                  sleep_tune=0.0001, autostart=True,
@@ -1795,7 +1876,6 @@ receiving a KeyboardInterrupt exception</p></section>
         :param shutdown_on_exception: call shutdown before raising
                                       a RunTimeError exception, or
                                       receiving a KeyboardInterrupt exception
-
         &#34;&#34;&#34;
         # check to make sure that Python interpreter is version 3.7 or greater
         python_version = sys.version_info
@@ -1813,9 +1893,12 @@ receiving a KeyboardInterrupt exception</p></section>
         self.arduino_wait = arduino_wait
         self.sleep_tune = sleep_tune
         self.autostart = autostart
+        # self.legacy_mode = legacy_mode
 
         # set the event loop
         if loop is None:
+            if sys.platform == &#39;win32&#39;:
+                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
             self.loop = asyncio.get_event_loop()
         else:
             self.loop = loop
@@ -1831,26 +1914,26 @@ receiving a KeyboardInterrupt exception</p></section>
         self.serial_port = None
 
         # An i2c_map entry consists of a device i2c address as the key, and
-        #  the value of the key consists of a dictionary containing 3 entries.
+        #  the value of the key consists of a dictionary containing 2 entries.
         #  The first entry. &#39;value&#39; contains the last value reported, and
-        # the second, &#39;callback&#39; contains a reference to a callback function.
-        # the third, callback_type contains the callback type selector
-        #  (None = Direct, 1 = await)
+        # the second, &#39;callback&#39; contains a reference to a callback function,
+        # and the third, a time-stamp
         # For example:
-        # {12345: {&#39;value&#39;: 23, &#39;callback&#39;: None, &#39;callback_type: None}}
+        # {12345: {&#39;value&#39;: 23, &#39;callback&#39;: None, time_stamp:None}}
         self.i2c_map = {}
 
-        # the active_sonar_map maps the sonar trigger pin number (the key)
+        # The active_sonar_map maps the sonar trigger pin number (the key)
         # to the current data value returned
         # if a callback was specified, it is stored in the map as well.
-        # an entry in the map consists of:
-        #   pin: [callback, current_data_returned]
+        # A map entry consists of:
+        #   pin: [callback, current_data_returned, time_stamp]
         self.active_sonar_map = {}
 
         # keep alive variables
-        self.keep_alive_interval = 0
+        self.keep_alive_interval = []
         self.period = 0
         self.margin = 0
+        self.keep_alive_task = None
 
         # first analog pin number
         self.first_analog_pin = None
@@ -1993,7 +2076,10 @@ receiving a KeyboardInterrupt exception</p></section>
          &#34;&#34;&#34;
 
         # start the command dispatcher loop
-        self.loop = asyncio.get_event_loop()
+        if not self.loop:
+            if sys.platform == &#39;win32&#39;:
+                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+            self.loop = asyncio.get_event_loop()
         self.the_task = self.loop.create_task(self._arduino_report_dispatcher())
 
         # get arduino firmware version and print it
@@ -2064,7 +2150,8 @@ receiving a KeyboardInterrupt exception</p></section>
                 continue
             # print(&#39;\nChecking {}&#39;.format(port.device))
             try:
-                self.serial_port = PymataExpressSerial(port.device, self.baud_rate)
+                self.serial_port = PymataExpressSerial(port.device, self.baud_rate,
+                                                       express_instance=self)
             except SerialException:
                 continue
             # create a list of serial ports that we opened
@@ -2117,7 +2204,8 @@ receiving a KeyboardInterrupt exception</p></section>
         &#34;&#34;&#34;
         # if port is not found, a serial exception will be thrown
         print(&#39;Opening {} ...&#39;.format(self.com_port))
-        self.serial_port = PymataExpressSerial(self.com_port, self.baud_rate)
+        self.serial_port = PymataExpressSerial(self.com_port, self.baud_rate,
+                                               express_instance=self)
 
         print(&#39;Waiting {} seconds for the Arduino To Reset.&#39;
               .format(self.arduino_wait))
@@ -2158,19 +2246,19 @@ receiving a KeyboardInterrupt exception</p></section>
 
     async def analog_write(self, pin, value):
         &#34;&#34;&#34;
+        This is an alias for PWM_write
+
+        It may be removed in the future.
+
         Set the selected pin to the specified value.
 
-        :param pin: PWM pin number
+        :param pin: Analog output pin number
 
         :param value: Pin value (0 - 0x4000)
 
         &#34;&#34;&#34;
-        if PrivateConstants.ANALOG_MESSAGE + pin &lt; 0xf0:
-            command = [PrivateConstants.ANALOG_MESSAGE + pin, value &amp; 0x7f,
-                       (value &gt;&gt; 7) &amp; 0x7f]
-            await self._send_command(command)
-        else:
-            await self._analog_write_extended(pin, value)
+
+        await self.pwm_write(pin, value)
 
     async def _analog_write_extended(self, pin, data):
         &#34;&#34;&#34;
@@ -2279,6 +2367,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
     async def enable_digital_reporting(self, pin):
         &#34;&#34;&#34;
+        Enables digital reporting. By turning reporting on for all 8 bits
         Enables digital reporting. By turning reporting on for all 8 bits
         in the &#34;port&#34; - this is part of Firmata&#39;s protocol specification.
 
@@ -2417,7 +2506,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
         :param address: I2C device address
 
-        :returns: Last cached value reported
+        :returns data: [raw data returned from i2c device, time-stamp]
 
         &#34;&#34;&#34;
         if address in self.i2c_map:
@@ -2443,6 +2532,12 @@ receiving a KeyboardInterrupt exception</p></section>
         :param callback: Optional callback function to report i2c data as a
                    result of read command
 
+        callback returns a data list:
+
+        [pin_type, i2c_device_address, i2c_read_register, data_bytes returned, time_stamp]
+
+        The pin_type for i2c = 6
+
         &#34;&#34;&#34;
 
         await self._i2c_read_request(address, register, number_of_bytes,
@@ -2464,6 +2559,12 @@ receiving a KeyboardInterrupt exception</p></section>
 
         :param callback: Optional callback function to report i2c data as a
                    result of read command
+
+        callback returns a data list:
+
+        [pin_type, i2c_device_address, i2c_read_register, data_bytes returned, time_stamp]
+
+        The pin_type for i2c = 6
 
         &#34;&#34;&#34;
 
@@ -2488,6 +2589,12 @@ receiving a KeyboardInterrupt exception</p></section>
 
         :param callback: Optional callback function to report i2c data as a
                    result of read command
+
+        callback returns a data list:
+
+        [pin_type, i2c_device_address, i2c_read_register, data_bytes returned, time_stamp]
+
+        The pin_type for i2c = 6
 
         &#34;&#34;&#34;
 
@@ -2575,26 +2682,23 @@ receiving a KeyboardInterrupt exception</p></section>
         :param margin: Safety margin to assure keepalives are sent before
                     period expires. Range is 0.1 to 0.9
         &#34;&#34;&#34;
+
+        self.period = period
+        self.margin = margin
         if period &lt; 0:
             period = 0
-        if period &gt; 10:
-            period = 10
-        self.period = period
-        if margin &lt; .1:
-            margin = .1
-        if margin &gt; .9:
-            margin = .9
-        self.margin = margin
-        self.keep_alive_interval = [period &amp; 0x7f, (period &gt;&gt; 7) &amp; 0x7f]
-        await self._send_sysex(PrivateConstants.SAMPLING_INTERVAL,
-                               self.keep_alive_interval)
-        while True:
-            if self.period:
-                await asyncio.sleep(period - (period - (period * margin)))
-                await self._send_sysex(PrivateConstants.KEEP_ALIVE,
-                                       self.keep_alive_interval)
-            else:
-                break
+
+        # if there is a currently running keep alive task
+        # and the the period is 0, kill the task and return
+        if period == 0 and self.keep_alive_task:
+            self.keep_alive_task.cancel()
+            return
+
+        self.keep_alive_interval = period &amp; 0x7f, (period &gt;&gt; 7) &amp; 0x7f
+        # if there is no keep alive task, start one
+        if not self.keep_alive_task:
+            self.keep_alive_task = self.loop.create_task(
+                self._send_keep_alive())
 
     async def play_tone(self, pin_number, frequency, duration):
         &#34;&#34;&#34;
@@ -2677,6 +2781,23 @@ receiving a KeyboardInterrupt exception</p></section>
             data = [tone_command, pin]
         await self._send_sysex(PrivateConstants.TONE_DATA, data)
 
+    async def pwm_write(self, pin, value):
+        &#34;&#34;&#34;
+        is an alias for PWM_write
+        Set the selected pin to the specified value.
+
+        :param pin: PWM pin number
+
+        :param value: Pin value (0 - 0x4000)
+
+        &#34;&#34;&#34;
+        if PrivateConstants.ANALOG_MESSAGE + pin &lt; 0xf0:
+            command = [PrivateConstants.ANALOG_MESSAGE + pin, value &amp; 0x7f,
+                       (value &gt;&gt; 7) &amp; 0x7f]
+            await self._send_command(command)
+        else:
+            await self._analog_write_extended(pin, value)
+
     async def send_reset(self):
         &#34;&#34;&#34;
         Send a Sysex reset command to the arduino
@@ -2690,6 +2811,10 @@ receiving a KeyboardInterrupt exception</p></section>
     async def set_pin_mode_analog_input(self, pin_number, callback=None,
                                         differential=1):
         &#34;&#34;&#34;
+
+        This is an alias for set_pin_mode_pwm.
+
+        It may be removed in a future release.
         Set a pin as an analog input.
 
         :param pin_number: arduino pin number
@@ -2698,6 +2823,12 @@ receiving a KeyboardInterrupt exception</p></section>
 
         :param differential: This value needs to be met for a callback
                              to be invoked.
+
+        callback returns a data list:
+
+        [pin_type, pin_number, pin_value, raw_time_stamp]
+
+        The pin_type for analog input pins = 2
 
         &#34;&#34;&#34;
         await self._set_pin_mode(pin_number, PrivateConstants.ANALOG,
@@ -2712,6 +2843,12 @@ receiving a KeyboardInterrupt exception</p></section>
 
         :param callback: async callback function
 
+        callback returns a data list:
+
+        [pin_type, pin_number, pin_value, raw_time_stamp]
+
+        The pin_type for digital input pins = 0
+
         &#34;&#34;&#34;
         await self._set_pin_mode(pin_number, PrivateConstants.INPUT, callback)
 
@@ -2722,6 +2859,12 @@ receiving a KeyboardInterrupt exception</p></section>
         :param pin_number: arduino pin number
 
         :param callback: async callback function
+
+        callback returns a data list:
+
+        [pin_type, pin_number, pin_value, raw_time_stamp]
+
+        The pin_type for digital input pins with pullups enabled = 11
 
         &#34;&#34;&#34;
         await self._set_pin_mode(pin_number, PrivateConstants.PULLUP, callback)
@@ -2751,6 +2894,18 @@ receiving a KeyboardInterrupt exception</p></section>
         await self._send_sysex(PrivateConstants.I2C_CONFIG, data)
 
     async def set_pin_mode_pwm(self, pin_number):
+        &#34;&#34;&#34;
+
+        This is an alias for set_pint_mode_pwm_output.
+
+        Set a pin as a pwm (analog output) pin.
+
+        :param pin_number:arduino pin number
+
+        &#34;&#34;&#34;
+        await self.set_pin_mode_pwm_output(pin_number)
+
+    async def set_pin_mode_pwm_output(self, pin_number):
         &#34;&#34;&#34;
         Set a pin as a pwm (analog output) pin.
 
@@ -2801,6 +2956,12 @@ receiving a KeyboardInterrupt exception</p></section>
 
         :param timeout: a tuning parameter. 80000UL equals 80ms.
 
+        callback returns a data list:
+
+        [pin_type, trigger_pin_number, distance_value (in cm), raw_time_stamp]
+
+        The pin_type for sonar pins = 12
+
 
         &#34;&#34;&#34;
         # if there is an entry for the trigger pin in existence,
@@ -2822,7 +2983,7 @@ receiving a KeyboardInterrupt exception</p></section>
             print(&#39;sonar_config: maximum number of devices assigned&#39;
                   &#39; - ignoring request&#39;)
         else:
-            self.active_sonar_map[trigger_pin] = [cb, 0]
+            self.active_sonar_map[trigger_pin] = [cb, 0, 0]
 
         await self._send_sysex(PrivateConstants.SONAR_CONFIG, data)
 
@@ -2908,6 +3069,19 @@ receiving a KeyboardInterrupt exception</p></section>
 
         await asyncio.sleep(.05)
 
+    async def _send_keep_alive(self):
+        &#34;&#34;&#34;
+        This is a the task to continuously send keep alive messages
+        &#34;&#34;&#34;
+        while not self.shutdown_flag:
+            if self.period:
+                await self._send_sysex(PrivateConstants.KEEP_ALIVE,
+                                       self.keep_alive_interval)
+
+                # wait the requested amount of time before sending the next
+                # keep alive to the Arduino
+                await asyncio.sleep(self.period - self.margin)
+
     async def set_sampling_interval(self, interval):
         &#34;&#34;&#34;
         This method sends the desired sampling interval to Firmata.
@@ -2924,7 +3098,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
     async def servo_write(self, pin, position):
         &#34;&#34;&#34;
-        This is an alias for analog_write to set
+        This is an alias for pwm_write to set
         the position of a servo that has been
         previously configured using set_pin_mode_servo.
 
@@ -2934,7 +3108,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
         &#34;&#34;&#34;
 
-        await self.analog_write(pin, position)
+        await self.pwm_write(pin, position)
 
     async def shutdown(self):
         &#34;&#34;&#34;
@@ -2957,6 +3131,7 @@ receiving a KeyboardInterrupt exception</p></section>
             await self.send_reset()
             await self.serial_port.reset_input_buffer()
             await self.serial_port.close()
+            self.loop.close()
         except (RuntimeError, SerialException):
             pass
 
@@ -2973,12 +3148,13 @@ receiving a KeyboardInterrupt exception</p></section>
 
         :param trigger_pin: key into sonar data map
 
-        :returns: active_sonar_map
+        :returns: [last distance, raw time stamp]
         &#34;&#34;&#34;
 
         sonar_pin_entry = self.active_sonar_map.get(trigger_pin)
-        value = sonar_pin_entry[1]
-        return value
+        return [sonar_pin_entry[1], sonar_pin_entry[2]]
+        # value = sonar_pin_entry[1]
+        # return value
 
     async def stepper_write(self, motor_speed, number_of_steps):
         &#34;&#34;&#34;
@@ -3018,7 +3194,10 @@ receiving a KeyboardInterrupt exception</p></section>
         while True:
             if self.shutdown_flag:
                 break
-            next_command_byte = await self.serial_port.read()
+            try:
+                next_command_byte = await self.serial_port.read()
+            except TypeError:
+                continue
             # if this is a SYSEX command, then assemble the entire
             # command process it
             if next_command_byte == PrivateConstants.START_SYSEX:
@@ -3085,17 +3264,14 @@ receiving a KeyboardInterrupt exception</p></section>
         if differential &gt;= self.analog_pins[pin].differential:
             self.analog_pins[pin].current_value = value
             time_stamp = time.time()
-            self.digital_pins[pin].event_time = time_stamp
+            self.analog_pins[pin].event_time = time_stamp
 
             # append pin number, pin value, and pin type to return value and return as a list
-            message = [pin, value, PrivateConstants.ANALOG, time_stamp]
+            message = [PrivateConstants.ANALOG, pin, value,  time_stamp]
 
             if self.analog_pins[pin].cb:
                 # if self.analog_pins[pin].cb_type:
                 await self.analog_pins[pin].cb(message)
-                # else:
-                #     loop = self.loop
-                #     loop.call_soon(self.analog_pins[pin].cb, message)
 
     async def _capability_response(self, data):
         &#34;&#34;&#34;
@@ -3116,7 +3292,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
         &#34;&#34;&#34;
         port = data[0]
-        # noinspection PyPep8
+        # noinspection PyPep8,PyPep8
         port_data = (data[PrivateConstants.MSB] &lt;&lt; 7) + \
                     data[PrivateConstants.LSB]
         pin = port * 8
@@ -3130,43 +3306,18 @@ receiving a KeyboardInterrupt exception</p></section>
             self.digital_pins[pin].event_time = time_stamp
 
             # append pin number, pin value, and pin type to return value and return as a list
-            message = [pin, value, PrivateConstants.INPUT, time_stamp]
+            # if self.legacy_mode:
+            #     message = [pin, value, PrivateConstants.INPUT, time_stamp]
+            # else:
+            if self.digital_pins[pin].pull_up:
+                message = [PrivateConstants.PULLUP, pin, value, time_stamp]
+            else:
+                message = [PrivateConstants.INPUT, pin, value, time_stamp]
 
             if self.digital_pins[pin].cb:
                 await self.digital_pins[pin].cb(message)
 
             port_data &gt;&gt;= 1
-
-    async def _encoder_data(self, data):
-        &#34;&#34;&#34;
-        This is a private message handler method.
-        It handles encoder data messages.
-
-        :param data: encoder data
-
-        &#34;&#34;&#34;
-        # strip off sysex start and end
-        data = data[1:-1]
-        pin = data[0]
-        val = int((data[PrivateConstants.MSB] &lt;&lt; 7) +
-                  data[PrivateConstants.LSB])
-        # set value so that it shows positive and negative values
-        if val &gt; 8192:
-            val -= 16384
-        # if this value is different that is what is already in the
-        # table store it and check for callback
-        if val != self.digital_pins[pin].current_value:
-            self.digital_pins[pin].current_value = val
-            if self.digital_pins[pin].cb:
-                # self.digital_pins[pin].cb([pin, val])
-                if self.digital_pins[pin].cb_type:
-                    await self.digital_pins[pin].cb(val)
-                else:
-                    # self.digital_pins[pin].cb(data)
-                    loop = self.loop
-                    loop.call_soon(self.digital_pins[pin].cb, val)
-
-    # noinspection PyDictCreation
 
     async def _i2c_reply(self, data):
         &#34;&#34;&#34;
@@ -3182,7 +3333,7 @@ receiving a KeyboardInterrupt exception</p></section>
         &#34;&#34;&#34;
         # remove the start and end sysex commands from the data
         data = data[1:-1]
-        reply_data = []
+        reply_data = [PrivateConstants.I2C]
         # reassemble the data from the firmata 2 byte format
         address = (data[0] &amp; 0x7f) + (data[1] &lt;&lt; 7)
 
@@ -3193,10 +3344,14 @@ receiving a KeyboardInterrupt exception</p></section>
                 combined_data = (data[i] &amp; 0x7f) + (data[i + 1] &lt;&lt; 7)
                 reply_data.append(combined_data)
 
+            current_time = time.time()
+            reply_data.append(current_time)
+
             # place the data in the i2c map without storing the address byte or
             #  register byte (returned data only)
             map_entry = self.i2c_map.get(address)
             map_entry[&#39;value&#39;] = reply_data[2:]
+            map_entry[&#39;time_stamp&#39;] = current_time
             self.i2c_map[address] = map_entry
             cb = map_entry.get(&#39;callback&#39;)
             if cb:
@@ -3300,12 +3455,15 @@ receiving a KeyboardInterrupt exception</p></section>
             # check if value changed since last reading
             if sonar_pin_entry[1] != val:
                 sonar_pin_entry[1] = val
+                time_stamp = time.time()
+                sonar_pin_entry[2] = time_stamp
                 self.active_sonar_map[pin_number] = sonar_pin_entry
                 # Do a callback if one is specified in the table
                 if sonar_pin_entry[0]:
-                    # if this is an asyncio callback type
                     reply_data.append(pin_number)
                     reply_data.append(val)
+                    reply_data.append(time_stamp)
+
                     if sonar_pin_entry[1]:
                         await sonar_pin_entry[0](reply_data)
 
@@ -3410,7 +3568,9 @@ receiving a KeyboardInterrupt exception</p></section>
 <p>:param pin: Analog pin number (ex. A2 is specified as 2)</p>
 <p>:returns: A tuple of last value change and the time that it occurred</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def analog_read(self, pin):
     &#34;&#34;&#34;
     Retrieve the last data update for the specified analog pin.
@@ -3427,26 +3587,30 @@ receiving a KeyboardInterrupt exception</p></section>
 <span>async def <span class="ident">analog_write</span></span>(<span>self, pin, value)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Set the selected pin to the specified value.</p>
-<p>:param pin: PWM pin number</p>
+<section class="desc"><p>This is an alias for PWM_write</p>
+<p>It may be removed in the future.</p>
+<p>Set the selected pin to the specified value.</p>
+<p>:param pin: Analog output pin number</p>
 <p>:param value: Pin value (0 - 0x4000)</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def analog_write(self, pin, value):
     &#34;&#34;&#34;
+    This is an alias for PWM_write
+
+    It may be removed in the future.
+
     Set the selected pin to the specified value.
 
-    :param pin: PWM pin number
+    :param pin: Analog output pin number
 
     :param value: Pin value (0 - 0x4000)
 
     &#34;&#34;&#34;
-    if PrivateConstants.ANALOG_MESSAGE + pin &lt; 0xf0:
-        command = [PrivateConstants.ANALOG_MESSAGE + pin, value &amp; 0x7f,
-                   (value &gt;&gt; 7) &amp; 0x7f]
-        await self._send_command(command)
-    else:
-        await self._analog_write_extended(pin, value)</code></pre>
+
+    await self.pwm_write(pin, value)</code></pre>
 </details>
 </dd>
 <dt id="pymata_express.pymata_express.PymataExpress.digital_pin_write"><code class="name flex">
@@ -3457,7 +3621,9 @@ receiving a KeyboardInterrupt exception</p></section>
 <p>:param pin: arduino pin number</p>
 <p>:param value: pin value</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def digital_pin_write(self, pin, value):
     &#34;&#34;&#34;
     Set the specified pin to the specified value directly without port manipulation.
@@ -3481,7 +3647,9 @@ receiving a KeyboardInterrupt exception</p></section>
 <p>:param pin: Digital pin number</p>
 <p>:returns: A tuple of last value change and the time that it occurred</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def digital_read(self, pin):
     &#34;&#34;&#34;
     Retrieve the last data update for the specified digital pin.
@@ -3502,7 +3670,9 @@ receiving a KeyboardInterrupt exception</p></section>
 <p>:param pin: arduino pin number</p>
 <p>:param value: pin value (1 or 0)</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def digital_write(self, pin, value):
     &#34;&#34;&#34;
     Set the specified pin to the specified value.
@@ -3540,7 +3710,9 @@ receiving a KeyboardInterrupt exception</p></section>
 <section class="desc"><p>Disables analog reporting for a single analog pin.</p>
 <p>:param pin: Analog pin number. For example for A0, the number is 0.</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def disable_analog_reporting(self, pin):
     &#34;&#34;&#34;
     Disables analog reporting for a single analog pin.
@@ -3560,7 +3732,9 @@ receiving a KeyboardInterrupt exception</p></section>
 Reporting is disabled for all 8 bits in the "port"</p>
 <p>:param pin: Pin and all pins for this port</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def disable_digital_reporting(self, pin):
     &#34;&#34;&#34;
     Disables digital reporting. By turning reporting off for this pin,
@@ -3585,7 +3759,9 @@ Reporting is disabled for all 8 bits in the "port"</p>
 <p>:param differential: This value needs to be met for a callback
 to be invoked.</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def enable_analog_reporting(self, pin, callback=None, differential=1):
     &#34;&#34;&#34;
     Enables analog reporting. This is an alias for set_pin_mode_analog
@@ -3605,13 +3781,17 @@ to be invoked.</p></section>
 </code></dt>
 <dd>
 <section class="desc"><p>Enables digital reporting. By turning reporting on for all 8 bits
+Enables digital reporting. By turning reporting on for all 8 bits
 in the "port" - this is part of Firmata's protocol specification.</p>
 <p>:param pin: Pin and all pins for this port</p>
 <p>:returns: No return value</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def enable_digital_reporting(self, pin):
     &#34;&#34;&#34;
+    Enables digital reporting. By turning reporting on for all 8 bits
     Enables digital reporting. By turning reporting on for all 8 bits
     in the &#34;port&#34; - this is part of Firmata&#39;s protocol specification.
 
@@ -3633,7 +3813,9 @@ in the "port" - this is part of Firmata's protocol specification.</p>
 results.</p>
 <p>:returns: An analog map response or None if a timeout occurs</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def get_analog_map(self):
     &#34;&#34;&#34;
     This method requests a Firmata analog map query and returns the
@@ -3668,7 +3850,9 @@ results.</p>
 <section class="desc"><p>This method requests and returns a Firmata capability query report</p>
 <p>:returns: A capability report in the form of a list</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def get_capability_report(self):
     &#34;&#34;&#34;
     This method requests and returns a Firmata capability query report
@@ -3691,7 +3875,9 @@ results.</p>
 <section class="desc"><p>Return the currently active asyncio event loop</p>
 <p>:return: Active event loop</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def get_event_loop(self):
     &#34;&#34;&#34;
     Return the currently active asyncio event loop
@@ -3709,7 +3895,9 @@ results.</p>
 <section class="desc"><p>This method retrieves the Firmata firmware version</p>
 <p>:returns: Firmata firmware version</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def get_firmware_version(self):
     &#34;&#34;&#34;
     This method retrieves the Firmata firmware version
@@ -3766,7 +3954,9 @@ Pin modes reported:</p>
 <p>:param pin: Pin of interest</p>
 <p>:returns: pin state report</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def get_pin_state(self, pin):
     &#34;&#34;&#34;
     This method retrieves a pin state report for the specified pin.
@@ -3816,7 +4006,9 @@ Pin modes reported:</p>
 version, i.e. 2.5</p>
 <p>:returns: Firmata protocol version</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def get_protocol_version(self):
     &#34;&#34;&#34;
     This method returns the major and minor values for the protocol
@@ -3839,7 +4031,9 @@ version, i.e. 2.5</p>
 <section class="desc"><p>This method retrieves the PyMata Express version number</p>
 <p>:returns: PyMata Express version number.</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def get_pymata_version(self):
     &#34;&#34;&#34;
     This method retrieves the PyMata Express version number
@@ -3859,9 +4053,14 @@ the i2c device.</p>
 <p>:param register: i2c register</p>
 <p>:param number_of_bytes: number of bytes to be read</p>
 <p>:param callback: Optional callback function to report i2c data as a
-result of read command</p></section>
+result of read command</p>
+<p>callback returns a data list:</p>
+<p>[pin_type, i2c_device_address, i2c_read_register, data_bytes returned, time_stamp]</p>
+<p>The pin_type for i2c = 6</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def i2c_read(self, address, register, number_of_bytes,
                    callback=None):
     &#34;&#34;&#34;
@@ -3877,6 +4076,12 @@ result of read command</p></section>
 
     :param callback: Optional callback function to report i2c data as a
                result of read command
+
+    callback returns a data list:
+
+    [pin_type, i2c_device_address, i2c_read_register, data_bytes returned, time_stamp]
+
+    The pin_type for i2c = 6
 
     &#34;&#34;&#34;
 
@@ -3895,9 +4100,14 @@ continuous reads.</p>
 <p>:param register: i2c register</p>
 <p>:param number_of_bytes: number of bytes to be read</p>
 <p>:param callback: Optional callback function to report i2c data as a
-result of read command</p></section>
+result of read command</p>
+<p>callback returns a data list:</p>
+<p>[pin_type, i2c_device_address, i2c_read_register, data_bytes returned, time_stamp]</p>
+<p>The pin_type for i2c = 6</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def i2c_read_continuous(self, address, register, number_of_bytes,
                               callback=None):
     &#34;&#34;&#34;
@@ -3914,6 +4124,12 @@ result of read command</p></section>
 
     :param callback: Optional callback function to report i2c data as a
                result of read command
+
+    callback returns a data list:
+
+    [pin_type, i2c_device_address, i2c_read_register, data_bytes returned, time_stamp]
+
+    The pin_type for i2c = 6
 
     &#34;&#34;&#34;
 
@@ -3933,9 +4149,14 @@ required for some i2c devices such as the MMA8452Q accelerometer.</p>
 <p>:param register: i2c register</p>
 <p>:param number_of_bytes: number of bytes to be read</p>
 <p>:param callback: Optional callback function to report i2c data as a
-result of read command</p></section>
+result of read command</p>
+<p>callback returns a data list:</p>
+<p>[pin_type, i2c_device_address, i2c_read_register, data_bytes returned, time_stamp]</p>
+<p>The pin_type for i2c = 6</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def i2c_read_restart_transmission(self, address, register,
                                         number_of_bytes,
                                         callback=None):
@@ -3954,6 +4175,12 @@ result of read command</p></section>
     :param callback: Optional callback function to report i2c data as a
                result of read command
 
+    callback returns a data list:
+
+    [pin_type, i2c_device_address, i2c_read_register, data_bytes returned, time_stamp]
+
+    The pin_type for i2c = 6
+
     &#34;&#34;&#34;
 
     await self._i2c_read_request(address, register, number_of_bytes,
@@ -3968,16 +4195,18 @@ result of read command</p></section>
 <dd>
 <section class="desc"><p>This method retrieves cached i2c data to support a polling mode.</p>
 <p>:param address: I2C device address</p>
-<p>:returns: Last cached value reported</p></section>
+<p>:returns data: [raw data returned from i2c device, time-stamp]</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def i2c_read_saved_data(self, address):
     &#34;&#34;&#34;
     This method retrieves cached i2c data to support a polling mode.
 
     :param address: I2C device address
 
-    :returns: Last cached value reported
+    :returns data: [raw data returned from i2c device, time-stamp]
 
     &#34;&#34;&#34;
     if address in self.i2c_map:
@@ -3997,7 +4226,9 @@ result of read command</p></section>
 <p>:param args: A variable number of bytes to be sent to the device
 passed in as a list</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def i2c_write(self, address, args):
     &#34;&#34;&#34;
     Write data to an i2c device.
@@ -4032,7 +4263,9 @@ keep_alive_sent = period - (period * margin)</p>
 <p>:param margin: Safety margin to assure keepalives are sent before
 period expires. Range is 0.1 to 0.9</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def keep_alive(self, period=1, margin=.3):
     &#34;&#34;&#34;
     This is a FirmataExpress feature.
@@ -4052,26 +4285,23 @@ period expires. Range is 0.1 to 0.9</p></section>
     :param margin: Safety margin to assure keepalives are sent before
                 period expires. Range is 0.1 to 0.9
     &#34;&#34;&#34;
+
+    self.period = period
+    self.margin = margin
     if period &lt; 0:
         period = 0
-    if period &gt; 10:
-        period = 10
-    self.period = period
-    if margin &lt; .1:
-        margin = .1
-    if margin &gt; .9:
-        margin = .9
-    self.margin = margin
-    self.keep_alive_interval = [period &amp; 0x7f, (period &gt;&gt; 7) &amp; 0x7f]
-    await self._send_sysex(PrivateConstants.SAMPLING_INTERVAL,
-                           self.keep_alive_interval)
-    while True:
-        if self.period:
-            await asyncio.sleep(period - (period - (period * margin)))
-            await self._send_sysex(PrivateConstants.KEEP_ALIVE,
-                                   self.keep_alive_interval)
-        else:
-            break</code></pre>
+
+    # if there is a currently running keep alive task
+    # and the the period is 0, kill the task and return
+    if period == 0 and self.keep_alive_task:
+        self.keep_alive_task.cancel()
+        return
+
+    self.keep_alive_interval = period &amp; 0x7f, (period &gt;&gt; 7) &amp; 0x7f
+    # if there is no keep alive task, start one
+    if not self.keep_alive_task:
+        self.keep_alive_task = self.loop.create_task(
+            self._send_keep_alive())</code></pre>
 </details>
 </dd>
 <dt id="pymata_express.pymata_express.PymataExpress.play_tone"><code class="name flex">
@@ -4084,7 +4314,9 @@ period expires. Range is 0.1 to 0.9</p></section>
 <p>:param frequency: tone frequency in hz</p>
 <p>:param duration: duration in milliseconds</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def play_tone(self, pin_number, frequency, duration):
     &#34;&#34;&#34;
 
@@ -4112,7 +4344,9 @@ period expires. Range is 0.1 to 0.9</p></section>
 <p>:param pin_number: arduino pin number</p>
 <p>:param frequency: tone frequency in hz</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def play_tone_continuously(self, pin_number, frequency):
     &#34;&#34;&#34;
 
@@ -4138,7 +4372,9 @@ period expires. Range is 0.1 to 0.9</p></section>
 <p>This method turns tone off for the specified pin.
 :param pin_number: arduino pin number</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def play_tone_off(self, pin_number):
     &#34;&#34;&#34;
     This is a FirmataExpress Feature
@@ -4152,13 +4388,45 @@ period expires. Range is 0.1 to 0.9</p></section>
                           frequency=None, duration=None)</code></pre>
 </details>
 </dd>
+<dt id="pymata_express.pymata_express.PymataExpress.pwm_write"><code class="name flex">
+<span>async def <span class="ident">pwm_write</span></span>(<span>self, pin, value)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>is an alias for PWM_write
+Set the selected pin to the specified value.</p>
+<p>:param pin: PWM pin number</p>
+<p>:param value: Pin value (0 - 0x4000)</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def pwm_write(self, pin, value):
+    &#34;&#34;&#34;
+    is an alias for PWM_write
+    Set the selected pin to the specified value.
+
+    :param pin: PWM pin number
+
+    :param value: Pin value (0 - 0x4000)
+
+    &#34;&#34;&#34;
+    if PrivateConstants.ANALOG_MESSAGE + pin &lt; 0xf0:
+        command = [PrivateConstants.ANALOG_MESSAGE + pin, value &amp; 0x7f,
+                   (value &gt;&gt; 7) &amp; 0x7f]
+        await self._send_command(command)
+    else:
+        await self._analog_write_extended(pin, value)</code></pre>
+</details>
+</dd>
 <dt id="pymata_express.pymata_express.PymataExpress.send_reset"><code class="name flex">
 <span>async def <span class="ident">send_reset</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Send a Sysex reset command to the arduino</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def send_reset(self):
     &#34;&#34;&#34;
     Send a Sysex reset command to the arduino
@@ -4174,16 +4442,18 @@ period expires. Range is 0.1 to 0.9</p></section>
 <span>async def <span class="ident">servo_write</span></span>(<span>self, pin, position)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>This is an alias for analog_write to set
+<section class="desc"><p>This is an alias for pwm_write to set
 the position of a servo that has been
 previously configured using set_pin_mode_servo.</p>
 <p>:param pin: arduino pin number</p>
 <p>:param position: servo position</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def servo_write(self, pin, position):
     &#34;&#34;&#34;
-    This is an alias for analog_write to set
+    This is an alias for pwm_write to set
     the position of a servo that has been
     previously configured using set_pin_mode_servo.
 
@@ -4193,23 +4463,34 @@ previously configured using set_pin_mode_servo.</p>
 
     &#34;&#34;&#34;
 
-    await self.analog_write(pin, position)</code></pre>
+    await self.pwm_write(pin, position)</code></pre>
 </details>
 </dd>
 <dt id="pymata_express.pymata_express.PymataExpress.set_pin_mode_analog_input"><code class="name flex">
 <span>async def <span class="ident">set_pin_mode_analog_input</span></span>(<span>self, pin_number, callback=None, differential=1)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Set a pin as an analog input.</p>
+<section class="desc"><p>This is an alias for set_pin_mode_pwm.</p>
+<p>It may be removed in a future release.
+Set a pin as an analog input.</p>
 <p>:param pin_number: arduino pin number</p>
 <p>:param callback: async callback function</p>
 <p>:param differential: This value needs to be met for a callback
-to be invoked.</p></section>
+to be invoked.</p>
+<p>callback returns a data list:</p>
+<p>[pin_type, pin_number, pin_value, raw_time_stamp]</p>
+<p>The pin_type for analog input pins = 2</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def set_pin_mode_analog_input(self, pin_number, callback=None,
                                     differential=1):
     &#34;&#34;&#34;
+
+    This is an alias for set_pin_mode_pwm.
+
+    It may be removed in a future release.
     Set a pin as an analog input.
 
     :param pin_number: arduino pin number
@@ -4218,6 +4499,12 @@ to be invoked.</p></section>
 
     :param differential: This value needs to be met for a callback
                          to be invoked.
+
+    callback returns a data list:
+
+    [pin_type, pin_number, pin_value, raw_time_stamp]
+
+    The pin_type for analog input pins = 2
 
     &#34;&#34;&#34;
     await self._set_pin_mode(pin_number, PrivateConstants.ANALOG,
@@ -4231,9 +4518,14 @@ to be invoked.</p></section>
 <dd>
 <section class="desc"><p>Set a pin as a digital input.</p>
 <p>:param pin_number: arduino pin number</p>
-<p>:param callback: async callback function</p></section>
+<p>:param callback: async callback function</p>
+<p>callback returns a data list:</p>
+<p>[pin_type, pin_number, pin_value, raw_time_stamp]</p>
+<p>The pin_type for digital input pins = 0</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def set_pin_mode_digital_input(self, pin_number, callback=None):
     &#34;&#34;&#34;
     Set a pin as a digital input.
@@ -4241,6 +4533,12 @@ to be invoked.</p></section>
     :param pin_number: arduino pin number
 
     :param callback: async callback function
+
+    callback returns a data list:
+
+    [pin_type, pin_number, pin_value, raw_time_stamp]
+
+    The pin_type for digital input pins = 0
 
     &#34;&#34;&#34;
     await self._set_pin_mode(pin_number, PrivateConstants.INPUT, callback)</code></pre>
@@ -4252,9 +4550,14 @@ to be invoked.</p></section>
 <dd>
 <section class="desc"><p>Set a pin as a digital input with pullup enabled.</p>
 <p>:param pin_number: arduino pin number</p>
-<p>:param callback: async callback function</p></section>
+<p>:param callback: async callback function</p>
+<p>callback returns a data list:</p>
+<p>[pin_type, pin_number, pin_value, raw_time_stamp]</p>
+<p>The pin_type for digital input pins with pullups enabled = 11</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def set_pin_mode_digital_input_pullup(self, pin_number, callback=None):
     &#34;&#34;&#34;
     Set a pin as a digital input with pullup enabled.
@@ -4262,6 +4565,12 @@ to be invoked.</p></section>
     :param pin_number: arduino pin number
 
     :param callback: async callback function
+
+    callback returns a data list:
+
+    [pin_type, pin_number, pin_value, raw_time_stamp]
+
+    The pin_type for digital input pins with pullups enabled = 11
 
     &#34;&#34;&#34;
     await self._set_pin_mode(pin_number, PrivateConstants.PULLUP, callback)</code></pre>
@@ -4274,7 +4583,9 @@ to be invoked.</p></section>
 <section class="desc"><p>Set a pin as a digital output pin.</p>
 <p>:param pin_number: arduino pin number</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def set_pin_mode_digital_output(self, pin_number):
     &#34;&#34;&#34;
     Set a pin as a digital output pin.
@@ -4295,7 +4606,9 @@ This method initializes Firmata for I2c operations.</p>
 <p>:param read_delay_time (in microseconds): an optional parameter,
 default is 0</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def set_pin_mode_i2c(self, read_delay_time=0):
     &#34;&#34;&#34;
     Establish the standard Arduino i2c pins for i2c utilization.
@@ -4315,11 +4628,37 @@ default is 0</p></section>
 <span>async def <span class="ident">set_pin_mode_pwm</span></span>(<span>self, pin_number)</span>
 </code></dt>
 <dd>
+<section class="desc"><p>This is an alias for set_pint_mode_pwm_output.</p>
+<p>Set a pin as a pwm (analog output) pin.</p>
+<p>:param pin_number:arduino pin number</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_pin_mode_pwm(self, pin_number):
+    &#34;&#34;&#34;
+
+    This is an alias for set_pint_mode_pwm_output.
+
+    Set a pin as a pwm (analog output) pin.
+
+    :param pin_number:arduino pin number
+
+    &#34;&#34;&#34;
+    await self.set_pin_mode_pwm_output(pin_number)</code></pre>
+</details>
+</dd>
+<dt id="pymata_express.pymata_express.PymataExpress.set_pin_mode_pwm_output"><code class="name flex">
+<span>async def <span class="ident">set_pin_mode_pwm_output</span></span>(<span>self, pin_number)</span>
+</code></dt>
+<dd>
 <section class="desc"><p>Set a pin as a pwm (analog output) pin.</p>
 <p>:param pin_number:arduino pin number</p></section>
 <details class="source">
-<summary>Source code</summary>
-<pre><code class="python">async def set_pin_mode_pwm(self, pin_number):
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_pin_mode_pwm_output(self, pin_number):
     &#34;&#34;&#34;
     Set a pin as a pwm (analog output) pin.
 
@@ -4338,7 +4677,9 @@ default is 0</p></section>
 <p>:param min_pulse: Min pulse width in ms.</p>
 <p>:param max_pulse: Max pulse width in ms.</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def set_pin_mode_servo(self, pin, min_pulse=544, max_pulse=2400):
     &#34;&#34;&#34;
     Configure a pin as a servo pin. Set pulse min, max in ms.
@@ -4373,9 +4714,14 @@ request is ignored.</p>
 <p>:param trigger_pin: The pin number of for the trigger (transmitter).</p>
 <p>:param echo_pin: The pin number for the received echo.</p>
 <p>:param cb: optional callback function to report sonar data changes</p>
-<p>:param timeout: a tuning parameter. 80000UL equals 80ms.</p></section>
+<p>:param timeout: a tuning parameter. 80000UL equals 80ms.</p>
+<p>callback returns a data list:</p>
+<p>[pin_type, trigger_pin_number, distance_value (in cm), raw_time_stamp]</p>
+<p>The pin_type for sonar pins = 12</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def set_pin_mode_sonar(self, trigger_pin, echo_pin,
                              cb=None, timeout=80000):
     &#34;&#34;&#34;
@@ -4401,6 +4747,12 @@ request is ignored.</p>
 
     :param timeout: a tuning parameter. 80000UL equals 80ms.
 
+    callback returns a data list:
+
+    [pin_type, trigger_pin_number, distance_value (in cm), raw_time_stamp]
+
+    The pin_type for sonar pins = 12
+
 
     &#34;&#34;&#34;
     # if there is an entry for the trigger pin in existence,
@@ -4422,7 +4774,7 @@ request is ignored.</p>
         print(&#39;sonar_config: maximum number of devices assigned&#39;
               &#39; - ignoring request&#39;)
     else:
-        self.active_sonar_map[trigger_pin] = [cb, 0]
+        self.active_sonar_map[trigger_pin] = [cb, 0, 0]
 
     await self._send_sysex(PrivateConstants.SONAR_CONFIG, data)</code></pre>
 </details>
@@ -4437,7 +4789,9 @@ This is a FirmataPlus feature.</p>
 <p>:param steps_per_revolution: number of steps per motor revolution</p>
 <p>:param stepper_pins: a list of control pin numbers - either 4 or 2</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def set_pin_mode_stepper(self, steps_per_revolution, stepper_pins):
     &#34;&#34;&#34;
     This is a FirmataExpress feature.
@@ -4466,7 +4820,9 @@ This is a FirmataPlus feature.</p>
 <p>Set the analog pin to tone mode.</p>
 <p>:param pin_number: arduino pin number</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def set_pin_mode_tone(self, pin_number):
     &#34;&#34;&#34;
     This is FirmataExpress feature.
@@ -4492,7 +4848,9 @@ will ignore any interval less than
 <p>:param interval: Integer value for desired sampling interval
 in milliseconds</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def set_sampling_interval(self, interval):
     &#34;&#34;&#34;
     This method sends the desired sampling interval to Firmata.
@@ -4515,7 +4873,9 @@ in milliseconds</p></section>
 <section class="desc"><p>This method attempts an orderly shutdown
 If any exceptions are thrown, they are ignored.</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def shutdown(self):
     &#34;&#34;&#34;
     This method attempts an orderly shutdown
@@ -4537,6 +4897,7 @@ If any exceptions are thrown, they are ignored.</p></section>
         await self.send_reset()
         await self.serial_port.reset_input_buffer()
         await self.serial_port.close()
+        self.loop.close()
     except (RuntimeError, SerialException):
         pass</code></pre>
 </details>
@@ -4552,9 +4913,11 @@ dictionary.</p>
 and the 'data' is the current measured distance (in centimeters)
 for that pin. If there is no data, the value is set to None.</p>
 <p>:param trigger_pin: key into sonar data map</p>
-<p>:returns: active_sonar_map</p></section>
+<p>:returns: [last distance, raw time stamp]</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def sonar_read(self, trigger_pin):
     &#34;&#34;&#34;
     This is a FirmataExpress feature
@@ -4568,12 +4931,11 @@ for that pin. If there is no data, the value is set to None.</p>
 
     :param trigger_pin: key into sonar data map
 
-    :returns: active_sonar_map
+    :returns: [last distance, raw time stamp]
     &#34;&#34;&#34;
 
     sonar_pin_entry = self.active_sonar_map.get(trigger_pin)
-    value = sonar_pin_entry[1]
-    return value</code></pre>
+    return [sonar_pin_entry[1], sonar_pin_entry[2]]</code></pre>
 </details>
 </dd>
 <dt id="pymata_express.pymata_express.PymataExpress.start"><code class="name flex">
@@ -4587,7 +4949,9 @@ auto pin discovery.</p>
 <p>Use this method if you wish to start PymataExpress manually from
 a non-asyncio function - it used by <strong>init</strong>.</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">def start(self):
     &#34;&#34;&#34;
     This method may be called directly, if the autostart
@@ -4655,7 +5019,9 @@ discovery.
 Use this method if you wish to start PymataExpress manually from
 an asyncio function.</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def start_aio(self):
     &#34;&#34;&#34;
     This method may be called directly, if the autostart
@@ -4668,7 +5034,10 @@ an asyncio function.</p></section>
      &#34;&#34;&#34;
 
     # start the command dispatcher loop
-    self.loop = asyncio.get_event_loop()
+    if not self.loop:
+        if sys.platform == &#39;win32&#39;:
+            asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+        self.loop = asyncio.get_event_loop()
     self.the_task = self.loop.create_task(self._arduino_report_dispatcher())
 
     # get arduino firmware version and print it
@@ -4723,7 +5092,9 @@ This is a FirmataPlus feature.</p>
 <p>:param number_of_steps: 14 bits for number of steps &amp; direction
 positive is forward, negative is reverse</p></section>
 <details class="source">
-<summary>Source code</summary>
+<summary>
+<span>Expand source code</span>
+</summary>
 <pre><code class="python">async def stepper_write(self, motor_speed, number_of_steps):
     &#34;&#34;&#34;
     This is a FirmataExpress feature
@@ -4795,6 +5166,7 @@ positive is forward, negative is reverse</p></section>
 <li><code><a title="pymata_express.pymata_express.PymataExpress.play_tone" href="#pymata_express.pymata_express.PymataExpress.play_tone">play_tone</a></code></li>
 <li><code><a title="pymata_express.pymata_express.PymataExpress.play_tone_continuously" href="#pymata_express.pymata_express.PymataExpress.play_tone_continuously">play_tone_continuously</a></code></li>
 <li><code><a title="pymata_express.pymata_express.PymataExpress.play_tone_off" href="#pymata_express.pymata_express.PymataExpress.play_tone_off">play_tone_off</a></code></li>
+<li><code><a title="pymata_express.pymata_express.PymataExpress.pwm_write" href="#pymata_express.pymata_express.PymataExpress.pwm_write">pwm_write</a></code></li>
 <li><code><a title="pymata_express.pymata_express.PymataExpress.send_reset" href="#pymata_express.pymata_express.PymataExpress.send_reset">send_reset</a></code></li>
 <li><code><a title="pymata_express.pymata_express.PymataExpress.servo_write" href="#pymata_express.pymata_express.PymataExpress.servo_write">servo_write</a></code></li>
 <li><code><a title="pymata_express.pymata_express.PymataExpress.set_pin_mode_analog_input" href="#pymata_express.pymata_express.PymataExpress.set_pin_mode_analog_input">set_pin_mode_analog_input</a></code></li>
@@ -4803,6 +5175,7 @@ positive is forward, negative is reverse</p></section>
 <li><code><a title="pymata_express.pymata_express.PymataExpress.set_pin_mode_digital_output" href="#pymata_express.pymata_express.PymataExpress.set_pin_mode_digital_output">set_pin_mode_digital_output</a></code></li>
 <li><code><a title="pymata_express.pymata_express.PymataExpress.set_pin_mode_i2c" href="#pymata_express.pymata_express.PymataExpress.set_pin_mode_i2c">set_pin_mode_i2c</a></code></li>
 <li><code><a title="pymata_express.pymata_express.PymataExpress.set_pin_mode_pwm" href="#pymata_express.pymata_express.PymataExpress.set_pin_mode_pwm">set_pin_mode_pwm</a></code></li>
+<li><code><a title="pymata_express.pymata_express.PymataExpress.set_pin_mode_pwm_output" href="#pymata_express.pymata_express.PymataExpress.set_pin_mode_pwm_output">set_pin_mode_pwm_output</a></code></li>
 <li><code><a title="pymata_express.pymata_express.PymataExpress.set_pin_mode_servo" href="#pymata_express.pymata_express.PymataExpress.set_pin_mode_servo">set_pin_mode_servo</a></code></li>
 <li><code><a title="pymata_express.pymata_express.PymataExpress.set_pin_mode_sonar" href="#pymata_express.pymata_express.PymataExpress.set_pin_mode_sonar">set_pin_mode_sonar</a></code></li>
 <li><code><a title="pymata_express.pymata_express.PymataExpress.set_pin_mode_stepper" href="#pymata_express.pymata_express.PymataExpress.set_pin_mode_stepper">set_pin_mode_stepper</a></code></li>
@@ -4821,7 +5194,7 @@ positive is forward, negative is reverse</p></section>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.6.3</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5.dev2+gfcc2b1b</a>.</p>
 </footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad()</script>
