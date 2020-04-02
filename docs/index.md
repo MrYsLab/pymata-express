@@ -5,11 +5,13 @@
 
 <br>
 
-# What is pymata4? 
+# What is pymata-express? 
 
-[Pymata4](https://github.com/MrYsLab/pymata4) is a Python 3 compatible (Version 3.7 or above)  [Firmata Protocol](https://github.com/firmata/protocol) 
+[Pymata-express](https://github.com/MrYsLab/pymata-express) is a Python 3 compatible (Version 3.7 or above)  [Firmata Protocol](https://github.com/firmata/protocol) 
 client that, in conjunction with an Arduino Firmata sketch, permits you to control and monitor Arduino hardware
-remotely over a serial link.
+remotely over a serial link. 
+
+It offers an asyncio API
 
 Like its asyncio sibling [pymata-express,](https://mryslab.github.io/pymata-express/) pymata4 allows the user to take
 advantage of the advanced feature set of 
