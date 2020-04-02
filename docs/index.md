@@ -61,12 +61,12 @@ from pymata_express import pymata_express
 
 """
 Setup a pin for digital input and monitor its changes
-via callback.
+using a callback.
 """
 
 # Setup a pin for analog input and monitor its changes
 DIGITAL_PIN = 12  # arduino pin number
-WASTE_TIME = .001  # time for the idle loop
+IDLE_TIME = .001  # number of seconds for idle loop to sleep
 
 # Callback data indices
 # Callback data indices
@@ -81,6 +81,7 @@ async def the_callback(data):
     A callback function to report data changes.
     This will print the pin number, its reported value and
     the date and time when the change occurred
+
     :param data: [pin, current reported value, pin_mode, timestamp]
     """
     date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[CB_TIME]))
@@ -92,6 +93,7 @@ async def digital_in(my_board, pin):
      This function establishes the pin as a
      digital input. Any changes on this pin will
      be reported through the call back function.
+
      :param my_board: a pymata_express instance
      :param pin: Arduino pin number
      """
@@ -99,10 +101,10 @@ async def digital_in(my_board, pin):
     # set the pin mode
     await my_board.set_pin_mode_digital_input(pin, callback=the_callback)
 
-    # this is the idle loop waiting for data reports
     while True:
         try:
-            await asyncio.sleep(POLL_TIME)
+
+            await asyncio.sleep(IDLE_TIME)
         except KeyboardInterrupt:
             await board.shutdown()
             sys.exit(0)
@@ -119,6 +121,7 @@ try:
 except (KeyboardInterrupt, RuntimeError) as e:
     loop.run_until_complete(board.shutdown())
     sys.exit(0)
+
 ```
 
 Sample console output as input change events occur:
