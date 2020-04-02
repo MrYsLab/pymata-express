@@ -1,5 +1,5 @@
 """
- Copyright (c) 2018-2019 Alan Yorinks All rights reserved.
+ Copyright (c) 2020 Alan Yorinks All rights reserved.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -16,13 +16,26 @@
 """
 
 import asyncio
-import sys
 import time
-from pymata_express.pymata_express import PymataExpress
+import sys
+from pymata_express import pymata_express
 
+"""
+Setup a pin for digital input and monitor its changes
+Both polling and callback are being used in this example.
+"""
 
-# Setup a pin for digital input and monitor its changes
-# Both polling and callback are being used in this example.
+# Setup a pin for analog input and monitor its changes
+DIGITAL_PIN = 12  # arduino pin number
+POLL_TIME = 5  # number of seconds between polls
+
+# Callback data indices
+# Callback data indices
+CB_PIN_MODE = 0
+CB_PIN = 1
+CB_VALUE = 2
+CB_TIME = 3
+
 
 async def the_callback(data):
     """
@@ -32,8 +45,8 @@ async def the_callback(data):
 
     :param data: [pin, current reported value, pin_mode, timestamp]
     """
-    date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
-    print('Pin: {} Value: {} Time Stamp: {}'.format(data[0], data[1], date))
+    date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[CB_TIME]))
+    print(f'Pin: {data[CB_PIN]} Value: {data[CB_VALUE]} Time Stamp: {date}')
 
 
 async def digital_in(my_board, pin):
@@ -50,20 +63,27 @@ async def digital_in(my_board, pin):
     await my_board.set_pin_mode_digital_input(pin, callback=the_callback)
 
     while True:
-        # Do a read of the last value reported every 5 seconds and print it
-        # digital_read returns A tuple of last value change and the time that it occurred
-        value = await my_board.digital_read(pin)
-        date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(value[1]))
-        # value
-        print('Polling - last change: {} at {} '.format(value[0], date))
-        await asyncio.sleep(5)
+        try:
+            # Do a read of the last value reported every 5 seconds and print it
+            # digital_read returns A tuple of last value change and the time that it occurred
+            value, time_stamp = await my_board.digital_read(pin)
+            date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time_stamp))
+            # value
+            print(f'Polling - last value: {value} received on {date} ')
+            await asyncio.sleep(POLL_TIME)
+        except KeyboardInterrupt:
+            await board.shutdown()
+            sys.exit(0)
 
-
+# get the event loop
 loop = asyncio.get_event_loop()
-board = PymataExpress()
+
+# instantiate pymata_express
+board = pymata_express.PymataExpress()
+
 try:
-    loop.run_until_complete(digital_in(board, 13))
-    loop.run_until_complete(board.shutdown())
-except KeyboardInterrupt:
+    # start the main function
+    loop.run_until_complete(digital_in(board, 12))
+except (KeyboardInterrupt, RuntimeError) as e:
     loop.run_until_complete(board.shutdown())
     sys.exit(0)

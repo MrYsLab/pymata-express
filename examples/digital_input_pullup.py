@@ -1,5 +1,5 @@
 """
- Copyright (c) 2018-2019 Alan Yorinks All rights reserved.
+ Copyright (c) 2020 Alan Yorinks All rights reserved.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -16,9 +16,25 @@
 """
 
 import asyncio
-import time
 import sys
-from pymata_express.pymata_express import PymataExpress
+import time
+
+from pymata_express import pymata_express
+
+"""
+Setup a digital pin for input pullup and monitor its changes.
+"""
+
+# some globals
+DIGITAL_PIN = 12  # arduino pin number
+KILL_TIME = 5  # sleep time to keep forever loop open
+
+# Callback data indices
+# Callback data indices
+CB_PIN_MODE = 0
+CB_PIN = 1
+CB_VALUE = 2
+CB_TIME = 3
 
 
 # Setup a pin for digital pin input and monitor its changes
@@ -31,8 +47,8 @@ async def the_callback(data):
 
     :param data: [pin, current reported value, pin_mode, timestamp]
     """
-    date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
-    print('Pin: {} Value: {} Time Stamp: {}'.format(data[0], data[1], date))
+    date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[CB_TIME]))
+    print(f'Pin: {data[CB_PIN]} Value: {data[CB_VALUE]} Time Stamp: {date}')
 
 
 async def digital_in_pullup(my_board, pin):
@@ -50,14 +66,22 @@ async def digital_in_pullup(my_board, pin):
 
     # get pin changes forever
     while True:
-        await asyncio.sleep(.5)
+        try:
+            await asyncio.sleep(KILL_TIME)
+        except KeyboardInterrupt:
+            await board.shutdown()
+            sys.exit(0)
 
 
+# get the event loop
 loop = asyncio.get_event_loop()
-board = PymataExpress()
+
+# instantiate pymata_express
+board = pymata_express.PymataExpress()
+
 try:
-    loop.run_until_complete(digital_in_pullup(board, 13))
-    loop.run_until_complete(board.shutdown())
-except KeyboardInterrupt:
+    # start the main function
+    loop.run_until_complete(digital_in_pullup(board, 12))
+except (KeyboardInterrupt, RuntimeError) as e:
     loop.run_until_complete(board.shutdown())
     sys.exit(0)

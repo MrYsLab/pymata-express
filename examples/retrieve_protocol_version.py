@@ -1,5 +1,5 @@
 """
- Copyright (c) 2018-2019 Alan Yorinks All rights reserved.
+ Copyright (c) 2020 Alan Yorinks All rights reserved.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -20,7 +20,9 @@ import sys
 
 from pymata_express.pymata_express import PymataExpress
 
-# This example retrieves the Firmata sketch protocol number.
+"""
+This example retrieves the Firmata sketch protocol number.
+"""
 
 
 async def retrieve_protocol_version(my_board):
@@ -29,9 +31,8 @@ async def retrieve_protocol_version(my_board):
 
     :param my_board: pymata_express instance
     """
-    version = await my_board.get_protocol_version()
-    print(version)
 
+    print(f'Protocol Version: {await my_board.get_protocol_version()}')
 
 loop = asyncio.get_event_loop()
 board = PymataExpress()

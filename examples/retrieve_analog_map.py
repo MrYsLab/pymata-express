@@ -1,5 +1,5 @@
 """
- Copyright (c) 2018-2019 Alan Yorinks All rights reserved.
+ Copyright (c) 2020 Alan Yorinks All rights reserved.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -14,17 +14,18 @@
  along with this library; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
-
 import asyncio
 import sys
 
-from pymata_express.pymata_express import PymataExpress
+from pymata_express import pymata_express
 
+"""
+This example will retrieve the Firmata analog map and display
+the raw data. The pins are displayed in order. A value of 127
+indicates a digital only pin, and other values indicate the
+analog input pin number.
+"""
 
-# This example will retrieve the Firmata analog map and display
-# the raw data. The pins are displayed in order. A value of 127
-# indicates a digital only pin, and other values indicate the
-# analog input pin number.
 
 # Retrieve and print the map
 
@@ -34,7 +35,7 @@ async def retrieve_analog_map(my_board):
 
 
 loop = asyncio.get_event_loop()
-board = PymataExpress()
+board = pymata_express.PymataExpress()
 try:
     loop.run_until_complete(retrieve_analog_map(board))
     loop.run_until_complete(board.shutdown())

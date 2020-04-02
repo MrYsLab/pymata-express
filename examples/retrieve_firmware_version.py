@@ -1,5 +1,5 @@
 """
- Copyright (c) 2018-2019 Alan Yorinks All rights reserved.
+ Copyright (c) 2020 Alan Yorinks All rights reserved.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -20,8 +20,10 @@ import sys
 
 from pymata_express.pymata_express import PymataExpress
 
-# This example retrieves the Firmata version, which consists
-# of a version number and name of the file.
+"""
+This example retrieves the Firmata version, which consists
+of a version number and name of the file.
+"""
 
 
 async def retrieve_firmware_version(my_board):

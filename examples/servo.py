@@ -1,5 +1,5 @@
 """
- Copyright (c) 2018-2019 Alan Yorinks All rights reserved.
+ Copyright (c) 2020 Alan Yorinks All rights reserved.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -20,8 +20,10 @@ import sys
 
 from pymata_express.pymata_express import PymataExpress
 
-# This example will set a servo to 0, 90 and 180 degree
-# positions.
+"""
+This example will set a servo to 0, 90 and 180 degree
+positions.
+"""
 
 
 async def servo(my_board, pin):

@@ -33,6 +33,8 @@ class PinData:
         # callback reference
         self._cb = None
         self._differential = 1
+        # digital pin was set as a pullup pin
+        self._pull_up = False
 
     @property
     def current_value(self):
@@ -65,5 +67,14 @@ class PinData:
     @differential.setter
     def differential(self, value):
         self._differential = value
+
+    @property
+    def pull_up(self):
+        return self._pull_up
+
+    @pull_up.setter
+    def pull_up(self, value):
+        self._pull_up = value
+
 
 

@@ -122,7 +122,8 @@ class PymataExpressSerial:
                 # if not, relinquish control back to the event loop through the
                 # short sleep
                 if not self.my_serial.in_waiting:
-                    await asyncio.sleep(self.sleep_tune)
+                    await asyncio.sleep(self.sleep_tune*2)
+
                 # data is available.
                 # set the flag to true so that the future can "wait" until the
                 # read is completed.
