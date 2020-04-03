@@ -1122,15 +1122,12 @@ class PymataExpress:
         await self._send_sysex(PrivateConstants.SERVO_CONFIG, command)
 
     async def set_pin_mode_sonar(self, trigger_pin, echo_pin,
-                                 cb=None, timeout=80000):
+                                 callback=None, timeout=80000):
         """
         This is a FirmataExpress feature.
 
         Configure the pins,ping interval and maximum distance for an HC-SR04
         type device.
-
-        Single pin configuration may be used. To do so, set both the trigger
-        and echo pins to the same value.
 
         Up to a maximum of 6 SONAR devices is supported.
         If the maximum is exceeded a message is sent to the console and the
@@ -1142,7 +1139,7 @@ class PymataExpress:
 
         :param echo_pin: The pin number for the received echo.
 
-        :param cb: optional callback function to report sonar data changes
+        :param callback: optional callback function to report sonar data changes
 
         :param timeout: a tuning parameter. 80000UL equals 80ms.
 
@@ -1173,7 +1170,7 @@ class PymataExpress:
             print('sonar_config: maximum number of devices assigned'
                   ' - ignoring request')
         else:
-            self.active_sonar_map[trigger_pin] = [cb, 0, 0]
+            self.active_sonar_map[trigger_pin] = [callback, 0, 0]
 
         await self._send_sysex(PrivateConstants.SONAR_CONFIG, data)
 
