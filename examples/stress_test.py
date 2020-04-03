@@ -33,7 +33,7 @@ async def stress_test(my_board, loop_count, the_loop):
 
     await my_board.set_pin_mode_digital_input(12, callback=the_callback)
     await my_board.set_pin_mode_digital_input(13, callback=the_callback)
-    await my_board.set_pin_mode_analog_input(2, differential=5, callback=the_callback)
+    await my_board.set_pin_mode_analog_input(2, callback=the_callback, differential=5)
     await my_board.set_pin_mode_pwm_output(9)
     await my_board.set_pin_mode_digital_output(6)
 
@@ -43,11 +43,9 @@ async def stress_test(my_board, loop_count, the_loop):
         await my_board.digital_pin_write(6, 1)
         await my_board.pwm_write(9, 255)
         await my_board.analog_read(2)
-        await asyncio.sleep(.00001)
         await my_board.digital_pin_write(6, 0)
         await my_board.pwm_write(9, 0)
         await my_board.digital_read(13)
-        await asyncio.sleep(.00001)
 
     print(f'Execution time: {the_loop.time() - start_time} seconds for {loop_count} iterations.')
 
