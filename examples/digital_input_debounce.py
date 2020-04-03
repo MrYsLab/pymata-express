@@ -16,14 +16,23 @@
 """
 
 import asyncio
-import time
 import sys
+import time
 from pymata_express import pymata_express
 
 """
 Setup a pin for digital input and monitor its changes
 Both polling and callback are being used in this example.
+This demonstrates one possible way to debounce a switch.
 """
+
+# A global to hold the time of the last change detected.
+# Used to debounce a switch
+previous_change_time = 0
+
+# differential in time to suppress switch bounces
+# adjust this to your device "bounciness"
+debounce_time = 600
 
 # Setup a pin for analog input and monitor its changes
 DIGITAL_PIN = 12  # arduino pin number
@@ -43,10 +52,18 @@ async def the_callback(data):
     This will print the pin number, its reported value and
     the date and time when the change occurred
 
-    :param data: [pin_mode, pin, current reported valuetimestamp]
+    :param data: [pin, current reported value, pin_mode, timestamp]
     """
-    date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[CB_TIME]))
-    print(f'Pin: {data[CB_PIN]} Value: {data[CB_VALUE]} Time Stamp: {date}')
+
+    global debounce_time, previous_change_time
+    # see if we waited long enough for debounce
+    # get the reported change time
+    ts_milliseconds = int(round(data[CB_TIME] * 1000))
+
+    if ts_milliseconds - previous_change_time > debounce_time:
+        date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[CB_TIME]))
+        print(f'Pin: {data[CB_PIN]} Value: {data[CB_VALUE]} Time Stamp: {date}')
+        previous_change_time = ts_milliseconds
 
 
 async def digital_in(my_board, pin):
@@ -63,16 +80,15 @@ async def digital_in(my_board, pin):
     await my_board.set_pin_mode_digital_input(pin, callback=the_callback)
 
     while True:
+        # Do a read of the last value reported every 5 seconds and print it
+        # digital_read returns A tuple of last value change and the time that it occurred
+        value, time_stamp = await my_board.digital_read(pin)
+        date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time_stamp))
+        print(f'Polling - last change: {value} change received on {date} ')
         try:
-            # Do a read of the last value reported every 5 seconds and print it
-            # digital_read returns A tuple of last value change and the time that it occurred
-            value, time_stamp = await my_board.digital_read(pin)
-            date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time_stamp))
-            # value
-            print(f'Polling - last value: {value} received on {date} ')
             await asyncio.sleep(POLL_TIME)
-        except KeyboardInterrupt:
-            await board.shutdown()
+        except (KeyboardInterrupt, RuntimeError) as e:
+            loop.run_until_complete(board.shutdown())
             sys.exit(0)
 
 # get the event loop

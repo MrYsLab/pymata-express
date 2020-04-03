@@ -23,6 +23,7 @@ from pymata_express import pymata_express
 """
 Setup a pin for digital input and monitor its changes
 Both polling and callback are being used in this example.
+Keepalives are enabled.
 """
 
 # Setup a pin for analog input and monitor its changes
@@ -43,8 +44,11 @@ async def the_callback(data):
     This will print the pin number, its reported value and
     the date and time when the change occurred
 
-    :param data: [pin_mode, pin, current reported valuetimestamp]
+    :param data: [pin, current reported value, pin_mode, timestamp]
     """
+    date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
+    print(f'Pin: {data[0]} Value: {data[1]} Time Stamp: {date}')
+
     date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[CB_TIME]))
     print(f'Pin: {data[CB_PIN]} Value: {data[CB_VALUE]} Time Stamp: {date}')
 
@@ -58,7 +62,8 @@ async def digital_in(my_board, pin):
      :param my_board: a pymata_express instance
      :param pin: Arduino pin number
      """
-
+    # enable keep alives
+    await my_board.keep_alive()
     # set the pin mode
     await my_board.set_pin_mode_digital_input(pin, callback=the_callback)
 
@@ -69,11 +74,12 @@ async def digital_in(my_board, pin):
             value, time_stamp = await my_board.digital_read(pin)
             date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time_stamp))
             # value
-            print(f'Polling - last value: {value} received on {date} ')
+            print(f'Polling - last change: {value} change received on {date} ')
             await asyncio.sleep(POLL_TIME)
         except KeyboardInterrupt:
             await board.shutdown()
             sys.exit(0)
+
 
 # get the event loop
 loop = asyncio.get_event_loop()
