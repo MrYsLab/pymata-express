@@ -1181,6 +1181,8 @@ class PymataExpress:
         Configure stepper motor prior to operation.
         This is a FirmataPlus feature.
 
+        NOTE: Single stepper only. Multiple steppers not supported.
+
         :param steps_per_revolution: number of steps per motor revolution
 
         :param stepper_pins: a list of control pin numbers - either 4 or 2
@@ -1197,7 +1199,7 @@ class PymataExpress:
         """
         This is FirmataExpress feature.
 
-        Set the analog pin to tone mode.
+        Set a PWM pin to tone mode.
 
         :param pin_number: arduino pin number
 
