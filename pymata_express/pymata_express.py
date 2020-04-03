@@ -1641,7 +1641,7 @@ class PymataExpress:
         pin_number = data[0]
         val = int((data[PrivateConstants.MSB] << 7) +
                   data[PrivateConstants.LSB])
-        reply_data = []
+        reply_data = [PrivateConstants.SONAR]
 
         sonar_pin_entry = self.active_sonar_map[pin_number]
 
