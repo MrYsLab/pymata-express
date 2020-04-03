@@ -1086,7 +1086,7 @@ class PymataExpress:
     async def set_pin_mode_pwm(self, pin_number):
         """
 
-        This is an alias for set_pint_mode_pwm_output.
+        This is an alias for set_pin_mode_pwm_output.
 
         Set a pin as a pwm (analog output) pin.
 
