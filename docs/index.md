@@ -9,7 +9,7 @@
 
 [Pymata-Express](https://github.com/MrYsLab/pymata-express) is a Python 3 compatible
  (Version 3.7 or above)  [Firmata Protocol](https://github.com/firmata/protocol) 
-client that, in conjunction with an Arduino Firmata sketch, permits you to control and monitor Arduino hardware
+client.  When used in conjunction with an Arduino Firmata sketch, it permits you to control and monitor Arduino hardware
 remotely over a serial link.
 
 Like its conventional sibling [pymata4,](https://mryslab.github.io/pymata4/) *pymata-express* allows you to take
@@ -31,6 +31,26 @@ or polling may be used when a synchronous approach is desired.
 * A full set of working examples
 are available for download [online.](https://github.com/MrYsLab/pymata-express/tree/master/examples)
 
+## Why Use Asyncio?
+
+You may be wondering why you might consider using pymata-express instead of 
+pymata4. Pymata-express tends to execute more quickly than pymata4 and at a lower
+CPU utilization rate. 
+
+If you run the 
+stress_test.py examples available in both packages, pymata-express runs approximately 10% faster
+than pymata4 and at a significantly lower CPU utilization rate.
+
+That being said, if you are not already familiar with asyncio, you may find the asyncio learning curve is
+rather steep (but worth it, in my opinion). If you are more comfortable with
+*traditional* Python programming, then pymata4 may be the better choice.
+
+Both packages have similar APIs, and the set of examples provided in each package parallels the other.
+Compare examples to get an understanding of the differences
+
+No matter which package you pick, since the APIs between the two packages are so similar, converting an
+application from one API to another should be straight forward. 
+ 
 
 ## Advantages of Using The FirmataExpress Sketch Over StandardFirmata:
 
@@ -134,7 +154,7 @@ Pin: 12 Value: 1 Time Stamp: 2020-03-10 13:26:27
 
 ## What You Will Find In This Document
 
-* A discussion of the API methods including links to working examples.
+* A discussion of the API methods, including links to working examples.
 * A discussion about the asyncio concurrency model.
 * Installation and system requirements:
     * [Verifying The Python 3 Version.](../python_3_verify/#how-to-verify-the-python-3-version-installed) 
