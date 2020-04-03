@@ -977,7 +977,7 @@ class PymataExpress:
 
     async def pwm_write(self, pin, value):
         """
-        is an alias for PWM_write
+        This is an alias for PWM_write
         Set the selected pin to the specified value.
 
         :param pin: PWM pin number
@@ -1005,10 +1005,6 @@ class PymataExpress:
     async def set_pin_mode_analog_input(self, pin_number, callback=None,
                                         differential=1):
         """
-
-        This is an alias for set_pin_mode_pwm.
-
-        It may be removed in a future release.
         Set a pin as an analog input.
 
         :param pin_number: arduino pin number
