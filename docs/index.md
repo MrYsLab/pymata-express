@@ -12,14 +12,15 @@
 client that, in conjunction with an Arduino Firmata sketch, permits you to control and monitor Arduino hardware
 remotely over a serial link.
 
-Like its conventional sibling [pymata4,](https://mryslab.github.io/pymata4/) pymata4 allows the user to take
+Like its conventional sibling [pymata4,](https://mryslab.github.io/pymata4/) *pymata-express* allows you to take
 advantage of the advanced feature set of 
 the [FirmataExpress](https://github.com/MrYsLab/FirmataExpress) (recommended) or StandardFirmata 
-Arduino server sketches. 
-Unlike pymata4, pymata-express presents a Python [asyncio API.](https://docs.python.org/3/library/asyncio.html) 
+Arduino server sketches. However, unlike its conventional sibling, pymata-expresses implements its API
+utilizing the 
+[Python asyncio package](https://docs.python.org/3/library/asyncio.html).
 
 
-## A summary of pymata4's major features:
+## *Pymata-Express* Major Features:
 
 * Applications are programmed using the Python 3 asyncio package.
 * Data change events may be associated with a callback function for asynchronous notification, 
@@ -51,7 +52,8 @@ For example, to receive asynchronous digital pin state data change notifications
 When pymata-express executes your callback method, the data parameter will contain
 a list of items that describe the change event, including a time-stamp.
 
-Here is an object-oriented example that monitors digital pin 12 for state changes:
+Here is an example demonstrating using a callback to monitor
+the state changes of a digital input pin.
 
 ```python
 import asyncio
@@ -103,7 +105,6 @@ async def digital_in(my_board, pin):
 
     while True:
         try:
-
             await asyncio.sleep(IDLE_TIME)
         except KeyboardInterrupt:
             await board.shutdown()
@@ -131,15 +132,15 @@ Pin: 12 Value: 1 Time Stamp: 2020-03-10 13:26:27
 ```
 
 
-## What Your Will Find In This Document
+## What You Will Find In This Document
 
 * A discussion of the API methods including links to working examples.
-* A discussion about the threading model.
+* A discussion about the asyncio concurrency model.
 * Installation and system requirements:
-    * [Verifying The Python 3 Version.](./python_3_verify/#how-to-verify-the-python-3-version-installed) 
-    * [Python 3 Installation Instructions.](./python_install/#installing-python-37-or-greater)
-    * [Installing _pymata4_.](./install_pymata4/#before-you-install)
-    * [Installing FirmataExpress On Your Arduino.](./firmata_express/#installation-instructions)
+    * [Verifying The Python 3 Version.](../python_3_verify/#how-to-verify-the-python-3-version-installed) 
+    * [Python 3 Installation Instructions.](../python_install/#installing-python-37-or-greater)
+    * [Installing _pymata-express_.](../install_pymata_express/#before-you-install)
+    * [Installing FirmataExpress On Your Arduino.](../firmata_express/#installation-instructions)
 
 
 <br>
@@ -147,4 +148,4 @@ Pin: 12 Value: 1 Time Stamp: 2020-03-10 13:26:27
 
 Copyright (C) 2020 Alan Yorinks. All Rights Reserved.
 
-**Last updated 2 April 2020 For Release v1.01**
+**Last updated 5 April 2020 For Release v1.11**
