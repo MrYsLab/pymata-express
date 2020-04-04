@@ -15,11 +15,12 @@ reporting before exiting your application.
 ## disable_analog_reporting
 
 ```python
-async def disable_analog_reporting(self, pin):
-    """
+ async def disable_analog_reporting(self, pin)
+
     Disables analog reporting for a single analog pin.
+
     :param pin: Analog pin number. For example for A0, the number is 0.
-    """
+
 ```
 
 **Example:**
@@ -34,14 +35,15 @@ mode.
 
 ## enable_analog_reporting
 ```python
-async def enable_analog_reporting(self, pin, callback=None, differential=1):
-    """
+ async def enable_analog_reporting(self, pin, callback=None, differential=1)
+
     Enables analog reporting. This is an alias for set_pin_mode_analog
 
     :param pin: Analog pin number. For example for A0, the number is 0.
+
     :param callback: async callback function
-    :param differential: This value needs to be met for a callback
-                         to be invoked.
+
+    :param differential: This value needs to be met for a callback to be invoked.
 ```
 
 **Example:**
@@ -49,16 +51,15 @@ async def enable_analog_reporting(self, pin, callback=None, differential=1):
 1. [disable_enable_analog_reporting.py](https://github.com/MrYsLab/pymata-express/blob/master/examples/disable_enable_analog_reporting.py) 
 
 ## disable_digital_reporting
-```python
-async def disable_digital_reporting(self, pin):
-    """
-    Disables digital reporting. By turning reporting off for this pin,
 
-    Reporting is disabled for all 8 bits in the "port"
+```python
+ async def disable_digital_reporting(self, pin)
+
+    Disables digital reporting. By turning reporting off for this pin, Reporting is disabled for all 8 bits in the "port"
 
     :param pin: Pin and all pins for this port
-    """
 ```
+
 **Example:**
 
 1. [disable_enable_digital_reporting.py](https://github.com/MrYsLab/pymata-express/blob/master/examples/disable_enable_digital_reporting.py) 
@@ -66,12 +67,11 @@ async def disable_digital_reporting(self, pin):
 ## enable_digital_reporting
 
 ```python
-async def enable_digital_reporting(self, pin):
-        """
-        Enables digital reporting. By turning reporting on for all 8 bits
-        in the "port" - this is part of Firmata's protocol specification.
+ async def enable_digital_reporting(self, pin)
 
-        :param pin: Pin and all pins for this port
+    Enables digital reporting. By turning reporting on for all 8 bits in the "port" - this is part of Firmata's protocol specification.
+
+    :param pin: Pin and all pins for this port
 
 ```
 **Example:**

@@ -14,9 +14,9 @@ nav:
         - Exceptions: exceptions.md
     - The pymata-express Concurrency Model: concurrency.md
     - System and Installation Requirements:
-        - Verifying Python 3 Version: python_3_verify.md
+        - Verifying Python 3 Version: python_3_7_install.md
         - Python 3 Installation: python_install.md
-        - Installing pymata4: install_pymata4.md
+        - Installing pymata-express: install_pymata_express.md
         - Installing FirmataExpress: firmata_express.md
     - About: about.md
     - License: license.md

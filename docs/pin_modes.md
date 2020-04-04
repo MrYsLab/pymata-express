@@ -20,20 +20,22 @@ provided.
 ### set_pin_mode_analog_input
 
 ```python
-async def set_pin_mode_analog_input(self, pin_number, callback=None,
-                                        differential=1):
-        """
-        Set a pin as an analog input.
+ async def set_pin_mode_analog_input(self, pin_number, callback=None, differential=1)
 
-        :param pin_number: arduino pin number
-        :param callback: async callback function
-        :param differential: This value needs to be met for a callback
-                             to be invoked.
+    Set a pin as an analog input.
 
-        callback returns a data list:
-        [pin_type, pin_number, pin_value, raw_time_stamp]
+    :param pin_number: arduino pin number
 
-        The pin_type for analog input pins = 2
+    :param callback: async callback function
+
+    :param differential: This value needs to be met for a callback to be invoked.
+
+    callback returns a data list:
+
+    [pin_type, pin_number, pin_value, raw_time_stamp]
+
+    The pin_type for analog input pins = 2
+
 ```
 **Examples:**
 
@@ -56,18 +58,19 @@ For example, pin A3 is referred to as pin 3.
 
 ### set_pin_mode_digital_input
 ```python
-async def set_pin_mode_digital_input(self, pin_number, callback=None):
-        """
-        Set a pin as a digital input.
+ async def set_pin_mode_digital_input(self, pin_number, callback=None)
 
-        :param pin_number: arduino pin number
-        :param callback: async callback function
+    Set a pin as a digital input.
 
-        callback returns a data list:
-        [pin_type, pin_number, pin_value, raw_time_stamp]
+    :param pin_number: arduino pin number
 
-        The pin_type for digital input pins = 0
-        """
+    :param callback: async callback function
+
+    callback returns a data list:
+
+    [pin_type, pin_number, pin_value, raw_time_stamp]
+
+    The pin_type for digital input pins = 0
 ```
 
 **Examples:** 
@@ -83,18 +86,19 @@ Data reporting via callbacks for this pin begins immediately after this method i
 ### set_pin_mode_digital_input_pullup
 
 ```python
-async def set_pin_mode_digital_input_pullup(self, pin_number, callback=None):
-        """
-        Set a pin as a digital input with pullup enabled.
+ async def set_pin_mode_digital_input_pullup(self, pin_number, callback=None)
 
-        :param pin_number: arduino pin number
-        :param callback: async callback function
+    Set a pin as a digital input with pullup enabled.
 
-        callback returns a data list:
-        [pin_type, pin_number, pin_value, raw_time_stamp]
+    :param pin_number: arduino pin number
 
-        The pin_type for digital input pins with pullups enabled = 11
-        """
+    :param callback: async callback function
+
+    callback returns a data list:
+
+    [pin_type, pin_number, pin_value, raw_time_stamp]
+
+    The pin_type for digital input pins with pullups enabled = 11
 ```
 **Example:** 
 
@@ -106,12 +110,12 @@ Data reporting via callbacks for this pin begins immediately after this method i
 
 ### set_pin_mode_digital_output
 ```python
-async def set_pin_mode_digital_output(self, pin_number):
-        """
-        Set a pin as a digital output pin.
+ async def set_pin_mode_digital_output(self, pin_number)
 
-        :param pin_number: arduino pin number
-        """
+    Set a pin as a digital output pin.
+
+    :param pin_number: arduino pin number
+
 
 ```
 **Examples:** 
@@ -122,13 +126,13 @@ async def set_pin_mode_digital_output(self, pin_number):
 
 ### set_pin_mode_pwm
 ```python
-async def set_pin_mode_pwm(self, pin_number):
-        """
-        This is an alias for set_pin_mode_pwm_output.
+ async def set_pin_mode_pwm(self, pin_number)
 
-        Set a pin as a pwm (analog output) pin.
-        :param pin_number:arduino pin number
-        """
+    This is an alias for set_pin_mode_pwm_output.
+
+    Set a pin as a pwm (analog output) pin.
+
+    :param pin_number:arduino pin number
 ```
 
 **Example:**
@@ -142,11 +146,11 @@ to determine which pins support PWM for your board.
 ### set_pin_mode_pwm_output
 
 ```python
-async def set_pin_mode_pwm_output(self, pin_number):
-    """
+ async def set_pin_mode_pwm_output(self, pin_number)
+
     Set a pin as a pwm (analog output) pin.
+
     :param pin_number:arduino pin number
-    """
 ```
 
 **Example:**
@@ -161,15 +165,13 @@ to determine which pins support PWM for your board.
 
 ### set_pin_mode_i2c
 ```python
-async def set_pin_mode_i2c(self, read_delay_time=0):
-        """
-        Establish the standard Arduino i2c pins for i2c utilization.
+ async def set_pin_mode_i2c(self, read_delay_time=0)
 
-        NOTE: THIS METHOD MUST BE CALLED BEFORE ANY I2C REQUEST IS MADE
-        This method initializes Firmata for I2c operations.
+    Establish the standard Arduino i2c pins for i2c utilization.
 
-        :param read_delay_time (in microseconds): an optional parameter,
-                                                  default is 0
+    NOTE: THIS METHOD MUST BE CALLED BEFORE ANY I2C REQUEST IS MADE This method initializes Firmata for I2c operations.
+
+    :param read_delay_time (in microseconds): an optional parameter, default is 0
 
 ```
 
@@ -184,14 +186,15 @@ Callbacks are set within the individual i2c read methods of this API.
 
 ### set_pin_mode_servo
 ```python
-async def set_pin_mode_servo(self, pin, min_pulse=544, max_pulse=2400):
-        """
-        Configure a pin as a servo pin. Set pulse min, max in ms.
+ async def set_pin_mode_servo(self, pin, min_pulse=544, max_pulse=2400)
 
-        :param pin: Servo Pin.
-        :param min_pulse: Min pulse width in ms.
-        :param max_pulse: Max pulse width in ms.
-        """
+    Configure a pin as a servo pin. Set pulse min, max in ms.
+
+    :param pin: Servo Pin.
+
+    :param min_pulse: Min pulse width in ms.
+
+    :param max_pulse: Max pulse width in ms.
 ```
 **Example:**
 1. [servo.py](https://github.com/MrYsLab/pymata-express/blob/master/examples/servo.py)
@@ -199,28 +202,30 @@ async def set_pin_mode_servo(self, pin, min_pulse=544, max_pulse=2400):
 ### set_pin_mode_sonar
 ```python
 
-async def set_pin_mode_sonar(self, trigger_pin, echo_pin,
-                             cb=None, timeout=80000):
-    """
+ async def set_pin_mode_sonar(self, trigger_pin, echo_pin, callback=None, timeout=80000)
+
     This is a FirmataExpress feature.
 
-    Configure the pins,ping interval and maximum distance for an HC-SR04
-    type device.
+    Configure the pins,ping interval and maximum distance for an HC-SR04 type device.
 
-    Up to a maximum of 6 SONAR devices is supported.
-    If the maximum is exceeded a message is sent to the console and the
-    request is ignored.
+    Up to a maximum of 6 SONAR devices is supported. If the maximum is exceeded a message is sent to the console and the request is ignored.
 
     NOTE: data is measured in centimeters
 
     :param trigger_pin: The pin number of for the trigger (transmitter).
+
     :param echo_pin: The pin number for the received echo.
-    :param cb: optional callback function to report sonar data changes
+
+    :param callback: optional callback function to report sonar data changes
+
     :param timeout: a tuning parameter. 80000UL equals 80ms.
+
     callback returns a data list:
+
     [pin_type, trigger_pin_number, distance_value (in cm), raw_time_stamp]
+
     The pin_type for sonar pins = 12
-    """
+
 
 ```
 **Example:**
@@ -228,17 +233,18 @@ async def set_pin_mode_sonar(self, trigger_pin, echo_pin,
 
 ### set_pin_mode_stepper
 ```python
-async def set_pin_mode_stepper(self, steps_per_revolution, stepper_pins):
-        """
-        This is a FirmataExpress feature.
+ async def set_pin_mode_stepper(self, steps_per_revolution, stepper_pins)
 
-        Configure stepper motor prior to operation.
+    This is a FirmataExpress feature.
 
-        NOTE: Single stepper only. Multiple steppers not supported.
+    Configure stepper motor prior to operation. This is a FirmataPlus feature.
 
-        :param steps_per_revolution: number of steps per motor revolution
-        :param stepper_pins: a list of control pin numbers - either 4 or 2
-        """
+    NOTE: Single stepper only. Multiple steppers not supported.
+
+    :param steps_per_revolution: number of steps per motor revolution
+
+    :param stepper_pins: a list of control pin numbers - either 4 or 2
+
 ```
 **Example:**
 1. [stepper.py](https://github.com/MrYsLab/pymata-express/blob/master/examples/stepper.py)
@@ -248,14 +254,13 @@ Only a single stepper motor is supported.
 
 ### set_pin_mode_tone
 ```python
-async def set_pin_mode_tone(self, pin_number):
-        """
-        This is FirmataExpress feature.
+ async def set_pin_mode_tone(self, pin_number)
 
-        Set a PWM pin to tone mode.
+    This is FirmataExpress feature.
 
-        :param pin_number: arduino pin number
-        """
+    Set a PWM pin to tone mode.
+
+    :param pin_number: arduino pin number
 ```
 
 **Example:**

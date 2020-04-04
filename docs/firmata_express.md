@@ -20,7 +20,7 @@ and select Ultrasonic and then click Install.
 
 ## Setting The FirmataExpress Instance ID
 
-FirmataExpress, in conjunction with pymata4, has the ability to automatically
+FirmataExpress, in conjunction with pymata-express, has the ability to automatically
 associate a Pymata Express application with a specific Arduino board
 plugged into your computer.
 
