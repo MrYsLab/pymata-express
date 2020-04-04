@@ -1,206 +1,783 @@
-<!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="None">
-  
-  <link rel="shortcut icon" href="img/favicon.ico">
-  <title>User's Guide - Pymata Express</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
-  <link rel="stylesheet" href="css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "User's Guide";
-    var mkdocs_page_input_path = "index.md";
-    var mkdocs_page_url = null;
-  </script>
-  
-  <script src="js/jquery-2.1.1.min.js" defer></script>
-  <script src="js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
-  
-</head>
 
-<body class="wy-body-for-nav" role="document">
 
-  <div class="wy-grid-for-nav">
 
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-      <div class="wy-side-nav-search">
-        <a href="." class="icon icon-home"> Pymata Express</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
-  </form>
-</div>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>pymata-express</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/application.adb8469c.css">
+      
+      
+    
+    
+      <script src="assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#what-is-pymata-express" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="." title="pymata-express" aria-label="pymata-express" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
       </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1 current">
-		
-    <a class="current" href=".">User's Guide</a>
-    <ul class="subnav">
-            
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="python_3_7.install/">Verifying/Installing Python 3.7</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="install_pymata_express/">Installing Pymata Express</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="firmata_express/">FirmataExpress Installation</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="guidelines/">Pymata Express Application Development</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="examples/">Example Applications/Tests</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="api/">Pymata Express API</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="about/">About</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="license/">License</a>
-	    </li>
-          
-        </ul>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
       </div>
-      &nbsp;
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href=".">Pymata Express</a>
-      </nav>
-
-      
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href=".">Docs</a> &raquo;</li>
-    
-      
-    
-    <li>User's Guide</li>
-    <li class="wy-breadcrumbs-aside">
-      
-    </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main">
-            <div class="section">
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              pymata-express
+            </span>
+            <span class="md-header-nav__topic">
               
-                <p><img align="middle" src="./images/pymata_express.png"></p>
-<div style="text-align:center;color:#990033; font-family:times, serif; font-size:5.0em">Pymata Express</div>
-
-<p><br></p>
-<p style="color:#990033; text-align:center; font-family:Georgia; font-size:3.5em;"> The User's Guide</p>
-
-<p><br></p>
-<p><a href="https://github.com/MrYsLab/pymata-express">Pymata Express</a> is a fast and streamlined Firmata client used
-to control Arduino micro-controllers
-remotely from a Windows, Linux (including Raspberry Pi), or a macOS computer.</p>
-<p>It uses the Python 3.7 <a href="https://docs.python.org/3/library/asyncio.html">asyncio library</a>
-to support concurrency (running multiple things simultaneously)
-by taking advantage of asyncio tasks, which simplifies program design.</p>
-<p>When used with the <a href="https://github.com/MrYsLab/FirmataExpress">FirmataExpress</a> Arduino sketch,
-the serial data rate is 115200 baud, twice the speed of StandardFirmata. FirmataExpress,
-based on <a href="https://github.com/firmata/protocol/blob/master/protocol.md">StandardFirmata 2.5.8 protocol</a>,
- adds support for
-stepper motors, tone generation, HC-SRO4 distance sensors, and the auto-detection of Arduino boards.</p>
-<p>If you prefer to work with StandardFirmata or other slower sketches, Pymata Express is compatible with those
-slower versions as well.</p>
-<p>Included with the distribution are <a href="https://mryslab.github.io/pymata-express/api/">full API documentation</a>
-and a set of <a href="https://github.com/MrYsLab/pymata-express/tree/master/examples">working examples.</a></p>
-<p><br>
-<br></p>
-<p>Last updated 10 January 2020 For Release v1.10</p>
-<p>Copyright (C) 2019-2020 Alan Yorinks. All Rights Reserved.</p>
+                What Is pymata-express?
               
-            </div>
-          </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="python_3_7.install/" class="btn btn-neutral float-right" title="Verifying/Installing Python 3.7">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-    </div>
-  
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
-    
-  </div>
-
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-</footer>
-      
+            </span>
+          
         </div>
       </div>
-
-    </section>
-
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-      
-        <span style="margin-left: 15px"><a href="python_3_7.install/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
 </div>
-    <script>var base_url = '.';</script>
-    <script src="js/theme.js" defer></script>
-      <script src="search/main.js" defer></script>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="." title="pymata-express" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    pymata-express
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
 
-</body>
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        What Is pymata-express?
+      </label>
+    
+    <a href="." title="What Is pymata-express?" class="md-nav__link md-nav__link--active">
+      What Is pymata-express?
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pymata-express-major-features" class="md-nav__link">
+    Pymata-Express Major Features:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-use-asyncio" class="md-nav__link">
+    Why Use Asyncio?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advantages-of-using-the-firmataexpress-sketch-over-standardfirmata" class="md-nav__link">
+    Advantages of Using The FirmataExpress Sketch Over StandardFirmata:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-intuitive-and-easy-to-use-api" class="md-nav__link">
+    An Intuitive And Easy To use API
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-will-find-in-this-document" class="md-nav__link">
+    What You Will Find In This Document
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      The pymata-express API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        The pymata-express API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="polling/" title="Understanding Input Data Collection" class="md-nav__link">
+      Understanding Input Data Collection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="init/" title="The __init__ Method" class="md-nav__link">
+      The __init__ Method
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="pin_modes/" title="Setting Pin Modes" class="md-nav__link">
+      Setting Pin Modes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="enable_disable/" title="Enabling/Disabling Analog And Digital Reporting" class="md-nav__link">
+      Enabling/Disabling Analog And Digital Reporting
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="pin_changes/" title="Reading Input Data Via Polling" class="md-nav__link">
+      Reading Input Data Via Polling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="device_writes/" title="Writing Values To Pins And Selected Devices" class="md-nav__link">
+      Writing Values To Pins And Selected Devices
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="i2c/" title="I2C Reads And Writes" class="md-nav__link">
+      I2C Reads And Writes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="report_requests/" title="Report Requests" class="md-nav__link">
+      Report Requests
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="management/" title="Management Requests" class="md-nav__link">
+      Management Requests
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="exceptions/" title="Exceptions" class="md-nav__link">
+      Exceptions
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="concurrency/" title="The pymata-express Concurrency Model" class="md-nav__link">
+      The pymata-express Concurrency Model
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      System and Installation Requirements
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        System and Installation Requirements
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="python_3_7_install/" title="Verifying Python 3 Version" class="md-nav__link">
+      Verifying Python 3 Version
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="python_install/" title="Python 3 Installation" class="md-nav__link">
+      Python 3 Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="install_pymata_express/" title="Installing pymata-express" class="md-nav__link">
+      Installing pymata-express
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="firmata_express/" title="Installing FirmataExpress" class="md-nav__link">
+      Installing FirmataExpress
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="about/" title="About" class="md-nav__link">
+      About
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pymata-express-major-features" class="md-nav__link">
+    Pymata-Express Major Features:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-use-asyncio" class="md-nav__link">
+    Why Use Asyncio?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advantages-of-using-the-firmataexpress-sketch-over-standardfirmata" class="md-nav__link">
+    Advantages of Using The FirmataExpress Sketch Over StandardFirmata:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-intuitive-and-easy-to-use-api" class="md-nav__link">
+    An Intuitive And Easy To use API
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-will-find-in-this-document" class="md-nav__link">
+    What You Will Find In This Document
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <div style="text-align:center;color:#990033; font-family:times, serif; font-size:3.5em"><i>pymata-express</i></div>
+
+<div style="text-align:center;color:#990033; font-family:times, serif; font-size:2em"><i>A User's Guide</i></div>
+
+<p><br></p>
+<h1 id="what-is-pymata-express">What is pymata-express?</h1>
+<p><a href="https://github.com/MrYsLab/pymata-express">Pymata-Express</a> is a Python 3 compatible
+ (Version 3.7 or above)  <a href="https://github.com/firmata/protocol">Firmata Protocol</a> 
+client.  When used in conjunction with an Arduino Firmata sketch, it permits you to control and monitor Arduino hardware
+remotely over a serial link.</p>
+<p>Like its conventional sibling <a href="https://mryslab.github.io/pymata4/">pymata4,</a> <em>pymata-express</em> allows you to take
+advantage of the advanced feature set of 
+the <a href="https://github.com/MrYsLab/FirmataExpress">FirmataExpress</a> (recommended) or StandardFirmata 
+Arduino server sketches. However, unlike its conventional sibling, pymata-expresses implements its API
+utilizing the 
+<a href="https://docs.python.org/3/library/asyncio.html">Python asyncio package</a>.</p>
+<h2 id="pymata-express-major-features"><em>Pymata-Express</em> Major Features:</h2>
+<ul>
+<li>Applications are programmed using the Python 3 asyncio package.</li>
+<li>Data change events may be associated with a callback function for asynchronous notification, 
+or polling may be used when a synchronous approach is desired.</li>
+<li>Each data change event is time-stamped and stored.</li>
+<li><a href="https://htmlpreview.github.com/?https://github.com/MrYsLab/pymata-express/blob/master/html/pymata_express/index.html">API Reference Documentation</a> 
+ is available online.</li>
+<li>A full set of working examples
+are available for download <a href="https://github.com/MrYsLab/pymata-express/tree/master/examples">online.</a></li>
+</ul>
+<h2 id="why-use-asyncio">Why Use Asyncio?</h2>
+<p>You may be wondering why you might consider using pymata-express instead of 
+pymata4. Pymata-express tends to execute more quickly than pymata4 and at a lower
+CPU utilization rate. </p>
+<p>If you run the 
+stress_test.py examples available in both packages, pymata-express runs approximately 10% faster
+than pymata4 and at a significantly lower CPU utilization rate.</p>
+<p>That being said, if you are not already familiar with asyncio, you may find the asyncio learning curve is
+rather steep (but worth it, in my opinion). If you are more comfortable with
+<em>traditional</em> Python programming, then pymata4 may be the better choice.</p>
+<p>Both packages have similar APIs, and the set of examples provided in each package parallels the other.
+Compare examples to get an understanding of the differences</p>
+<p>No matter which package you pick, since the APIs between the two packages are so similar, converting an
+application from one API to another should be straight forward. </p>
+<h2 id="advantages-of-using-the-firmataexpress-sketch-over-standardfirmata">Advantages of Using The FirmataExpress Sketch Over StandardFirmata:</h2>
+<ul>
+<li>The data link runs at 115200, twice the speed of StandardFirmata.</li>
+<li>Advanced Arduino auto-discovery support is provided.</li>
+<li>Additional hardware support is provided for:<ul>
+<li>HC-SR04 ultrasonic distance sensors.</li>
+<li>Stepper motors.</li>
+<li>Tone generation for piezo devices.</li>
+</ul>
+</li>
+</ul>
+<h2 id="an-intuitive-and-easy-to-use-api">An Intuitive And Easy To use API</h2>
+<p>For example, to receive asynchronous digital pin state data change notifications, you simply do the following:</p>
+<ol>
+<li>Set a pin mode for the pin and register a callback function.</li>
+<li>Have your application sit in a loop waiting for notifications.</li>
+</ol>
+<p>When pymata-express executes your callback method, the data parameter will contain
+a list of items that describe the change event, including a time-stamp.</p>
+<p>Here is an example demonstrating using a callback to monitor
+the state changes of a digital input pin.</p>
+<pre><code class="python">import asyncio
+import time
+import sys
+from pymata_express import pymata_express
+
+&quot;&quot;&quot;
+Setup a pin for digital input and monitor its changes
+using a callback.
+&quot;&quot;&quot;
+
+# Setup a pin for analog input and monitor its changes
+DIGITAL_PIN = 12  # arduino pin number
+IDLE_TIME = .001  # number of seconds for idle loop to sleep
+
+# Callback data indices
+# Callback data indices
+CB_PIN_MODE = 0
+CB_PIN = 1
+CB_VALUE = 2
+CB_TIME = 3
+
+
+async def the_callback(data):
+    &quot;&quot;&quot;
+    A callback function to report data changes.
+    This will print the pin number, its reported value and
+    the date and time when the change occurred
+
+    :param data: [pin, current reported value, pin_mode, timestamp]
+    &quot;&quot;&quot;
+    date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[CB_TIME]))
+    print(f'Pin: {data[CB_PIN]} Value: {data[CB_VALUE]} Time Stamp: {date}')
+
+
+async def digital_in(my_board, pin):
+    &quot;&quot;&quot;
+     This function establishes the pin as a
+     digital input. Any changes on this pin will
+     be reported through the call back function.
+
+     :param my_board: a pymata_express instance
+     :param pin: Arduino pin number
+     &quot;&quot;&quot;
+
+    # set the pin mode
+    await my_board.set_pin_mode_digital_input(pin, callback=the_callback)
+
+    while True:
+        try:
+            await asyncio.sleep(IDLE_TIME)
+        except KeyboardInterrupt:
+            await board.shutdown()
+            sys.exit(0)
+
+# get the event loop
+loop = asyncio.get_event_loop()
+
+# instantiate pymata_express
+board = pymata_express.PymataExpress()
+
+try:
+    # start the main function
+    loop.run_until_complete(digital_in(board, 12))
+except (KeyboardInterrupt, RuntimeError) as e:
+    loop.run_until_complete(board.shutdown())
+    sys.exit(0)
+
+</code></pre>
+
+<p>Sample console output as input change events occur:</p>
+<pre><code class="bash">Pin: 12 Value: 0 Time Stamp: 2020-03-10 13:26:22
+Pin: 12 Value: 1 Time Stamp: 2020-03-10 13:26:27
+</code></pre>
+
+<h2 id="what-you-will-find-in-this-document">What You Will Find In This Document</h2>
+<ul>
+<li>A discussion of the API methods, including links to working examples.</li>
+<li>A discussion about the asyncio concurrency model.</li>
+<li>Installation and system requirements:<ul>
+<li><a href="../python_3_verify/#how-to-verify-the-python-3-version-installed">Verifying The Python 3 Version.</a> </li>
+<li><a href="../python_install/#installing-python-37-or-greater">Python 3 Installation Instructions.</a></li>
+<li><a href="../install_pymata_express/#before-you-install">Installing <em>pymata-express</em>.</a></li>
+<li><a href="../firmata_express/#installation-instructions">Installing FirmataExpress On Your Arduino.</a></li>
+</ul>
+</li>
+</ul>
+<p><br>
+<br></p>
+<p>Copyright (C) 2020 Alan Yorinks. All Rights Reserved.</p>
+<p><strong>Last updated 5 April 2020 For Release v1.11</strong></p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+        
+          <a href="polling/" title="Understanding Input Data Collection" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Understanding Input Data Collection
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"."}})</script>
+      
+    
+  </body>
 </html>
-
-<!--
-MkDocs version : 1.0.4
-Build Date UTC : 2020-03-05 00:23:52
--->

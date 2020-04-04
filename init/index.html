@@ -36,7 +36,7 @@
     
     
       
-        <title>Installing pymata-express - pymata-express</title>
+        <title>The __init__ Method - pymata-express</title>
       
     
     
@@ -75,7 +75,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#before-you-install" tabindex="0" class="md-skip">
+      <a href="#the-pymataexpress-class" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -101,7 +101,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Installing pymata-express
+                The __init__ Method
               
             </span>
           
@@ -180,10 +180,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
     <label class="md-nav__link" for="nav-2">
       The pymata-express API
@@ -211,11 +213,125 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../init/" title="The __init__ Method" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        The __init__ Method
+      </label>
+    
+    <a href="./" title="The __init__ Method" class="md-nav__link md-nav__link--active">
       The __init__ Method
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-the-pymataexpress-__init__-parameters" class="md-nav__link">
+    Understanding The PymataExpress __init__ Parameters
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-auto-discovery-parameters-com_port-baud_rate-and-arduino_instance" class="md-nav__link">
+    The Auto-Discovery Parameters - com_port, baud_rate, and arduino_instance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#com_port" class="md-nav__link">
+    com_port
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#baud_rate" class="md-nav__link">
+    baud_rate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arduino_instance_id" class="md-nav__link">
+    arduino_instance_id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arduino_wait" class="md-nav__link">
+    arduino_wait
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sleep_tune" class="md-nav__link">
+    sleep_tune
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#autostart" class="md-nav__link">
+    autostart
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loop" class="md-nav__link">
+    loop
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shutdown_on_exception" class="md-nav__link">
+    shutdown_on_exception
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -336,12 +452,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
       System and Installation Requirements
@@ -381,20 +495,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="./" title="Installing pymata-express" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../install_pymata_express/" title="Installing pymata-express" class="md-nav__link">
       Installing pymata-express
     </a>
-    
   </li>
 
         
@@ -456,6 +561,98 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-the-pymataexpress-__init__-parameters" class="md-nav__link">
+    Understanding The PymataExpress __init__ Parameters
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-auto-discovery-parameters-com_port-baud_rate-and-arduino_instance" class="md-nav__link">
+    The Auto-Discovery Parameters - com_port, baud_rate, and arduino_instance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#com_port" class="md-nav__link">
+    com_port
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#baud_rate" class="md-nav__link">
+    baud_rate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arduino_instance_id" class="md-nav__link">
+    arduino_instance_id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arduino_wait" class="md-nav__link">
+    arduino_wait
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sleep_tune" class="md-nav__link">
+    sleep_tune
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#autostart" class="md-nav__link">
+    autostart
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loop" class="md-nav__link">
+    loop
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shutdown_on_exception" class="md-nav__link">
+    shutdown_on_exception
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -467,27 +664,108 @@
               
                 
                 
-                <h1 id="before-you-install">BEFORE YOU INSTALL</h1>
-<p>Pymata Express requires Python 3.7 or above.
-Please see the <a href="https://mryslab.github.io/pymata-express/python_3_7.install/">Verifying/Installing Python 3.7</a>
- section of this
-document to verify or install Python on your computer.</p>
-<h1 id="installing-pymata-express">INSTALLING PYMATA EXPRESS</h1>
-<p>To install Pymata Express on Linux (including Raspberry Pi) and macOS computers, open a terminal window and type:</p>
-<pre><code>sudo pip3 install pymata-express
+                <h1 id="the-pymataexpress-class">The PymataExpress Class</h1>
+<p>To use the PymataExpress class, you must first import it:</p>
+<pre><code class="python">from pymata_express import pymata_express
 </code></pre>
 
-<p>For Windows users type:</p>
-<pre><code>pip install pymata-express
+<p>and then instantiate it:</p>
+<pre><code class="python">board = pymata_express.PymataExpress()
 </code></pre>
 
-<p>You can find the code for pymata-express on <a href="https://github.com/MrYsLab/pymata-express">GitHub</a>.</p>
-<h1 id="accessing-the-advanced-feature-set">ACCESSING THE ADVANCED FEATURE SET</h1>
-<p>If you wish to use all the advanced features of Pymata Express, install the FirmataExpress Arduino sketch on your Arduino
-device. You can find the installation instructions <a href="https://mryslab.github.io/pymata-express/firmata_express/">here</a>.</p>
+<p>The <em>board</em> variable contains a reference to the PymataExpress instance. You use this
+reference to access the PymataExpress methods of the instance. </p>
+<p>For example, to cleanly shutdown your PymataExpress application, you might call
+the <em>shutdown</em> method:</p>
+<pre><code class="python">board.shutdown()
+</code></pre>
+
+<p>Of course, you can name the instance variable, anything that is meaningful to you.
+There is nothing <em>magic</em> about the name <em>board</em>.</p>
+<h2 id="understanding-the-pymataexpress-__init__-parameters">Understanding The PymataExpress <em>__init__</em> Parameters</h2>
+<pre><code class="python">def __init__(self, com_port=None, baud_rate=115200,
+                 arduino_instance_id=1, arduino_wait=4,
+                 sleep_tune=0.0001, autostart=True,
+                 loop=None, shutdown_on_exception=True):
+        &quot;&quot;&quot;
+        If you are using the Firmata Express Arduino sketch,
+        and have a single Arduino connected to your computer,
+        then you may accept all the default values.
+        If you are using some other Firmata sketch, then
+        you must specify both the com_port and baudrate.
+        :param com_port: e.g. COM3 or /dev/ttyACM0.
+        :param baud_rate: Match this to the Firmata sketch in use.
+        :param arduino_instance_id: If you are using the Firmata
+                                    Express sketch, match this
+                                    value to that in the sketch.
+        :param arduino_wait: Amount of time to wait for an Arduino to
+                             fully reset itself.
+        :param sleep_tune: A tuning parameter (typically not changed by user)
+        :param autostart: If you wish to call the start method within
+                          your application, then set this to False.
+        :param loop: optional user provided event loop
+        :param shutdown_on_exception: call shutdown before raising
+                                      a RunTimeError exception, or
+                                      receiving a KeyboardInterrupt exception
+</code></pre>
+
+<p>There are many optional parameters available when you instantiate PymataExpress. </p>
+<p>If you are using FiramataExpress with a single Arduino, then in most cases, you
+ can accept all of the default parameters provided in the __init__ method.</p>
+<p>But there are times when you may wish to take advantage of the flexibility provided
+by the __init__ method parameters, so let's explore the definition and purpose
+of each parameter:</p>
+<h3 id="the-auto-discovery-parameters-com_port-baud_rate-and-arduino_instance">The Auto-Discovery Parameters - com_port, baud_rate, and arduino_instance</h3>
+<p>By accepting the default values for these parameters, pymata-express assumes you have
+flashed your Arduino with FirmataExpress. </p>
+<h3 id="com_port">com_port</h3>
+<p>The <em>com_port</em> parameter specifies a serial com_port, such as COM4 or '/dev/ttyACM0'
+ used for PC to Arduino communication. If the default value of <em>None</em> is accepted,
+ pymata-express will attempt to find the connected Arduino automatically.</p>
+<h3 id="baud_rate">baud_rate</h3>
+<p>The default for this parameter is 115200, matching the speed set in the 
+FirmataExpress sketch. If you wish to use StandardFirmata instead of
+FirmataExpress, you will set the baud_rate to 57600. If you specify the baud_rate
+and accept the default com_port value, pymata-express attempts to find a connected Arduino.</p>
+<h3 id="arduino_instance_id">arduino_instance_id</h3>
+<p>This parameter is only valid when using FirmataExpress. This parameter
+allows pymata-express to connect to an Arduino with a matching ID.</p>
+<p>This is useful if you have multiple Arduino's plugged into your computer,
+and you wish to have a specific Arduino selected for connection. </p>
+<p>StandardFirmata does not have this capability, and auto-discovery connects to the first
+Arduino it finds. This is not always the desired result.</p>
+<p>The default value for the arduino_instance_id for both pymata-express and FirmataExpress is 1.</p>
+<p>Instructions for changing the FirmataExpress value may be found
+in the <a href="../firmata_express"><strong>Installing FirmataExpress</strong></a> section of this document.</p>
+<h3 id="arduino_wait">arduino_wait</h3>
+<p>This parameter specifies the amount of time that pymata-express assumes it takes for an Arduino 
+to reboot the FirmataExpress (or StandardFirmata) sketch from a power-up or reset.</p>
+<p>The default is 4 seconds. If the Arduino is not fully booted when com_port auto-discovery begins,
+auto-discovery will fail.</p>
+<h3 id="sleep_tune">sleep_tune</h3>
+<p>This is an asyncio.sleep value expressed in seconds. It is used to yield the asyncio loop 
+so that other tasks may run without blocking.
+The default value is 0.000001 seconds.</p>
+<h3 id="autostart">autostart</h3>
+<p>If the default of True is accepted, the class will continue with its initialization. There
+may be times when you wish to control when that occurs within your application. If set to False,
+you may use the non-asyncio <em>start()</em> method, or the async version, <em>start_aio()</em>.</p>
+<h3 id="loop">loop</h3>
+<p>If the default of <em>None</em> is accepted for this parameter, the default system asyncio event loop is 
+used. If you should need to specify your own loop, then this parameter should be set with your custom loop.</p>
+<h3 id="shutdown_on_exception">shutdown_on_exception</h3>
+<p>When this parameter is set to True, the shutdown method is automatically
+called when an exception is detected. This disables reporting for both digital and analog pins, 
+in addition to closing the serial port.</p>
+<p>By setting this parameter to False, the Arduino may continue to send data to
+your application even after restarting it.</p>
+<p>The default is True and recommended to be used.</p>
+<h3 id="examples">Examples</h3>
+<p>Each <a href="https://github.com/MrYsLab/pymata-express/tree/master/examples">example on GitHub</a> 
+   demonstrates instantiating the PymataExpress class.</p>
 <p><br>
 <br></p>
-<p>Copyright (C) 2019-2020 Alan Yorinks. All Rights Reserved.</p>
+<p>Copyright (C) 2020 Alan Yorinks. All Rights Reserved.</p>
                 
                   
                 
@@ -509,7 +787,7 @@ device. You can find the installation instructions <a href="https://mryslab.gith
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../python_install/" title="Python 3 Installation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../polling/" title="Understanding Input Data Collection" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -518,19 +796,19 @@ device. You can find the installation instructions <a href="https://mryslab.gith
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Python 3 Installation
+                Understanding Input Data Collection
               </span>
             </div>
           </a>
         
         
-          <a href="../firmata_express/" title="Installing FirmataExpress" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../pin_modes/" title="Setting Pin Modes" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Installing FirmataExpress
+                Setting Pin Modes
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
