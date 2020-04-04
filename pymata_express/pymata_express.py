@@ -433,7 +433,7 @@ class PymataExpress:
 
         :param pin: Analog pin number (ex. A2 is specified as 2)
 
-        :returns: A tuple of last value change and the time that it occurred
+        :returns: A list of last value change and the time that it occurred
         """
 
         return self.analog_pins[pin].current_value, self.analog_pins[pin].event_time
@@ -475,7 +475,7 @@ class PymataExpress:
 
         :param pin: Digital pin number
 
-        :returns: A tuple of last value change and the time that it occurred
+        :returns: A list of last value change and the time that it occurred
 
         """
         return self.digital_pins[pin].current_value, self.digital_pins[pin].event_time
@@ -561,7 +561,6 @@ class PymataExpress:
 
     async def enable_digital_reporting(self, pin):
         """
-        Enables digital reporting. By turning reporting on for all 8 bits
         Enables digital reporting. By turning reporting on for all 8 bits
         in the "port" - this is part of Firmata's protocol specification.
 
