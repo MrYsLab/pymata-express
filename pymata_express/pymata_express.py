@@ -433,7 +433,7 @@ class PymataExpress:
 
         :param pin: Analog pin number (ex. A2 is specified as 2)
 
-        :returns: A list of last value change and the time that it occurred
+        :returns:  [last value reported, time-stamp]
         """
 
         return self.analog_pins[pin].current_value, self.analog_pins[pin].event_time
@@ -475,7 +475,7 @@ class PymataExpress:
 
         :param pin: Digital pin number
 
-        :returns: A list of last value change and the time that it occurred
+        :returns:  [last value reported, time-stamp]
 
         """
         return self.digital_pins[pin].current_value, self.digital_pins[pin].event_time
@@ -931,6 +931,7 @@ class PymataExpress:
         This is a FirmataExpress Feature
 
         This method turns tone off for the specified pin.
+
         :param pin_number: arduino pin number
 
         """

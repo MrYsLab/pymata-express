@@ -474,7 +474,7 @@ class PymataExpress:
 
         :param pin: Analog pin number (ex. A2 is specified as 2)
 
-        :returns: A list of last value change and the time that it occurred
+        :returns:  [last value reported, time-stamp]
         &#34;&#34;&#34;
 
         return self.analog_pins[pin].current_value, self.analog_pins[pin].event_time
@@ -516,7 +516,7 @@ class PymataExpress:
 
         :param pin: Digital pin number
 
-        :returns: A list of last value change and the time that it occurred
+        :returns:  [last value reported, time-stamp]
 
         &#34;&#34;&#34;
         return self.digital_pins[pin].current_value, self.digital_pins[pin].event_time
@@ -972,6 +972,7 @@ class PymataExpress:
         This is a FirmataExpress Feature
 
         This method turns tone off for the specified pin.
+
         :param pin_number: arduino pin number
 
         &#34;&#34;&#34;
@@ -2233,7 +2234,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
         :param pin: Analog pin number (ex. A2 is specified as 2)
 
-        :returns: A list of last value change and the time that it occurred
+        :returns:  [last value reported, time-stamp]
         &#34;&#34;&#34;
 
         return self.analog_pins[pin].current_value, self.analog_pins[pin].event_time
@@ -2275,7 +2276,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
         :param pin: Digital pin number
 
-        :returns: A list of last value change and the time that it occurred
+        :returns:  [last value reported, time-stamp]
 
         &#34;&#34;&#34;
         return self.digital_pins[pin].current_value, self.digital_pins[pin].event_time
@@ -2731,6 +2732,7 @@ receiving a KeyboardInterrupt exception</p></section>
         This is a FirmataExpress Feature
 
         This method turns tone off for the specified pin.
+
         :param pin_number: arduino pin number
 
         &#34;&#34;&#34;
@@ -3554,7 +3556,8 @@ receiving a KeyboardInterrupt exception</p></section>
 <dd>
 <section class="desc"><p>Retrieve the last data update for the specified analog pin.</p>
 <p>:param pin: Analog pin number (ex. A2 is specified as 2)</p>
-<p>:returns: A list of last value change and the time that it occurred</p></section>
+<p>:returns:
+[last value reported, time-stamp]</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3565,7 +3568,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
     :param pin: Analog pin number (ex. A2 is specified as 2)
 
-    :returns: A list of last value change and the time that it occurred
+    :returns:  [last value reported, time-stamp]
     &#34;&#34;&#34;
 
     return self.analog_pins[pin].current_value, self.analog_pins[pin].event_time</code></pre>
@@ -3633,7 +3636,8 @@ receiving a KeyboardInterrupt exception</p></section>
 <dd>
 <section class="desc"><p>Retrieve the last data update for the specified digital pin.</p>
 <p>:param pin: Digital pin number</p>
-<p>:returns: A list of last value change and the time that it occurred</p></section>
+<p>:returns:
+[last value reported, time-stamp]</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3644,7 +3648,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
     :param pin: Digital pin number
 
-    :returns: A list of last value change and the time that it occurred
+    :returns:  [last value reported, time-stamp]
 
     &#34;&#34;&#34;
     return self.digital_pins[pin].current_value, self.digital_pins[pin].event_time</code></pre>
@@ -4355,8 +4359,8 @@ period expires. Range is 0.1 to 0.9</p></section>
 </code></dt>
 <dd>
 <section class="desc"><p>This is a FirmataExpress Feature</p>
-<p>This method turns tone off for the specified pin.
-:param pin_number: arduino pin number</p></section>
+<p>This method turns tone off for the specified pin.</p>
+<p>:param pin_number: arduino pin number</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4366,6 +4370,7 @@ period expires. Range is 0.1 to 0.9</p></section>
     This is a FirmataExpress Feature
 
     This method turns tone off for the specified pin.
+
     :param pin_number: arduino pin number
 
     &#34;&#34;&#34;
