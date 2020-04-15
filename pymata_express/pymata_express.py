@@ -172,7 +172,7 @@ class PymataExpress:
 
         print('{}{}{}'.format('\n', 'Pymata Express Version ' +
                               PrivateConstants.PYMATA_EXPRESS_VERSION,
-                              '\nCopyright (c) 2018-2019 Alan Yorinks All '
+                              '\nCopyright (c) 2018-2020 Alan Yorinks All '
                               'rights reserved.\n'))
         if not self.com_port:
             # user did not specify a com_port
@@ -1236,6 +1236,7 @@ class PymataExpress:
                 self.digital_pins[pin_number].cb = callback
             elif pin_state == PrivateConstants.PULLUP:
                 self.digital_pins[pin_number].cb = callback
+                self.digital_pins[pin_number].pull_up = True
             elif pin_state == PrivateConstants.ANALOG:
                 self.analog_pins[pin_number].cb = callback
                 self.analog_pins[pin_number].differential = differential
@@ -1489,6 +1490,8 @@ class PymataExpress:
             # get pin value
             value = port_data & 0x01
 
+            last_value = self.digital_pins[pin].current_value
+
             # set the current value in the pin structure
             self.digital_pins[pin].current_value = value
             time_stamp = time.time()
@@ -1503,8 +1506,9 @@ class PymataExpress:
             else:
                 message = [PrivateConstants.INPUT, pin, value, time_stamp]
 
-            if self.digital_pins[pin].cb:
-                await self.digital_pins[pin].cb(message)
+            if last_value != value:
+                if self.digital_pins[pin].cb:
+                    await self.digital_pins[pin].cb(message)
 
             port_data >>= 1
 
