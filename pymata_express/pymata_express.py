@@ -39,8 +39,9 @@ class PymataExpress:
     # noinspection PyPep8,PyPep8
     def __init__(self, com_port=None, baud_rate=115200,
                  arduino_instance_id=1, arduino_wait=4,
-                 sleep_tune=0.0001, autostart=True,
-                 loop=None, shutdown_on_exception=True):
+                 sleep_tune=0.0001, loop=None,
+                 shutdown_on_exception=True,
+                 close_loop_on_shutdown=True):
         """
         If you are using the Firmata Express Arduino sketch,
         and have a single Arduino connected to your computer,
@@ -62,14 +63,15 @@ class PymataExpress:
 
         :param sleep_tune: A tuning parameter (typically not changed by user)
 
-        :param autostart: If you wish to call the start method within
-                          your application, then set this to False.
-
         :param loop: optional user provided event loop
 
         :param shutdown_on_exception: call shutdown before raising
                                       a RunTimeError exception, or
                                       receiving a KeyboardInterrupt exception
+
+        :param close_loop_on_shutdown: stop and close the event loop loop
+                                       when a shutdown is called or a serial
+                                       error occurs
         """
         # check to make sure that Python interpreter is version 3.7 or greater
         python_version = sys.version_info
@@ -86,7 +88,6 @@ class PymataExpress:
         self.arduino_instance_id = arduino_instance_id
         self.arduino_wait = arduino_wait
         self.sleep_tune = sleep_tune
-        self.autostart = autostart
         # self.legacy_mode = legacy_mode
 
         # set the event loop
@@ -98,6 +99,7 @@ class PymataExpress:
             self.loop = loop
 
         self.shutdown_on_exception = shutdown_on_exception
+        self.close_loop_on_shutdown = close_loop_on_shutdown
 
         # a list of PinData objects - one for each pin segregated by pin type
         # see pin_data.py
@@ -174,20 +176,30 @@ class PymataExpress:
                               PrivateConstants.PYMATA_EXPRESS_VERSION,
                               '\nCopyright (c) 2018-2020 Alan Yorinks All '
                               'rights reserved.\n'))
+
+    async def start_aio(self):
+        """
+        This method may be called directly
+
+        This method instantiates the serial interface and then performs auto pin
+        discovery.
+        Use this method to start PymataExpress manually from an asyncio function.
+         """
+
         if not self.com_port:
             # user did not specify a com_port
             try:
-                self.loop.run_until_complete(self._find_arduino())
+                await self._find_arduino()
             except KeyboardInterrupt:
                 if self.shutdown_on_exception:
-                    self.loop.run_until_complete(self.shutdown())
+                    await self.shutdown()
         else:
             # com_port specified - set com_port and baud rate
             try:
-                self.loop.run_until_complete(self._manual_open())
+                await self._manual_open()
             except KeyboardInterrupt:
                 if self.shutdown_on_exception:
-                    self.loop.run_until_complete(self.shutdown())
+                    await self.shutdown()
 
         if self.com_port:
             print('{}{}\n'.format('\nArduino found and connected to ',
@@ -196,78 +208,8 @@ class PymataExpress:
         # no com_port found - raise a runtime exception
         else:
             if self.shutdown_on_exception:
-                self.loop.run_until_complete(self.shutdown())
+                await self.shutdown()
             raise RuntimeError('No Arduino Found or User Aborted Program')
-
-        # start the application
-        if autostart:
-            self.start()
-
-    def start(self):
-        """
-        This method may be called directly, if the autostart
-        parameter in __init__ is set to false.
-
-        This method instantiates the serial interface and then performs
-         auto pin discovery.
-
-        Use this method if you wish to start PymataExpress manually from
-        a non-asyncio function - it used by __init__.
-
-        """
-        self.the_task = self.loop.create_task(
-            self._arduino_report_dispatcher())
-
-        # get arduino firmware version and print it
-        try:
-            print('Retrieving Arduino Firmware ID...')
-            firmware_version = self.loop.run_until_complete(
-                self.get_firmware_version())
-
-            print("Arduino Firmware ID: " + firmware_version)
-        except TypeError:
-            print('\nIs your serial cable plugged in and do you have the '
-                  'correct Firmata sketch loaded?')
-            print('Is the COM port correct?')
-            print('To see a list of serial ports, type: "list_serial_ports" '
-                  'in your console.')
-            raise RuntimeError
-
-        # try to get an analog pin map. if it comes back as none - shutdown
-        report = self.loop.run_until_complete(self.get_analog_map())
-        if not report:
-            print('*** Analog map retrieval timed out. ***')
-            print('\nDo you have Arduino connectivity and do you have a '
-                  'Firmata sketch uploaded to the board?')
-            if self.shutdown_on_exception:
-                self.loop.run_until_complete(self.shutdown())
-            raise RuntimeError
-
-        # custom assemble the pin lists
-        for pin in report:
-            digital_data = PinData()
-            self.digital_pins.append(digital_data)
-            if pin != PrivateConstants.IGNORE:
-                analog_data = PinData()
-                self.analog_pins.append(analog_data)
-
-        print('{} {} {} {} {}'.format('Auto-discovery complete. Found',
-                                      len(self.digital_pins),
-                                      'Digital Pins and',
-                                      len(self.analog_pins),
-                                      'Analog Pins\n\n'))
-        self.first_analog_pin = len(self.digital_pins) - len(self.analog_pins)
-
-    async def start_aio(self):
-        """
-        This method may be called directly, if the autostart
-        parameter in __init__ is set to false.
-
-        This method instantiates the serial interface and then performs auto pin
-        discovery.
-        Use this method if you wish to start PymataExpress manually from
-        an asyncio function.
-         """
 
         # start the command dispatcher loop
         if not self.loop:
@@ -345,7 +287,8 @@ class PymataExpress:
             # print('\nChecking {}'.format(port.device))
             try:
                 self.serial_port = PymataExpressSerial(port.device, self.baud_rate,
-                                                       express_instance=self)
+                                                       express_instance=self,
+                                                       close_loop_on_error=self.close_loop_on_shutdown)
             except SerialException:
                 continue
             # create a list of serial ports that we opened
@@ -399,7 +342,8 @@ class PymataExpress:
         # if port is not found, a serial exception will be thrown
         print('Opening {} ...'.format(self.com_port))
         self.serial_port = PymataExpressSerial(self.com_port, self.baud_rate,
-                                               express_instance=self)
+                                               express_instance=self,
+                                               close_loop_on_error=self.close_loop_on_shutdown)
 
         print('Waiting {} seconds for the Arduino To Reset.'
               .format(self.arduino_wait))
@@ -1317,11 +1261,13 @@ class PymataExpress:
             await self.disable_digital_reporting(pin)
 
         try:
-            self.loop.stop()
+            if self.close_loop_on_shutdown:
+                self.loop.stop()
             await self.send_reset()
             await self.serial_port.reset_input_buffer()
             await self.serial_port.close()
-            self.loop.close()
+            if self.close_loop_on_shutdown:
+                self.loop.close()
         except (RuntimeError, SerialException):
             pass
 
