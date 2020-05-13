@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.5.dev2+gfcc2b1b" />
 <title>pymata_express.pymata_express API documentation</title>
-<meta name="description" content="Copyright (c) 2018-2019 Alan Yorinks All rights reserved …" />
+<meta name="description" content="Copyright (c) 2018-2020 Alan Yorinks All rights reserved …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 <h1 class="title">Module <code>pymata_express.pymata_express</code></h1>
 </header>
 <section id="section-intro">
-<p>Copyright (c) 2018-2019 Alan Yorinks All rights reserved.</p>
+<p>Copyright (c) 2018-2020 Alan Yorinks All rights reserved.</p>
 <p>This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
 Version 3 as published by the Free Software Foundation; either
@@ -40,7 +40,7 @@ USA</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">&#34;&#34;&#34;
- Copyright (c) 2018-2019 Alan Yorinks All rights reserved.
+ Copyright (c) 2018-2020 Alan Yorinks All rights reserved.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -474,7 +474,7 @@ class PymataExpress:
 
         :param pin: Analog pin number (ex. A2 is specified as 2)
 
-        :returns: A tuple of last value change and the time that it occurred
+        :returns:  [last value reported, time-stamp]
         &#34;&#34;&#34;
 
         return self.analog_pins[pin].current_value, self.analog_pins[pin].event_time
@@ -516,7 +516,7 @@ class PymataExpress:
 
         :param pin: Digital pin number
 
-        :returns: A tuple of last value change and the time that it occurred
+        :returns:  [last value reported, time-stamp]
 
         &#34;&#34;&#34;
         return self.digital_pins[pin].current_value, self.digital_pins[pin].event_time
@@ -602,7 +602,6 @@ class PymataExpress:
 
     async def enable_digital_reporting(self, pin):
         &#34;&#34;&#34;
-        Enables digital reporting. By turning reporting on for all 8 bits
         Enables digital reporting. By turning reporting on for all 8 bits
         in the &#34;port&#34; - this is part of Firmata&#39;s protocol specification.
 
@@ -973,6 +972,7 @@ class PymataExpress:
         This is a FirmataExpress Feature
 
         This method turns tone off for the specified pin.
+
         :param pin_number: arduino pin number
 
         &#34;&#34;&#34;
@@ -1018,7 +1018,7 @@ class PymataExpress:
 
     async def pwm_write(self, pin, value):
         &#34;&#34;&#34;
-        is an alias for PWM_write
+        This is an alias for PWM_write
         Set the selected pin to the specified value.
 
         :param pin: PWM pin number
@@ -1046,10 +1046,6 @@ class PymataExpress:
     async def set_pin_mode_analog_input(self, pin_number, callback=None,
                                         differential=1):
         &#34;&#34;&#34;
-
-        This is an alias for set_pin_mode_pwm.
-
-        It may be removed in a future release.
         Set a pin as an analog input.
 
         :param pin_number: arduino pin number
@@ -1131,7 +1127,7 @@ class PymataExpress:
     async def set_pin_mode_pwm(self, pin_number):
         &#34;&#34;&#34;
 
-        This is an alias for set_pint_mode_pwm_output.
+        This is an alias for set_pin_mode_pwm_output.
 
         Set a pin as a pwm (analog output) pin.
 
@@ -1167,15 +1163,12 @@ class PymataExpress:
         await self._send_sysex(PrivateConstants.SERVO_CONFIG, command)
 
     async def set_pin_mode_sonar(self, trigger_pin, echo_pin,
-                                 cb=None, timeout=80000):
+                                 callback=None, timeout=80000):
         &#34;&#34;&#34;
         This is a FirmataExpress feature.
 
         Configure the pins,ping interval and maximum distance for an HC-SR04
         type device.
-
-        Single pin configuration may be used. To do so, set both the trigger
-        and echo pins to the same value.
 
         Up to a maximum of 6 SONAR devices is supported.
         If the maximum is exceeded a message is sent to the console and the
@@ -1187,7 +1180,7 @@ class PymataExpress:
 
         :param echo_pin: The pin number for the received echo.
 
-        :param cb: optional callback function to report sonar data changes
+        :param callback: optional callback function to report sonar data changes
 
         :param timeout: a tuning parameter. 80000UL equals 80ms.
 
@@ -1218,7 +1211,7 @@ class PymataExpress:
             print(&#39;sonar_config: maximum number of devices assigned&#39;
                   &#39; - ignoring request&#39;)
         else:
-            self.active_sonar_map[trigger_pin] = [cb, 0, 0]
+            self.active_sonar_map[trigger_pin] = [callback, 0, 0]
 
         await self._send_sysex(PrivateConstants.SONAR_CONFIG, data)
 
@@ -1228,6 +1221,8 @@ class PymataExpress:
 
         Configure stepper motor prior to operation.
         This is a FirmataPlus feature.
+
+        NOTE: Single stepper only. Multiple steppers not supported.
 
         :param steps_per_revolution: number of steps per motor revolution
 
@@ -1245,7 +1240,7 @@ class PymataExpress:
         &#34;&#34;&#34;
         This is FirmataExpress feature.
 
-        Set the analog pin to tone mode.
+        Set a PWM pin to tone mode.
 
         :param pin_number: arduino pin number
 
@@ -1682,7 +1677,7 @@ class PymataExpress:
         pin_number = data[0]
         val = int((data[PrivateConstants.MSB] &lt;&lt; 7) +
                   data[PrivateConstants.LSB])
-        reply_data = []
+        reply_data = [PrivateConstants.SONAR]
 
         sonar_pin_entry = self.active_sonar_map[pin_number]
 
@@ -2239,7 +2234,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
         :param pin: Analog pin number (ex. A2 is specified as 2)
 
-        :returns: A tuple of last value change and the time that it occurred
+        :returns:  [last value reported, time-stamp]
         &#34;&#34;&#34;
 
         return self.analog_pins[pin].current_value, self.analog_pins[pin].event_time
@@ -2281,7 +2276,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
         :param pin: Digital pin number
 
-        :returns: A tuple of last value change and the time that it occurred
+        :returns:  [last value reported, time-stamp]
 
         &#34;&#34;&#34;
         return self.digital_pins[pin].current_value, self.digital_pins[pin].event_time
@@ -2367,7 +2362,6 @@ receiving a KeyboardInterrupt exception</p></section>
 
     async def enable_digital_reporting(self, pin):
         &#34;&#34;&#34;
-        Enables digital reporting. By turning reporting on for all 8 bits
         Enables digital reporting. By turning reporting on for all 8 bits
         in the &#34;port&#34; - this is part of Firmata&#39;s protocol specification.
 
@@ -2738,6 +2732,7 @@ receiving a KeyboardInterrupt exception</p></section>
         This is a FirmataExpress Feature
 
         This method turns tone off for the specified pin.
+
         :param pin_number: arduino pin number
 
         &#34;&#34;&#34;
@@ -2783,7 +2778,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
     async def pwm_write(self, pin, value):
         &#34;&#34;&#34;
-        is an alias for PWM_write
+        This is an alias for PWM_write
         Set the selected pin to the specified value.
 
         :param pin: PWM pin number
@@ -2811,10 +2806,6 @@ receiving a KeyboardInterrupt exception</p></section>
     async def set_pin_mode_analog_input(self, pin_number, callback=None,
                                         differential=1):
         &#34;&#34;&#34;
-
-        This is an alias for set_pin_mode_pwm.
-
-        It may be removed in a future release.
         Set a pin as an analog input.
 
         :param pin_number: arduino pin number
@@ -2896,7 +2887,7 @@ receiving a KeyboardInterrupt exception</p></section>
     async def set_pin_mode_pwm(self, pin_number):
         &#34;&#34;&#34;
 
-        This is an alias for set_pint_mode_pwm_output.
+        This is an alias for set_pin_mode_pwm_output.
 
         Set a pin as a pwm (analog output) pin.
 
@@ -2932,15 +2923,12 @@ receiving a KeyboardInterrupt exception</p></section>
         await self._send_sysex(PrivateConstants.SERVO_CONFIG, command)
 
     async def set_pin_mode_sonar(self, trigger_pin, echo_pin,
-                                 cb=None, timeout=80000):
+                                 callback=None, timeout=80000):
         &#34;&#34;&#34;
         This is a FirmataExpress feature.
 
         Configure the pins,ping interval and maximum distance for an HC-SR04
         type device.
-
-        Single pin configuration may be used. To do so, set both the trigger
-        and echo pins to the same value.
 
         Up to a maximum of 6 SONAR devices is supported.
         If the maximum is exceeded a message is sent to the console and the
@@ -2952,7 +2940,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
         :param echo_pin: The pin number for the received echo.
 
-        :param cb: optional callback function to report sonar data changes
+        :param callback: optional callback function to report sonar data changes
 
         :param timeout: a tuning parameter. 80000UL equals 80ms.
 
@@ -2983,7 +2971,7 @@ receiving a KeyboardInterrupt exception</p></section>
             print(&#39;sonar_config: maximum number of devices assigned&#39;
                   &#39; - ignoring request&#39;)
         else:
-            self.active_sonar_map[trigger_pin] = [cb, 0, 0]
+            self.active_sonar_map[trigger_pin] = [callback, 0, 0]
 
         await self._send_sysex(PrivateConstants.SONAR_CONFIG, data)
 
@@ -2993,6 +2981,8 @@ receiving a KeyboardInterrupt exception</p></section>
 
         Configure stepper motor prior to operation.
         This is a FirmataPlus feature.
+
+        NOTE: Single stepper only. Multiple steppers not supported.
 
         :param steps_per_revolution: number of steps per motor revolution
 
@@ -3010,7 +3000,7 @@ receiving a KeyboardInterrupt exception</p></section>
         &#34;&#34;&#34;
         This is FirmataExpress feature.
 
-        Set the analog pin to tone mode.
+        Set a PWM pin to tone mode.
 
         :param pin_number: arduino pin number
 
@@ -3447,7 +3437,7 @@ receiving a KeyboardInterrupt exception</p></section>
         pin_number = data[0]
         val = int((data[PrivateConstants.MSB] &lt;&lt; 7) +
                   data[PrivateConstants.LSB])
-        reply_data = []
+        reply_data = [PrivateConstants.SONAR]
 
         sonar_pin_entry = self.active_sonar_map[pin_number]
 
@@ -3566,7 +3556,8 @@ receiving a KeyboardInterrupt exception</p></section>
 <dd>
 <section class="desc"><p>Retrieve the last data update for the specified analog pin.</p>
 <p>:param pin: Analog pin number (ex. A2 is specified as 2)</p>
-<p>:returns: A tuple of last value change and the time that it occurred</p></section>
+<p>:returns:
+[last value reported, time-stamp]</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3577,7 +3568,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
     :param pin: Analog pin number (ex. A2 is specified as 2)
 
-    :returns: A tuple of last value change and the time that it occurred
+    :returns:  [last value reported, time-stamp]
     &#34;&#34;&#34;
 
     return self.analog_pins[pin].current_value, self.analog_pins[pin].event_time</code></pre>
@@ -3645,7 +3636,8 @@ receiving a KeyboardInterrupt exception</p></section>
 <dd>
 <section class="desc"><p>Retrieve the last data update for the specified digital pin.</p>
 <p>:param pin: Digital pin number</p>
-<p>:returns: A tuple of last value change and the time that it occurred</p></section>
+<p>:returns:
+[last value reported, time-stamp]</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3656,7 +3648,7 @@ receiving a KeyboardInterrupt exception</p></section>
 
     :param pin: Digital pin number
 
-    :returns: A tuple of last value change and the time that it occurred
+    :returns:  [last value reported, time-stamp]
 
     &#34;&#34;&#34;
     return self.digital_pins[pin].current_value, self.digital_pins[pin].event_time</code></pre>
@@ -3781,7 +3773,6 @@ to be invoked.</p></section>
 </code></dt>
 <dd>
 <section class="desc"><p>Enables digital reporting. By turning reporting on for all 8 bits
-Enables digital reporting. By turning reporting on for all 8 bits
 in the "port" - this is part of Firmata's protocol specification.</p>
 <p>:param pin: Pin and all pins for this port</p>
 <p>:returns: No return value</p></section>
@@ -3791,7 +3782,6 @@ in the "port" - this is part of Firmata's protocol specification.</p>
 </summary>
 <pre><code class="python">async def enable_digital_reporting(self, pin):
     &#34;&#34;&#34;
-    Enables digital reporting. By turning reporting on for all 8 bits
     Enables digital reporting. By turning reporting on for all 8 bits
     in the &#34;port&#34; - this is part of Firmata&#39;s protocol specification.
 
@@ -4369,8 +4359,8 @@ period expires. Range is 0.1 to 0.9</p></section>
 </code></dt>
 <dd>
 <section class="desc"><p>This is a FirmataExpress Feature</p>
-<p>This method turns tone off for the specified pin.
-:param pin_number: arduino pin number</p></section>
+<p>This method turns tone off for the specified pin.</p>
+<p>:param pin_number: arduino pin number</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4380,6 +4370,7 @@ period expires. Range is 0.1 to 0.9</p></section>
     This is a FirmataExpress Feature
 
     This method turns tone off for the specified pin.
+
     :param pin_number: arduino pin number
 
     &#34;&#34;&#34;
@@ -4392,7 +4383,7 @@ period expires. Range is 0.1 to 0.9</p></section>
 <span>async def <span class="ident">pwm_write</span></span>(<span>self, pin, value)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>is an alias for PWM_write
+<section class="desc"><p>This is an alias for PWM_write
 Set the selected pin to the specified value.</p>
 <p>:param pin: PWM pin number</p>
 <p>:param value: Pin value (0 - 0x4000)</p></section>
@@ -4402,7 +4393,7 @@ Set the selected pin to the specified value.</p>
 </summary>
 <pre><code class="python">async def pwm_write(self, pin, value):
     &#34;&#34;&#34;
-    is an alias for PWM_write
+    This is an alias for PWM_write
     Set the selected pin to the specified value.
 
     :param pin: PWM pin number
@@ -4470,9 +4461,7 @@ previously configured using set_pin_mode_servo.</p>
 <span>async def <span class="ident">set_pin_mode_analog_input</span></span>(<span>self, pin_number, callback=None, differential=1)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>This is an alias for set_pin_mode_pwm.</p>
-<p>It may be removed in a future release.
-Set a pin as an analog input.</p>
+<section class="desc"><p>Set a pin as an analog input.</p>
 <p>:param pin_number: arduino pin number</p>
 <p>:param callback: async callback function</p>
 <p>:param differential: This value needs to be met for a callback
@@ -4487,10 +4476,6 @@ to be invoked.</p>
 <pre><code class="python">async def set_pin_mode_analog_input(self, pin_number, callback=None,
                                     differential=1):
     &#34;&#34;&#34;
-
-    This is an alias for set_pin_mode_pwm.
-
-    It may be removed in a future release.
     Set a pin as an analog input.
 
     :param pin_number: arduino pin number
@@ -4628,7 +4613,7 @@ default is 0</p></section>
 <span>async def <span class="ident">set_pin_mode_pwm</span></span>(<span>self, pin_number)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>This is an alias for set_pint_mode_pwm_output.</p>
+<section class="desc"><p>This is an alias for set_pin_mode_pwm_output.</p>
 <p>Set a pin as a pwm (analog output) pin.</p>
 <p>:param pin_number:arduino pin number</p></section>
 <details class="source">
@@ -4638,7 +4623,7 @@ default is 0</p></section>
 <pre><code class="python">async def set_pin_mode_pwm(self, pin_number):
     &#34;&#34;&#34;
 
-    This is an alias for set_pint_mode_pwm_output.
+    This is an alias for set_pin_mode_pwm_output.
 
     Set a pin as a pwm (analog output) pin.
 
@@ -4699,21 +4684,19 @@ default is 0</p></section>
 </details>
 </dd>
 <dt id="pymata_express.pymata_express.PymataExpress.set_pin_mode_sonar"><code class="name flex">
-<span>async def <span class="ident">set_pin_mode_sonar</span></span>(<span>self, trigger_pin, echo_pin, cb=None, timeout=80000)</span>
+<span>async def <span class="ident">set_pin_mode_sonar</span></span>(<span>self, trigger_pin, echo_pin, callback=None, timeout=80000)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>This is a FirmataExpress feature.</p>
 <p>Configure the pins,ping interval and maximum distance for an HC-SR04
 type device.</p>
-<p>Single pin configuration may be used. To do so, set both the trigger
-and echo pins to the same value.</p>
 <p>Up to a maximum of 6 SONAR devices is supported.
 If the maximum is exceeded a message is sent to the console and the
 request is ignored.</p>
 <p>NOTE: data is measured in centimeters</p>
 <p>:param trigger_pin: The pin number of for the trigger (transmitter).</p>
 <p>:param echo_pin: The pin number for the received echo.</p>
-<p>:param cb: optional callback function to report sonar data changes</p>
+<p>:param callback: optional callback function to report sonar data changes</p>
 <p>:param timeout: a tuning parameter. 80000UL equals 80ms.</p>
 <p>callback returns a data list:</p>
 <p>[pin_type, trigger_pin_number, distance_value (in cm), raw_time_stamp]</p>
@@ -4723,15 +4706,12 @@ request is ignored.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">async def set_pin_mode_sonar(self, trigger_pin, echo_pin,
-                             cb=None, timeout=80000):
+                             callback=None, timeout=80000):
     &#34;&#34;&#34;
     This is a FirmataExpress feature.
 
     Configure the pins,ping interval and maximum distance for an HC-SR04
     type device.
-
-    Single pin configuration may be used. To do so, set both the trigger
-    and echo pins to the same value.
 
     Up to a maximum of 6 SONAR devices is supported.
     If the maximum is exceeded a message is sent to the console and the
@@ -4743,7 +4723,7 @@ request is ignored.</p>
 
     :param echo_pin: The pin number for the received echo.
 
-    :param cb: optional callback function to report sonar data changes
+    :param callback: optional callback function to report sonar data changes
 
     :param timeout: a tuning parameter. 80000UL equals 80ms.
 
@@ -4774,7 +4754,7 @@ request is ignored.</p>
         print(&#39;sonar_config: maximum number of devices assigned&#39;
               &#39; - ignoring request&#39;)
     else:
-        self.active_sonar_map[trigger_pin] = [cb, 0, 0]
+        self.active_sonar_map[trigger_pin] = [callback, 0, 0]
 
     await self._send_sysex(PrivateConstants.SONAR_CONFIG, data)</code></pre>
 </details>
@@ -4786,6 +4766,7 @@ request is ignored.</p>
 <section class="desc"><p>This is a FirmataExpress feature.</p>
 <p>Configure stepper motor prior to operation.
 This is a FirmataPlus feature.</p>
+<p>NOTE: Single stepper only. Multiple steppers not supported.</p>
 <p>:param steps_per_revolution: number of steps per motor revolution</p>
 <p>:param stepper_pins: a list of control pin numbers - either 4 or 2</p></section>
 <details class="source">
@@ -4798,6 +4779,8 @@ This is a FirmataPlus feature.</p>
 
     Configure stepper motor prior to operation.
     This is a FirmataPlus feature.
+
+    NOTE: Single stepper only. Multiple steppers not supported.
 
     :param steps_per_revolution: number of steps per motor revolution
 
@@ -4817,7 +4800,7 @@ This is a FirmataPlus feature.</p>
 </code></dt>
 <dd>
 <section class="desc"><p>This is FirmataExpress feature.</p>
-<p>Set the analog pin to tone mode.</p>
+<p>Set a PWM pin to tone mode.</p>
 <p>:param pin_number: arduino pin number</p></section>
 <details class="source">
 <summary>
@@ -4827,7 +4810,7 @@ This is a FirmataPlus feature.</p>
     &#34;&#34;&#34;
     This is FirmataExpress feature.
 
-    Set the analog pin to tone mode.
+    Set a PWM pin to tone mode.
 
     :param pin_number: arduino pin number
 

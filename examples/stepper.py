@@ -1,5 +1,5 @@
 """
- Copyright (c) 2018-2019 Alan Yorinks All rights reserved.
+ Copyright (c) 2020 Alan Yorinks All rights reserved.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -17,9 +17,12 @@
 
 import asyncio
 import sys
-from pymata_express.pymata_express import PymataExpress
-
-# This example demonstrates running a stepper motor
+from pymata_express import pymata_express
+"""
+This example demonstrates running a stepper motor
+"""
+NUM_STEPS = 512
+ARDUINO_PINS = [8, 9, 10, 11]
 
 
 async def stepper(my_board, steps_per_rev, pins):
@@ -38,9 +41,9 @@ async def stepper(my_board, steps_per_rev, pins):
 
 
 loop = asyncio.get_event_loop()
-board = PymataExpress()
+board = pymata_express.PymataExpress()
 try:
-    loop.run_until_complete(stepper(board, 512, [8, 9, 10, 11]))
+    loop.run_until_complete(stepper(board, NUM_STEPS, ARDUINO_PINS))
     loop.run_until_complete(board.shutdown())
 except KeyboardInterrupt:
     loop.run_until_complete(board.shutdown())

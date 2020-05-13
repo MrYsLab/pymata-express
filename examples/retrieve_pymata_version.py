@@ -20,24 +20,24 @@ import sys
 from pymata_express import pymata_express
 
 """
-This example will retrieve the Firmata analog map and display
-the raw data. The pins are displayed in order. A value of 127
-indicates a digital only pin, and other values indicate the
-analog input pin number.
+This example retrieves the pymata_express version, which consists
+of the major and minor version numbers.
 """
 
 
-# Retrieve and print the map
+async def retrieve_pymata_version(my_board):
+    """
 
-async def retrieve_analog_map(my_board):
-    analog_map = await my_board.get_analog_map()
-    print(analog_map)
+    :param my_board: pymata_express instance
+    :return: the pymata version
+    """
+    print(await my_board.get_pymata_version())
 
 
 loop = asyncio.get_event_loop()
 board = pymata_express.PymataExpress()
 try:
-    loop.run_until_complete(retrieve_analog_map(board))
+    loop.run_until_complete(retrieve_pymata_version(board))
     loop.run_until_complete(board.shutdown())
 except KeyboardInterrupt:
     loop.run_until_complete(board.shutdown())

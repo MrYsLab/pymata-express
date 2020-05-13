@@ -1,5 +1,5 @@
 """
- Copyright (c) 2018-2019 Alan Yorinks All rights reserved.
+ Copyright (c) 2020 Alan Yorinks All rights reserved.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -27,7 +27,7 @@ from pymata_express.pymata_express import PymataExpress
 async def the_callback(data):
     """
     The callback function to display the change in distance
-    :param data: data[0] = pin number, data[1] = distance
+    :param data: [pin_type=12, trigger pin number, distance, timestamp]
     """
     print("Distance in cm: ", data[1])
 
@@ -49,7 +49,8 @@ async def sonar(my_board, trigger_pin, echo_pin, callback):
     # wait forever
     while True:
         try:
-            await asyncio.sleep(.01)
+            await asyncio.sleep(3)
+            print(await my_board.sonar_read(12))
         except KeyboardInterrupt:
             await my_board.shutdown()
 

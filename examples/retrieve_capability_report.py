@@ -1,5 +1,5 @@
 """
- Copyright (c) 2018-2019 Alan Yorinks All rights reserved.
+ Copyright (c) 2020 Alan Yorinks All rights reserved.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -20,9 +20,11 @@ import sys
 
 from pymata_express.pymata_express import PymataExpress
 
+"""
+This is a demo of retrieving a Firmata capability report and
+printing a formatted version of the report to the console
+"""
 
-# This is a demo of retrieving a Firmata capability report and
-# printing a formatted version of the report to the console
 
 def format_capability_report(data):
     """

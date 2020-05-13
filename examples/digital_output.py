@@ -1,5 +1,5 @@
 """
- Copyright (c) 2018-2019 Alan Yorinks All rights reserved.
+ Copyright (c) 2020 Alan Yorinks All rights reserved.
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -14,15 +14,19 @@
  along with this library; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
-
 import asyncio
 import sys
 
-from pymata_express.pymata_express import PymataExpress
+from pymata_express import pymata_express
 
+"""
+Setup a pin for digital output and output a signal
+and toggle the pin. Do this 4 times.
+"""
 
-# Setup a pin for digital output and output
-# and toggle the pin.
+# some globals
+DIGITAL_PIN = 6  # arduino pin number
+
 
 async def blink(my_board, pin):
     """
@@ -45,11 +49,15 @@ async def blink(my_board, pin):
         await asyncio.sleep(1)
 
 
+# get the event loop
 loop = asyncio.get_event_loop()
-board = PymataExpress()
+
+# instantiate pymata_express
+board = pymata_express.PymataExpress()
+
 try:
-    loop.run_until_complete(blink(board, 9))
-    loop.run_until_complete(board.shutdown())
+    # start the main function
+    loop.run_until_complete(blink(board, DIGITAL_PIN))
 except KeyboardInterrupt:
     loop.run_until_complete(board.shutdown())
     sys.exit(0)
