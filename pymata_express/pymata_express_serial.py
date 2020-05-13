@@ -51,6 +51,7 @@ class PymataExpressSerial:
         self.com_port = com_port
         self.sleep_tune = sleep_tune
         self.express_instance = express_instance
+        self.close_loop_on_error = close_loop_on_error
 
         # used by read_until
         self.start_time = None
