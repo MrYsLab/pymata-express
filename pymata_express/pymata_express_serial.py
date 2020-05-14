@@ -33,7 +33,7 @@ class PymataExpressSerial:
     """
 
     def __init__(self, com_port='/dev/ttyACM0', baud_rate=115200, sleep_tune=.001,
-                 express_instance=None, close_loop_on_error=True):
+                 express_instance=None):
 
         """
         This is the constructor for the aio serial handler
@@ -51,7 +51,6 @@ class PymataExpressSerial:
         self.com_port = com_port
         self.sleep_tune = sleep_tune
         self.express_instance = express_instance
-        self.close_loop_on_error = close_loop_on_error
 
         # used by read_until
         self.start_time = None
@@ -83,15 +82,13 @@ class PymataExpressSerial:
             # noinspection PyBroadException
             await self.close()
             future.cancel()
-            if self.close_loop_on_error:
-                loop = asyncio.get_event_loop()
-                loop.stop()
+            loop = asyncio.get_event_loop()
+            loop.stop()
 
             if self.express_instance.the_task:
                 self.express_instance.the_task.cancel()
             await asyncio.sleep(1)
-            if self.close_loop_on_error:
-                loop.close()
+            loop.close()
 
         if result:
             future.set_result(result)
