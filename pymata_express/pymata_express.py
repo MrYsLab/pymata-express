@@ -40,14 +40,18 @@ class PymataExpress:
     def __init__(self, com_port=None, baud_rate=115200,
                  arduino_instance_id=1, arduino_wait=4,
                  sleep_tune=0.0001, autostart=True,
-                 loop=None, shutdown_on_exception=True):
+                 loop=None, shutdown_on_exception=True,
+                 close_loop_on_shutdown=True,
+                 ):
         """
         If you are using the Firmata Express Arduino sketch,
         and have a single Arduino connected to your computer,
         then you may accept all the default values.
 
         If you are using some other Firmata sketch, then
-        you must specify both the com_port and baudrate.
+        you must specify both the com_port and baudrate for
+        as serial connection, or ip_address and ip_port if
+        using StandardFirmataWifi.
 
         :param com_port: e.g. COM3 or /dev/ttyACM0.
 
@@ -70,6 +74,10 @@ class PymataExpress:
         :param shutdown_on_exception: call shutdown before raising
                                       a RunTimeError exception, or
                                       receiving a KeyboardInterrupt exception
+
+        :param close_loop_on_shutdown: stop and close the event loop loop
+                                       when a shutdown is called or a serial
+                                       error occurs
         """
         # check to make sure that Python interpreter is version 3.7 or greater
         python_version = sys.version_info
@@ -87,7 +95,8 @@ class PymataExpress:
         self.arduino_wait = arduino_wait
         self.sleep_tune = sleep_tune
         self.autostart = autostart
-        # self.legacy_mode = legacy_mode
+        # self.ip_address = ip_address
+        # self.ip_port = ip_port
 
         # set the event loop
         if loop is None:
@@ -98,6 +107,7 @@ class PymataExpress:
             self.loop = loop
 
         self.shutdown_on_exception = shutdown_on_exception
+        self.close_loop_on_shutdown = close_loop_on_shutdown
 
         # a list of PinData objects - one for each pin segregated by pin type
         # see pin_data.py
@@ -106,6 +116,9 @@ class PymataExpress:
 
         # serial port in use
         self.serial_port = None
+
+        # handle to tcp/ip socket
+        self.sock = None
 
         # An i2c_map entry consists of a device i2c address as the key, and
         #  the value of the key consists of a dictionary containing 2 entries.
@@ -159,7 +172,10 @@ class PymataExpress:
                                    PrivateConstants.I2C_REPLY:
                                        self._i2c_reply,
                                    PrivateConstants.SONAR_DATA:
-                                       self._sonar_data, }
+                                       self._sonar_data,
+                                   PrivateConstants.DHT_DATA:
+                                       self._dht_read_response,
+                                   }
 
         # report query results are stored in this dictionary
         self.query_reply_data = {PrivateConstants.REPORT_VERSION: '',
@@ -168,95 +184,17 @@ class PymataExpress:
                                  PrivateConstants.CAPABILITY_RESPONSE: None,
                                  PrivateConstants.ANALOG_MAPPING_RESPONSE:
                                      None,
-                                 PrivateConstants.PIN_STATE_RESPONSE: None}
+                                 PrivateConstants.PIN_STATE_RESPONSE: None,
+                                 PrivateConstants.DHT_DATA:'',
+                                 }
 
         print('{}{}{}'.format('\n', 'Pymata Express Version ' +
                               PrivateConstants.PYMATA_EXPRESS_VERSION,
                               '\nCopyright (c) 2018-2020 Alan Yorinks All '
                               'rights reserved.\n'))
-        if not self.com_port:
-            # user did not specify a com_port
-            try:
-                self.loop.run_until_complete(self._find_arduino())
-            except KeyboardInterrupt:
-                if self.shutdown_on_exception:
-                    self.loop.run_until_complete(self.shutdown())
-        else:
-            # com_port specified - set com_port and baud rate
-            try:
-                self.loop.run_until_complete(self._manual_open())
-            except KeyboardInterrupt:
-                if self.shutdown_on_exception:
-                    self.loop.run_until_complete(self.shutdown())
 
-        if self.com_port:
-            print('{}{}\n'.format('\nArduino found and connected to ',
-                                  self.com_port))
-
-        # no com_port found - raise a runtime exception
-        else:
-            if self.shutdown_on_exception:
-                self.loop.run_until_complete(self.shutdown())
-            raise RuntimeError('No Arduino Found or User Aborted Program')
-
-        # start the application
         if autostart:
-            self.start()
-
-    def start(self):
-        """
-        This method may be called directly, if the autostart
-        parameter in __init__ is set to false.
-
-        This method instantiates the serial interface and then performs
-         auto pin discovery.
-
-        Use this method if you wish to start PymataExpress manually from
-        a non-asyncio function - it used by __init__.
-
-        """
-        self.the_task = self.loop.create_task(
-            self._arduino_report_dispatcher())
-
-        # get arduino firmware version and print it
-        try:
-            print('Retrieving Arduino Firmware ID...')
-            firmware_version = self.loop.run_until_complete(
-                self.get_firmware_version())
-
-            print("Arduino Firmware ID: " + firmware_version)
-        except TypeError:
-            print('\nIs your serial cable plugged in and do you have the '
-                  'correct Firmata sketch loaded?')
-            print('Is the COM port correct?')
-            print('To see a list of serial ports, type: "list_serial_ports" '
-                  'in your console.')
-            raise RuntimeError
-
-        # try to get an analog pin map. if it comes back as none - shutdown
-        report = self.loop.run_until_complete(self.get_analog_map())
-        if not report:
-            print('*** Analog map retrieval timed out. ***')
-            print('\nDo you have Arduino connectivity and do you have a '
-                  'Firmata sketch uploaded to the board?')
-            if self.shutdown_on_exception:
-                self.loop.run_until_complete(self.shutdown())
-            raise RuntimeError
-
-        # custom assemble the pin lists
-        for pin in report:
-            digital_data = PinData()
-            self.digital_pins.append(digital_data)
-            if pin != PrivateConstants.IGNORE:
-                analog_data = PinData()
-                self.analog_pins.append(analog_data)
-
-        print('{} {} {} {} {}'.format('Auto-discovery complete. Found',
-                                      len(self.digital_pins),
-                                      'Digital Pins and',
-                                      len(self.analog_pins),
-                                      'Analog Pins\n\n'))
-        self.first_analog_pin = len(self.digital_pins) - len(self.analog_pins)
+            self.loop.run_until_complete(self.start_aio())
 
     async def start_aio(self):
         """
@@ -269,13 +207,42 @@ class PymataExpress:
         an asyncio function.
          """
 
+        if not self.com_port:
+            # user did not specify a com_port
+            try:
+                await self._find_arduino()
+            except KeyboardInterrupt:
+                if self.shutdown_on_exception:
+                    await self.shutdown()
+        else:
+            # com_port specified - set com_port and baud rate
+            try:
+                await self._manual_open()
+            except KeyboardInterrupt:
+                if self.shutdown_on_exception:
+                    await self.shutdown()
+
+        if self.com_port:
+            print('{}{}\n'.format('\nArduino found and connected to ',
+                                  self.com_port))
+
+        # no com_port found - raise a runtime exception
+        else:
+            if self.shutdown_on_exception:
+                await self.shutdown()
+            raise RuntimeError('No Arduino Found or User Aborted Program')
+
         # start the command dispatcher loop
         if not self.loop:
             if sys.platform == 'win32':
                 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
             self.loop = asyncio.get_event_loop()
         self.the_task = self.loop.create_task(self._arduino_report_dispatcher())
+        # dht error flag
+        self.dht_sensor_error = False
 
+        # a list of pins assigned to DHT devices
+        self.dht_list = []
         # get arduino firmware version and print it
         firmware_version = await self.get_firmware_version()
         if not firmware_version:
@@ -315,6 +282,8 @@ class PymataExpress:
                                       len(self.analog_pins),
                                       'Analog Pins\n\n'))
         self.first_analog_pin = len(self.digital_pins) - len(self.analog_pins)
+        await self.set_sampling_interval(19)
+
 
     async def get_event_loop(self):
         """
@@ -345,7 +314,8 @@ class PymataExpress:
             # print('\nChecking {}'.format(port.device))
             try:
                 self.serial_port = PymataExpressSerial(port.device, self.baud_rate,
-                                                       express_instance=self)
+                                                       express_instance=self,
+                                                       close_loop_on_error=self.close_loop_on_shutdown)
             except SerialException:
                 continue
             # create a list of serial ports that we opened
@@ -399,7 +369,8 @@ class PymataExpress:
         # if port is not found, a serial exception will be thrown
         print('Opening {} ...'.format(self.com_port))
         self.serial_port = PymataExpressSerial(self.com_port, self.baud_rate,
-                                               express_instance=self)
+                                               express_instance=self,
+                                               close_loop_on_error=self.close_loop_on_shutdown)
 
         print('Waiting {} seconds for the Arduino To Reset.'
               .format(self.arduino_wait))
@@ -479,6 +450,24 @@ class PymataExpress:
 
         """
         return self.digital_pins[pin].current_value, self.digital_pins[pin].event_time
+
+    async def dht_read(self, pin):
+        """
+        Retrieve the last data update for the specified dht pin.
+
+        :param pin: digital pin number
+
+        :return: A list = [humidity, temperature  time_stamp]
+
+                 ERROR CODES: If either humidity or temperature value:
+                              == -1 Configuration Error
+                              == -2 Checksum Error
+                              == -3 Timeout Error
+
+        """
+        return self.digital_pins[pin].current_value[0], \
+               self.digital_pins[pin].current_value[1], \
+               self.digital_pins[pin].event_time
 
     async def digital_pin_write(self, pin, value):
         """
@@ -1025,6 +1014,46 @@ class PymataExpress:
                                  callback=callback,
                                  differential=differential)
 
+    async def set_pin_mode_dht(self, pin_number, sensor_type=22, differential=.1, callback=None):
+        """
+        Configure a DHT sensor prior to operation.
+        Up to 6 DHT sensors are supported
+
+        :param pin_number: digital pin number on arduino.
+
+        :param sensor_type: type of dht sensor
+                            Valid values = DHT11, DHT12, DHT22, DHT21, AM2301
+
+        :param differential: This value needs to be met for a callback
+                             to be invoked.
+
+        :param callback: callback function
+
+        callback: returns a data list:
+
+        [pin_type, pin_number, DHT type, humidity value, temperature raw_time_stamp]
+
+        The pin_type for DHT input pins = 15
+
+                ERROR CODES: If either humidity or temperature value:
+                              == -1 Configuration Error
+                              == -2 Checksum Error
+                              == -3 Timeout Error
+        """
+
+        # if the pin is not currently associated with a DHT device
+        # initialize it.
+        if pin_number not in self.dht_list:
+            self.dht_list.append(pin_number)
+            self.digital_pins[pin_number].cb = callback
+            self.digital_pins[pin_number].current_value = [0, 0]
+            self.digital_pins[pin_number].differential = differential
+            data = [pin_number, sensor_type]
+            await self._send_sysex(PrivateConstants.DHT_CONFIG, data)
+        else:
+            # allow user to change the differential value
+            self.digital_pins[pin_number].differential = differential
+
     async def set_pin_mode_digital_input(self, pin_number, callback=None):
         """
         Set a pin as a digital input.
@@ -1217,6 +1246,7 @@ class PymataExpress:
 
         :param pin_state: INPUT/OUTPUT/ANALOG/PWM/PULLUP - for SERVO use
                           servo_config()
+                          For DHT   use: set_pin_mode_dht
 
         :param callback: A reference to an async call back function to be
                          called when pin data value changes
@@ -1317,11 +1347,13 @@ class PymataExpress:
             await self.disable_digital_reporting(pin)
 
         try:
-            self.loop.stop()
+            if self.close_loop_on_shutdown:
+                self.loop.stop()
             await self.send_reset()
             await self.serial_port.reset_input_buffer()
             await self.serial_port.close()
-            self.loop.close()
+            if self.close_loop_on_shutdown:
+                self.loop.close()
         except (RuntimeError, SerialException):
             pass
 
@@ -1457,7 +1489,7 @@ class PymataExpress:
             self.analog_pins[pin].event_time = time_stamp
 
             # append pin number, pin value, and pin type to return value and return as a list
-            message = [PrivateConstants.ANALOG, pin, value,  time_stamp]
+            message = [PrivateConstants.ANALOG, pin, value, time_stamp]
 
             if self.analog_pins[pin].cb:
                 # if self.analog_pins[pin].cb_type:
@@ -1472,6 +1504,92 @@ class PymataExpress:
 
         """
         self.query_reply_data[PrivateConstants.CAPABILITY_RESPONSE] = data[1:-1]
+
+    async def _dht_read_response(self, data):
+        """
+        Process the dht response message.
+
+        Values are calculated using:
+                humidity = (_bits[0] * 256 + _bits[1]) * 0.1
+
+                temperature = ((_bits[2] & 0x7F) * 256 + _bits[3]) * 0.1
+
+        error codes:
+        0 - OK
+        1 - DHTLIB_ERROR_TIMEOUT
+        2 - Checksum error
+
+        :param: data - array of 9 7bit bytes ending with the error status
+        """
+
+
+        # get the time of the report
+        time_stamp = time.time()
+
+        # adjust data to just show values from sensor
+        data = data[1:-1]
+        # initiate a list for a potential call back
+        reply_data = [PrivateConstants.DHT]
+
+        # get the pin and type of the dht
+        pin = data[0]
+        reply_data.append(pin)
+        dht_type = data[1]
+        reply_data.append(dht_type)
+        humidity = None
+        temperature = None
+
+        self.digital_pins[pin].event_time = time_stamp
+
+        if data[11] == 1:  # data[9] is config flag
+            if data[10] != 0:
+                self.dht_sensor_error = True
+                humidity = temperature = -1
+                # return
+        else:
+            # if data read correctly process and return
+
+            if data[10] == 0:
+                humidity = (((data[2] & 0x7f) + (data[3] << 7)) * 256 +
+                            ((data[4] & 0x7f) + (data[5] << 7))) * 0.1
+                temperature = (((data[6] & 0x7f) + (data[7] << 7) & 0x7F) * 256 +
+                               ((data[8] & 0x7f) + (data[9] << 7))) * 0.1
+
+                humidity = round(humidity, 2)
+                temperature = round(temperature, 2)
+            elif data[8] == 1:
+                # Checksum Error
+                humidity = temperature = -2
+                self.dht_sensor_error = True
+            elif data[8] == 2:
+                # Timeout Error
+                humidity = temperature = -3
+                self.dht_sensor_error = True
+        # since we initialize
+        if humidity is None:
+            return
+        reply_data.append(humidity)
+        reply_data.append(temperature)
+        reply_data.append(time_stamp)
+
+        # retrieve the last reported values
+        last_value = self.digital_pins[pin].current_value
+
+        self.digital_pins[pin].current_value = [humidity, temperature]
+        if self.digital_pins[pin].cb:
+            # only report changes
+            # has the humidity changed?
+            if last_value[0] != humidity:
+
+                differential = abs(humidity - last_value[0])
+                if differential >= self.digital_pins[pin].differential:
+                    await self.digital_pins[pin].cb(reply_data)
+                return
+            if last_value[1] != temperature:
+                differential = abs(temperature - last_value[1])
+                if differential >= self.digital_pins[pin].differential:
+                    await self.digital_pins[pin].cb(reply_data)
+                return
 
     async def _digital_message(self, data):
         """

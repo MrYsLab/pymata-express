@@ -69,7 +69,7 @@ class PrivateConstants:
     SYSEX_REALTIME = 0x7F  # MIDI Reserved for realtime messages
 
     # reserved for PyMata
-    PYMATA_EXPRESS_VERSION = "1.12"
+    PYMATA_EXPRESS_VERSION = "1.13"
 
     # each byte represents a digital port
     #  and its value contains the current port settings
@@ -105,12 +105,18 @@ class PrivateConstants:
     PULLUP = 0x0b  # Any pin in pullup mode
     SONAR = 0x0c  # Any pin in SONAR mode
     TONE = 0x0d  # Any pin in tone mode
+    PIXY = 0x0e  # reserved for pixy camera mode
+    DHT = 0x0f  # DHT sensor
 
     IGNORE = 0x7f
 
     # Tone commands
     TONE_TONE = 0  # play a tone
     TONE_NO_TONE = 1  # turn off tone
+
+    # DHT command
+    DHT_CONFIG = 0x64  # dht config command
+    DHT_DATA = 0x65  # dht sensor command
 
     # I2C command operation modes
     I2C_WRITE = 0B00000000
