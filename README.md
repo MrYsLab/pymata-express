@@ -6,9 +6,10 @@ Pymata-Express is a Firmata client that, like its conventional Python sibling,
  allows you to control an Arduino using the high-performance FirmataExpress sketch.
   It uses a conventional Python API for those that do not need or wish to use the asyncio programming paradigm of pymata-express.
 
-### It supports both an enhanced version of StandardaFirmata 2.5.8, called FirmataExpress, as well as StandardFirmata. 
+### It supports both an enhanced version of StandardaFirmata 2.5.8, called FirmataExpress, as well as StandardFirmata and StandardFimataWiFi. 
 * **[FirmataExpress](https://github.com/MrYsLab/FirmataExpress) adds support for:**
      * **HC-SR04 Ultrasonic Distance Sensors using a single pin.**
+     * **DHT Humidity/Temperature Sensors.** 
      * **Stepper Motors.**
      * **Piezo Tone Generation.**
      * **Baud rate of 115200**

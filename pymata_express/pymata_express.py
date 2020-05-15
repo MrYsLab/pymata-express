@@ -26,6 +26,7 @@ from serial.serialutil import SerialException
 from pymata_express.pin_data import PinData
 from pymata_express.private_constants import PrivateConstants
 from pymata_express.pymata_express_serial import PymataExpressSerial
+from pymata_express.pymata_express_socket import PymataExpressSocket
 
 
 class PymataExpress:
@@ -42,6 +43,7 @@ class PymataExpress:
                  sleep_tune=0.0001, autostart=True,
                  loop=None, shutdown_on_exception=True,
                  close_loop_on_shutdown=True,
+                 ip_address=None, ip_port=None,
                  ):
         """
         If you are using the Firmata Express Arduino sketch,
@@ -78,6 +80,12 @@ class PymataExpress:
         :param close_loop_on_shutdown: stop and close the event loop loop
                                        when a shutdown is called or a serial
                                        error occurs
+
+        :param ip_address: When interfacing with StandardFirmataWifi, set the
+                           IP address of the device.
+
+        :param ip_port: When interfacing with StandardFirmataWifi, set the
+                        ip port of the device.
         """
         # check to make sure that Python interpreter is version 3.7 or greater
         python_version = sys.version_info
@@ -95,8 +103,8 @@ class PymataExpress:
         self.arduino_wait = arduino_wait
         self.sleep_tune = sleep_tune
         self.autostart = autostart
-        # self.ip_address = ip_address
-        # self.ip_port = ip_port
+        self.ip_address = ip_address
+        self.ip_port = ip_port
 
         # set the event loop
         if loop is None:
@@ -117,7 +125,7 @@ class PymataExpress:
         # serial port in use
         self.serial_port = None
 
-        # handle to tcp/ip socket
+        # reference to tcp/ip socket
         self.sock = None
 
         # An i2c_map entry consists of a device i2c address as the key, and
@@ -145,11 +153,21 @@ class PymataExpress:
         # first analog pin number
         self.first_analog_pin = None
 
+        # dht error flag
+        self.dht_sensor_error = False
+
+        # a list of pins assigned to DHT devices
+        self.dht_list = []
+
         # generic asyncio task holder
         self.the_task = None
+        self.the_socket_receive_task = None
 
         # flag to indicate we are in shutdown mode
         self.shutdown_flag = False
+
+        # reference to instant of pymata_express_socket
+        self.socket_transport = None
 
         # this dictionary for mapping incoming Firmata message types to
         # handlers for the messages
@@ -185,7 +203,7 @@ class PymataExpress:
                                  PrivateConstants.ANALOG_MAPPING_RESPONSE:
                                      None,
                                  PrivateConstants.PIN_STATE_RESPONSE: None,
-                                 PrivateConstants.DHT_DATA:'',
+                                 PrivateConstants.DHT_DATA: '',
                                  }
 
         print('{}{}{}'.format('\n', 'Pymata Express Version ' +
@@ -202,35 +220,44 @@ class PymataExpress:
         parameter in __init__ is set to false.
 
         This method instantiates the serial interface and then performs auto pin
-        discovery.
+        discovery if using a serial interface, or creates and connects to
+        a TCP/IP enabled device running StandardFirmataWiFi.
+
         Use this method if you wish to start PymataExpress manually from
         an asyncio function.
          """
 
-        if not self.com_port:
-            # user did not specify a com_port
-            try:
-                await self._find_arduino()
-            except KeyboardInterrupt:
+        # using the serial port
+        if not self.ip_address:
+            if not self.com_port:
+                # user did not specify a com_port
+                try:
+                    await self._find_arduino()
+                except KeyboardInterrupt:
+                    if self.shutdown_on_exception:
+                        await self.shutdown()
+            else:
+                # com_port specified - set com_port and baud rate
+                try:
+                    await self._manual_open()
+                except KeyboardInterrupt:
+                    if self.shutdown_on_exception:
+                        await self.shutdown()
+
+            if self.com_port:
+                print('{}{}\n'.format('\nArduino found and connected to ',
+                                      self.com_port))
+
+            # no com_port found - raise a runtime exception
+            else:
                 if self.shutdown_on_exception:
                     await self.shutdown()
+                raise RuntimeError('No Arduino Found or User Aborted Program')
+        # connect to a wifi enabled device server
         else:
-            # com_port specified - set com_port and baud rate
-            try:
-                await self._manual_open()
-            except KeyboardInterrupt:
-                if self.shutdown_on_exception:
-                    await self.shutdown()
-
-        if self.com_port:
-            print('{}{}\n'.format('\nArduino found and connected to ',
-                                  self.com_port))
-
-        # no com_port found - raise a runtime exception
-        else:
-            if self.shutdown_on_exception:
-                await self.shutdown()
-            raise RuntimeError('No Arduino Found or User Aborted Program')
+            self.socket_transport = PymataExpressSocket(self.ip_address, self.ip_port, self.loop)
+            await self.socket_transport.start()
+            # self.loop.create_task(self.socket_transport.read())
 
         # start the command dispatcher loop
         if not self.loop:
@@ -238,11 +265,7 @@ class PymataExpress:
                 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
             self.loop = asyncio.get_event_loop()
         self.the_task = self.loop.create_task(self._arduino_report_dispatcher())
-        # dht error flag
-        self.dht_sensor_error = False
 
-        # a list of pins assigned to DHT devices
-        self.dht_list = []
         # get arduino firmware version and print it
         firmware_version = await self.get_firmware_version()
         if not firmware_version:
@@ -283,7 +306,6 @@ class PymataExpress:
                                       'Analog Pins\n\n'))
         self.first_analog_pin = len(self.digital_pins) - len(self.analog_pins)
         await self.set_sampling_interval(19)
-
 
     async def get_event_loop(self):
         """
@@ -1417,14 +1439,21 @@ class PymataExpress:
             if self.shutdown_flag:
                 break
             try:
-                next_command_byte = await self.serial_port.read()
+                if not self.ip_address:
+                    next_command_byte = await self.serial_port.read()
+                else:
+                    next_command_byte = await self.socket_transport.read()
+
             except TypeError:
                 continue
             # if this is a SYSEX command, then assemble the entire
             # command process it
             if next_command_byte == PrivateConstants.START_SYSEX:
                 while next_command_byte != PrivateConstants.END_SYSEX:
-                    next_command_byte = await self.serial_port.read()
+                    if not self.ip_address:
+                        next_command_byte = await self.serial_port.read()
+                    else:
+                        next_command_byte = await self.socket_transport.read()
                     sysex.append(next_command_byte)
                 await self.command_dictionary[sysex[0]](sysex)
                 sysex = []
@@ -1521,7 +1550,6 @@ class PymataExpress:
 
         :param: data - array of 9 7bit bytes ending with the error status
         """
-
 
         # get the time of the report
         time_stamp = time.time()
@@ -1737,9 +1765,17 @@ class PymataExpress:
 
         """
         # get next two bytes
-        major = await self.serial_port.read()
+        if not self.ip_address:
+            major = await self.serial_port.read()
+        else:
+            major = await self.socket_transport.read()
         version_string = str(major)
-        minor = await self.serial_port.read()
+
+        if not self.ip_address:
+            minor = await self.serial_port.read()
+        else:
+            minor = await self.socket_transport.read()
+
         version_string += '.'
         version_string += str(minor)
         self.query_reply_data[PrivateConstants.REPORT_VERSION] = version_string
@@ -1799,11 +1835,18 @@ class PymataExpress:
         for i in command:
             send_message += chr(i)
         result = None
-        for data in send_message:
-            try:
-                result = await self.serial_port.write(data)
-            except AttributeError:
-                raise RuntimeError
+        if not self.ip_address:
+            for data in send_message:
+                try:
+                    result = await self.serial_port.write(data)
+                except AttributeError:
+                    raise RuntimeError
+        else:
+            for data in send_message:
+                try:
+                    result = await self.socket_transport.write(data)
+                except AttributeError:
+                    raise RuntimeError
 
         return result
 
@@ -1828,8 +1871,12 @@ class PymataExpress:
                 sysex_message += chr(d)
         sysex_message += chr(PrivateConstants.END_SYSEX)
 
-        for data in sysex_message:
-            await self.serial_port.write(data)
+        if not self.ip_address:
+            for data in sysex_message:
+                await self.serial_port.write(data)
+        else:
+            await self.socket_transport.write(sysex_message)
+            await asyncio.sleep(.01)
 
         # noinspection PyMethodMayBeStatic
 
@@ -1864,7 +1911,12 @@ class PymataExpress:
         :returns: command
         """
         while number_of_bytes:
-            next_command_byte = await self.serial_port.read()
-            current_command.append(next_command_byte)
-            number_of_bytes -= 1
+            if not self.ip_address:
+                next_command_byte = await self.serial_port.read()
+                current_command.append(next_command_byte)
+                number_of_bytes -= 1
+            else:
+                next_command_byte = await self.socket_transport.read()
+                current_command.append(next_command_byte)
+                number_of_bytes -= 1
         return current_command
