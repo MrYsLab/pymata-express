@@ -30,6 +30,7 @@ or polling may be used when a synchronous approach is desired.
  is available online.
 * A full set of working examples
 are available for download [online.](https://github.com/MrYsLab/pymata-express/tree/master/examples)
+* Supports StandardFirmataWiFi.
 
 ## Why Use Asyncio?
 
@@ -38,7 +39,7 @@ pymata4. Pymata-express tends to execute more quickly than pymata4 and at a lowe
 CPU utilization rate. 
 
 If you run the 
-stress_test.py examples available in both packages, pymata-express runs approximately 10% faster
+stress_test.py examples available in both packages, pymata-express completes the task approximately 10% faster
 than pymata4 and at a significantly lower CPU utilization rate.
 
 That being said, if you are not already familiar with asyncio, you may find the asyncio learning curve is
@@ -58,6 +59,7 @@ application from one API to another should be straight forward.
 * Advanced Arduino auto-discovery support is provided.
 * Additional hardware support is provided for:
     * HC-SR04 ultrasonic distance sensors.
+    * DHT Humidity/Temperature sensors (in collaboration with Martyn Wheeler).
     * Stepper motors.
     * Tone generation for piezo devices.
     
@@ -168,4 +170,4 @@ Pin: 12 Value: 1 Time Stamp: 2020-03-10 13:26:27
 
 Copyright (C) 2020 Alan Yorinks. All Rights Reserved.
 
-**Last updated 15 April 2020 For Release v1.12**
+**Last updated 16 May 2020 For Release v1.13**

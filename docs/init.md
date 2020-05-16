@@ -31,27 +31,52 @@ There is nothing *magic* about the name *board*.
 def __init__(self, com_port=None, baud_rate=115200,
                  arduino_instance_id=1, arduino_wait=4,
                  sleep_tune=0.0001, autostart=True,
-                 loop=None, shutdown_on_exception=True):
+                 loop=None, shutdown_on_exception=True,
+                 close_loop_on_shutdown=True,
+                 ip_address=None, ip_port=None,
+                 ):
         """
         If you are using the Firmata Express Arduino sketch,
         and have a single Arduino connected to your computer,
         then you may accept all the default values.
+
         If you are using some other Firmata sketch, then
-        you must specify both the com_port and baudrate.
+        you must specify both the com_port and baudrate for
+        as serial connection, or ip_address and ip_port if
+        using StandardFirmataWifi.
+
         :param com_port: e.g. COM3 or /dev/ttyACM0.
+
         :param baud_rate: Match this to the Firmata sketch in use.
+
         :param arduino_instance_id: If you are using the Firmata
                                     Express sketch, match this
                                     value to that in the sketch.
+
         :param arduino_wait: Amount of time to wait for an Arduino to
                              fully reset itself.
+
         :param sleep_tune: A tuning parameter (typically not changed by user)
+
         :param autostart: If you wish to call the start method within
                           your application, then set this to False.
+
         :param loop: optional user provided event loop
+
         :param shutdown_on_exception: call shutdown before raising
                                       a RunTimeError exception, or
                                       receiving a KeyboardInterrupt exception
+
+        :param close_loop_on_shutdown: stop and close the event loop loop
+                                       when a shutdown is called or a serial
+                                       error occurs
+
+        :param ip_address: When interfacing with StandardFirmataWifi, set the
+                           IP address of the device.
+
+        :param ip_port: When interfacing with StandardFirmataWifi, set the
+                        ip port of the device.
+        """
 ```
 There are many optional parameters available when you instantiate PymataExpress. 
 
@@ -124,9 +149,23 @@ your application even after restarting it.
 
 The default is True and recommended to be used.
 
+### close_loop_on_shutdown
+When True (the default) a call to shutdown() will close the event loop.
+If set to False, then the event loop is left open.
+
+### ip_address
+If you are using StandardFirmataWiFi, set this parameter to the IP address of your WiFi
+connected device.
+
+### ip_port
+If you are using StandardFirmataWiFi, set this parameter to the IP port of your WiFi
+connected device.
+
 ### Examples
-   Each [example on GitHub](https://github.com/MrYsLab/pymata-express/tree/master/examples) 
+   1. Each [example on GitHub](https://github.com/MrYsLab/pymata-express/tree/master/examples) 
    demonstrates instantiating the PymataExpress class.
+   
+   2. A [blink demo](https://github.com/MrYsLab/pymata-express/blob/master/examples/wifi_blink.py) is provided for StandardFirmata WiFi connections.
 
 <br>
 <br>
