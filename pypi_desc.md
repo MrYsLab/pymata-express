@@ -14,7 +14,7 @@ Pymata-Express is a Firmata client that, like its conventional Python sibling,
      * **Piezo Tone Generation.**
      * **Baud rate of 115200**
 
-<h2><u>Major features</u></h2>
+##Major features
 
 * **Fully documented <a href="https://htmlpreview.github.com/?https://github.com/MrYsLab/pymata-express/blob/master/html/pymata_express/index.html" target="_blank">intuitive API</a>**
 
