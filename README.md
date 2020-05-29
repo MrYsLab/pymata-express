@@ -1,5 +1,7 @@
 # pymata-express
 
+
+
 ### A high performance, Python asyncio client for the Arduino Firmata Protocol.
 Pymata-Express is a Firmata client that, like its conventional Python sibling,
  [pymata4,](https://mryslab.github.io/pymata4/)
@@ -13,6 +15,11 @@ Pymata-Express is a Firmata client that, like its conventional Python sibling,
      * **Stepper Motors.**
      * **Piezo Tone Generation.**
      * **Baud rate of 115200**
+     
+## Special Note For FirmataExpress Users:
+### pymata-express now verifies the version of FirmataExpress in use.  You may need to upgrade to the latest version of FirmataExpress using the Arduino IDE Library management tool.
+     
+
      
 ## Special Note For Users Upgrading To Version 1.11
 ### The callback data format has changed to be consistent with pymata4.
