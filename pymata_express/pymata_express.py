@@ -169,6 +169,8 @@ class PymataExpress:
         # reference to instant of pymata_express_socket
         self.socket_transport = None
 
+        self.using_firmata_express = False
+
         # this dictionary for mapping incoming Firmata message types to
         # handlers for the messages
         self.command_dictionary = {PrivateConstants.REPORT_VERSION:
@@ -279,6 +281,10 @@ class PymataExpress:
                 await self.shutdown()
             raise RuntimeError
         else:
+            if self.using_firmata_express:
+                version_number = firmware_version[0:3]
+                if version_number != PrivateConstants.FIRMATA_EXPRESS_VERSION:
+                    raise RuntimeError(f'You must use FirmataExpress version 1.1. Version Found = {version_number}')
             print("\nArduino Firmware ID: " + firmware_version)
 
         # try to get an analog pin map. if it comes back as none - shutdown
@@ -381,6 +387,7 @@ class PymataExpress:
                 # got an I am here message - is it the correct ID?
                 if i_am_here[2] == self.arduino_instance_id:
                     self.com_port = serial_port.com_port
+                    self.using_firmata_express = True
                     return
 
     async def _manual_open(self):
@@ -1569,7 +1576,7 @@ class PymataExpress:
 
         self.digital_pins[pin].event_time = time_stamp
 
-        if data[11] == 1:  # data[9] is config flag
+        if data[7] == 1:  # data[9] is config flag
             if data[10] != 0:
                 self.dht_sensor_error = True
                 humidity = temperature = -1
@@ -1577,19 +1584,15 @@ class PymataExpress:
         else:
             # if data read correctly process and return
 
-            if data[10] == 0:
+            if data[6] == 0:
                 # dht 22
                 if data[1] == 22:
-                    humidity = (((data[2] & 0x7f) + (data[3] << 7)) * 256 +
-                                ((data[4] & 0x7f) + (data[5] << 7))) * 0.1
-                    temperature = (((data[6] & 0x7f) + (data[7] << 7) & 0x7F) * 256 +
-                                   ((data[8] & 0x7f) + (data[9] << 7))) * 0.1
+                    humidity = (data[2] * 256 + data[3]) * 0.1
+                    temperature = ((data[4] & 0x7F) * 256 + data[5]) * 0.1
                 # dht 11
                 elif data[1] == 11:
-                    humidity = (((data[2] & 0x7f) + (data[3] << 7)) +
-                                ((data[4] & 0x7f) + (data[5] << 7))) * 0.1
-                    temperature = (((data[6] & 0x7f) + (data[7] << 7) & 0x7F) +
-                                   ((data[8] & 0x7f) + (data[9] << 7))) * 0.1
+                    humidity = (data[2]) + (data[3]) * 0.1
+                    temperature = (data[4]) + (data[5]) * 0.1
                 else:
                     raise RuntimeError(f'Unknown DHT Sensor type reported: {data[2]}')
 
@@ -1600,14 +1603,40 @@ class PymataExpress:
                 if data[6] & 0x80:
                     temperature = -temperature
 
-            elif data[8] == 1:
+            elif data[7] == 1:
                 # Checksum Error
                 humidity = temperature = -2
                 self.dht_sensor_error = True
-            elif data[8] == 2:
+            elif data[7] == 2:
                 # Timeout Error
                 humidity = temperature = -3
                 self.dht_sensor_error = True
+        # since we initialize
+        if humidity is None:
+            return
+        reply_data.append(humidity)
+        reply_data.append(temperature)
+        reply_data.append(time_stamp)
+
+        # retrieve the last reported values
+        last_value = self.digital_pins[pin].current_value
+
+        self.digital_pins[pin].current_value = [humidity, temperature]
+        if self.digital_pins[pin].cb:
+            # only report changes
+            # has the humidity changed?
+            if last_value[0] != humidity:
+
+                differential = abs(humidity - last_value[0])
+                if differential >= self.digital_pins[pin].differential:
+                    await self.digital_pins[pin].cb(reply_data)
+                return
+            if last_value[1] != temperature:
+                differential = abs(temperature - last_value[1])
+                if differential >= self.digital_pins[pin].differential:
+                    await self.digital_pins[pin].cb(reply_data)
+                return
+
         # since we initialize
         if humidity is None:
             return
