@@ -5,7 +5,7 @@ with open('pypi_desc.md', "r") as f:
 
 setup(
     name='pymata-express',
-    version='1.16',
+    version='1.17',
     packages=['pymata_express'],
     install_requires=['pyserial'],
     url='https://mryslab.github.io/pymata-express/',
