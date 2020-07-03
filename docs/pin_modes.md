@@ -9,6 +9,20 @@ Analog input pins
 are even more flexible.
 They may be configured for analog input, digital input, or digital output operation.
 
+#### Mapping Analog Pin Numbers To Digital Pin Numbers
+When configuring an analog input pin as a digital input, you must use the pin's digital pin number equivalent. 
+For example, on an Arduino Uno, if you wish to use pin A0 as a digital pin,
+the digital pin number equivalent is 14. In general, to find the digital equivalent of pin A0 for your specific
+Arduino board type, the algorithm is:
+
+digital_pin_number = analog_pin_number + number of digital pins
+
+Looking at the Uno:
+A0 = 14, A1 = 15, and so forth.
+
+Looking at a Mega2560 which has 54 digital pins:
+A0 = 54, A1 = 55, etc.
+
 PymataExpress requires that before using a pin, its mode must be explicitly set. This is accomplished using one of
 the pymata-express mode setting methods.
 
@@ -199,7 +213,7 @@ def set_pin_mode_dht(self, pin_number, sensor_type=22, differential=.1, callback
 
 **Notes:** 
 
-You may reset the differential value by calling this method again with new a differntial value.
+You may reset the differential value by calling this method again with a new differential value.
 
 ### set_pin_mode_i2c
 ```python
