@@ -89,7 +89,16 @@ class PymataExpress:
         """
         # check to make sure that Python interpreter is version 3.7 or greater
         python_version = sys.version_info
-        if python_version[0] >= 3:
+        if sys.platform == 'win32':
+            if python_version[0] > 3:
+                if python_version[1] >= 8:
+                    if python_version[2] >= 3:
+                        pass
+                    else:
+                        raise RuntimeError("ERROR: Python 3.8.2 or greater is "
+                                           "required for use of this program on Windows.")
+
+        elif python_version[0] >= 3:
             if python_version[1] >= 7:
                 pass
             else:
@@ -108,8 +117,6 @@ class PymataExpress:
 
         # set the event loop
         if loop is None:
-            if sys.platform == 'win32':
-                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
             self.loop = asyncio.get_event_loop()
         else:
             self.loop = loop
@@ -263,8 +270,6 @@ class PymataExpress:
 
         # start the command dispatcher loop
         if not self.loop:
-            if sys.platform == 'win32':
-                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
             self.loop = asyncio.get_event_loop()
         self.the_task = self.loop.create_task(self._arduino_report_dispatcher())
 
