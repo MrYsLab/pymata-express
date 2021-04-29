@@ -93,7 +93,7 @@ A callback function is specified to accept a single input parameter, typically n
 ***data***. The input parameter will be filled with a list when pymata-express invokes the callback.
 A description of what is contained in the list
 is provided in the 
-[reference API.](https://htmlpreview.github.com/?https://github.com/MrYsLab/pymata-express/blob/master/html/pymata_express/index.html)
+[reference API.](https://htmlpreview.github.io/?https://github.com/MrYsLab/pymata-express/blob/master/html/pymata_express/index.html)
 
 ```python
 def my_callback(data):
