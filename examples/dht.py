@@ -45,7 +45,7 @@ async def the_callback(data):
     :param data: [pin, current reported value, pin_mode, timestamp]
     """
 
-    tlist = time.localtime(data[5])
+    tlist = time.localtime(data[6])
     ftime = f'{tlist.tm_year}-{tlist.tm_mon:02}-{tlist.tm_mday:02} ' \
             f'{tlist.tm_hour:02}:{tlist.tm_min:0}:{tlist.tm_sec:02}'
 
@@ -64,8 +64,9 @@ async def dht(my_board, callback=None):
      """
 
     # set the pin mode - for pin 6 differential is set explicitly
-    await my_board.set_pin_mode_dht(6, sensor_type=22, differential=.01, callback=callback)
-    await my_board.set_pin_mode_dht(7, sensor_type=11, callback=callback)
+    await my_board.set_pin_mode_dht(9, sensor_type=22, differential=.01,
+                                    callback=callback)
+    await my_board.set_pin_mode_dht(8, sensor_type=11, callback=callback)
 
     # a flag to change the differential value after the first 5 seconds
     changed = False
@@ -74,7 +75,7 @@ async def dht(my_board, callback=None):
             await asyncio.sleep(POLL_TIME)
 
             # poll the first DHT
-            value = await board.dht_read(6)
+            value = await board.dht_read(8)
             loop = asyncio.get_event_loop()
 
             # format the time string and then print the data
@@ -85,7 +86,7 @@ async def dht(my_board, callback=None):
                   f'time of last report: {ftime}')
 
             # poll the second DHT and print the values
-            value = await board.dht_read(7)
+            value = await board.dht_read(9)
             tlist = time.localtime(value[2])
             ftime = f'{tlist.tm_year}-{tlist.tm_mon:02}-{tlist.tm_mday:02} ' \
                     f'{tlist.tm_hour:02}:{tlist.tm_min:0}:{tlist.tm_sec:02}'
@@ -93,8 +94,10 @@ async def dht(my_board, callback=None):
                   f'time of last report: {ftime}')
             if not changed:
                 # explicitly change the differential values
-                await my_board.set_pin_mode_dht(6, sensor_type=22, differential=20.0, callback=callback)
-                await my_board.set_pin_mode_dht(7, sensor_type=11, differential=2.0, callback=callback)
+                await my_board.set_pin_mode_dht(9, sensor_type=22, differential=20.0,
+                                                callback=callback)
+                await my_board.set_pin_mode_dht(8, sensor_type=11, differential=2.0,
+                                                callback=callback)
                 changed = True
         except KeyboardInterrupt:
             await board.shutdown()

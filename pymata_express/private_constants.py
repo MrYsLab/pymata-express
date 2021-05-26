@@ -72,7 +72,7 @@ class PrivateConstants:
     PYMATA_EXPRESS_VERSION = "1.19"
 
     # matching FirmataExpress Version Number
-    FIRMATA_EXPRESS_VERSION = "1.1"
+    FIRMATA_EXPRESS_VERSION = "1.2"
 
     # each byte represents a digital port
     #  and its value contains the current port settings
