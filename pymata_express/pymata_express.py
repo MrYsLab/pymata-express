@@ -1075,6 +1075,7 @@ class PymataExpress:
         The pin_type for DHT input pins = 15
 
         Validation Flag Values:
+
             No Errors = 0
 
             Checksum Error = 1
