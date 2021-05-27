@@ -49,8 +49,9 @@ async def the_callback(data):
     ftime = f'{tlist.tm_year}-{tlist.tm_mon:02}-{tlist.tm_mday:02} ' \
             f'{tlist.tm_hour:02}:{tlist.tm_min:0}:{tlist.tm_sec:02}'
 
-    print(f'Pin: {data[1]} DHT Type: {data[2]} Humidity:{data[3]}, '
-          f'Temperature: {data[4]} Timestamp: {ftime}')
+    print(f'Pin: {data[1]} DHT Type: {data[2]} Error Return: {data[3]} Humidity'
+          f':{data[4]}, '
+          f'Temperature: {data[5]} Timestamp: {ftime}')
 
 
 async def dht(my_board, callback=None):
@@ -64,9 +65,9 @@ async def dht(my_board, callback=None):
      """
 
     # set the pin mode - for pin 6 differential is set explicitly
-    await my_board.set_pin_mode_dht(9, sensor_type=22, differential=.01,
-                                    callback=callback)
+
     await my_board.set_pin_mode_dht(8, sensor_type=11, callback=callback)
+    await my_board.set_pin_mode_dht(9, sensor_type=22, callback=callback)
 
     # a flag to change the differential value after the first 5 seconds
     changed = False

@@ -18,10 +18,11 @@
 import asyncio
 import sys
 import time
-# noinspection PyPackageRequirements
-from serial.tools import list_ports
+
 # noinspection PyPackageRequirementscd
 from serial.serialutil import SerialException
+# noinspection PyPackageRequirements
+from serial.tools import list_ports
 
 from pymata_express.pin_data import PinData
 from pymata_express.private_constants import PrivateConstants
@@ -264,7 +265,8 @@ class PymataExpress:
                 raise RuntimeError('No Arduino Found or User Aborted Program')
         # connect to a wifi enabled device server
         else:
-            self.socket_transport = PymataExpressSocket(self.ip_address, self.ip_port, self.loop)
+            self.socket_transport = PymataExpressSocket(self.ip_address, self.ip_port,
+                                                        self.loop)
             await self.socket_transport.start()
             # self.loop.create_task(self.socket_transport.read())
 
@@ -492,12 +494,7 @@ class PymataExpress:
 
         :param pin: digital pin number
 
-        :return: A list = [humidity, temperature  time_stamp]
-
-                 ERROR CODES: If either humidity or temperature value:
-                              == -1 Configuration Error
-                              == -2 Checksum Error
-                              == -3 Timeout Error
+        :return: list = [humidity, temperature  time_stamp]
 
         """
         return self.digital_pins[pin].current_value[0], \
@@ -1052,7 +1049,8 @@ class PymataExpress:
                                  callback=callback,
                                  differential=differential)
 
-    async def set_pin_mode_dht(self, pin_number, sensor_type=22, differential=.1, callback=None):
+    async def set_pin_mode_dht(self, pin_number, sensor_type=22, differential=.1,
+                               callback=None):
         """
         Configure a DHT sensor prior to operation.
         Up to 6 DHT sensors are supported
