@@ -1558,17 +1558,8 @@ class PymataExpress:
         """
         Process the dht response message.
 
-        Values are calculated using:
-                humidity = (_bits[0] * 256 + _bits[1]) * 0.1
-
-                temperature = ((_bits[2] & 0x7F) * 256 + _bits[3]) * 0.1
-
-        error codes:
-        0 - OK
-        1 - DHTLIB_ERROR_TIMEOUT
-        2 - Checksum error
-
-        :param: data: [Report Type, pin, dht_type, validation_flag, humidity, temperature]
+        :param: data: [pin, dht_type, validation_flag,
+        humidity_positivity_flag, temperature_positivity_flag, humidity, temperature]
         """
 
         # get the time of the report
@@ -1587,8 +1578,13 @@ class PymataExpress:
         humidity = temperature = 0
 
         if data[2] == 0:  # all is well
-            humidity = float(data[3] + data[4] / 10)
-            temperature = float(data[5] + data[6] / 10)
+            humidity = float(data[5] + data[6] / 100)
+            if data[3]:
+                humidity *= -1.0
+            temperature = float(data[7] + data[8] / 100)
+            if data[4]:
+                temperature *= -1.0
+
 
         self.digital_pins[pin].event_time = time_stamp
         reply_data.append(data[2])
