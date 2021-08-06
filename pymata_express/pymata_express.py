@@ -1524,6 +1524,7 @@ class PymataExpress:
         :param data: message data
 
         """
+        pin_type = PrivateConstants.ANALOG
         pin = data[0]
         value = (data[PrivateConstants.MSB] << 7) + data[PrivateConstants.LSB]
 
@@ -1535,7 +1536,7 @@ class PymataExpress:
             self.analog_pins[pin].event_time = time_stamp
 
             # append pin number, pin value, and pin type to return value and return as a list
-            message = [PrivateConstants.ANALOG, pin, value, time_stamp]
+            message = [pin_type, pin, value, time_stamp]
 
             if self.analog_pins[pin].cb:
                 # if self.analog_pins[pin].cb_type:
@@ -1636,10 +1637,9 @@ class PymataExpress:
             # if self.legacy_mode:
             #     message = [pin, value, PrivateConstants.INPUT, time_stamp]
             # else:
-            if self.digital_pins[pin].pull_up:
-                message = [PrivateConstants.PULLUP, pin, value, time_stamp]
-            else:
-                message = [PrivateConstants.INPUT, pin, value, time_stamp]
+            pin_type = PrivateConstants.PULLUP if self.digital_pins[pin].pull_up else PrivateConstants.INPUT
+
+            message = [pin_type, pin, value, time_stamp]
 
             if last_value != value:
                 if self.digital_pins[pin].cb:
