@@ -89,22 +89,19 @@ class PymataExpress:
                         ip port of the device.
         """
         # check to make sure that Python interpreter is version 3.7 or greater
-        python_version = sys.version_info
+        python_version = sys.version_info[:3]
         if sys.platform == 'win32':
-            if python_version[0] > 3:
-                if python_version[1] >= 8:
-                    if python_version[2] >= 3:
-                        pass
-                    else:
-                        raise RuntimeError("ERROR: Python 3.8.2 or greater is "
-                                           "required for use of this program on Windows.")
+            min_version = (3, 8, 2)
+        else:
+            min_version = (3, 7, 0)
 
-        elif python_version[0] >= 3:
-            if python_version[1] >= 7:
-                pass
-            else:
-                raise RuntimeError("ERROR: Python 3.7 or greater is "
-                                   "required for use of this program.")
+        for (v, mv) in zip(python_version, min_version):
+            if v > mv:  # check if version is strictly greater (major first)
+                break
+        else:  # still need to check whether there is not exact equality
+            if not list(python_version) == list(min_version):
+                raise RuntimeError("ERROR: Python {} or greater is "
+                                           "required for use of this program".format('.'.join([str(x) for x in min_version])))
 
         # save input parameters
         self.com_port = com_port
