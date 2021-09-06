@@ -1174,13 +1174,13 @@ class PymataExpress:
 
     async def set_pin_mode_servo(self, pin, min_pulse=544, max_pulse=2400):
         """
-        Configure a pin as a servo pin. Set pulse min, max in ms.
+        Configure a pin as a servo pin. Set pulse min, max in microseconds.
 
         :param pin: Servo Pin.
 
-        :param min_pulse: Min pulse width in ms.
+        :param min_pulse: Min pulse width in microseconds.
 
-        :param max_pulse: Max pulse width in ms.
+        :param max_pulse: Max pulse width in microseconds.
 
         """
         command = [pin, min_pulse & 0x7f, (min_pulse >> 7) & 0x7f,

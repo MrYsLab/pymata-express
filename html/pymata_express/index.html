@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.9.2" />
+<meta name="generator" content="pdoc 0.10.0" />
 <title>pymata_express.pymata_express API documentation</title>
 <meta name="description" content="Copyright (c) 2018-2020 Alan Yorinks All rights reserved …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
@@ -132,22 +132,19 @@ class PymataExpress:
                         ip port of the device.
         &#34;&#34;&#34;
         # check to make sure that Python interpreter is version 3.7 or greater
-        python_version = sys.version_info
+        python_version = sys.version_info[:3]
         if sys.platform == &#39;win32&#39;:
-            if python_version[0] &gt; 3:
-                if python_version[1] &gt;= 8:
-                    if python_version[2] &gt;= 3:
-                        pass
-                    else:
-                        raise RuntimeError(&#34;ERROR: Python 3.8.2 or greater is &#34;
-                                           &#34;required for use of this program on Windows.&#34;)
+            min_version = (3, 8, 2)
+        else:
+            min_version = (3, 7, 0)
 
-        elif python_version[0] &gt;= 3:
-            if python_version[1] &gt;= 7:
-                pass
-            else:
-                raise RuntimeError(&#34;ERROR: Python 3.7 or greater is &#34;
-                                   &#34;required for use of this program.&#34;)
+        for (v, mv) in zip(python_version, min_version):
+            if v &gt; mv:  # check if version is strictly greater (major first)
+                break
+        else:  # still need to check whether there is not exact equality
+            if not list(python_version) == list(min_version):
+                raise RuntimeError(&#34;ERROR: Python {} or greater is &#34;
+                                           &#34;required for use of this program&#34;.format(&#39;.&#39;.join([str(x) for x in min_version])))
 
         # save input parameters
         self.com_port = com_port
@@ -1220,13 +1217,13 @@ class PymataExpress:
 
     async def set_pin_mode_servo(self, pin, min_pulse=544, max_pulse=2400):
         &#34;&#34;&#34;
-        Configure a pin as a servo pin. Set pulse min, max in ms.
+        Configure a pin as a servo pin. Set pulse min, max in microseconds.
 
         :param pin: Servo Pin.
 
-        :param min_pulse: Min pulse width in ms.
+        :param min_pulse: Min pulse width in microseconds.
 
-        :param max_pulse: Max pulse width in ms.
+        :param max_pulse: Max pulse width in microseconds.
 
         &#34;&#34;&#34;
         command = [pin, min_pulse &amp; 0x7f, (min_pulse &gt;&gt; 7) &amp; 0x7f,
@@ -1570,6 +1567,7 @@ class PymataExpress:
         :param data: message data
 
         &#34;&#34;&#34;
+        pin_type = PrivateConstants.ANALOG
         pin = data[0]
         value = (data[PrivateConstants.MSB] &lt;&lt; 7) + data[PrivateConstants.LSB]
 
@@ -1581,7 +1579,7 @@ class PymataExpress:
             self.analog_pins[pin].event_time = time_stamp
 
             # append pin number, pin value, and pin type to return value and return as a list
-            message = [PrivateConstants.ANALOG, pin, value, time_stamp]
+            message = [pin_type, pin, value, time_stamp]
 
             if self.analog_pins[pin].cb:
                 # if self.analog_pins[pin].cb_type:
@@ -1601,17 +1599,8 @@ class PymataExpress:
         &#34;&#34;&#34;
         Process the dht response message.
 
-        Values are calculated using:
-                humidity = (_bits[0] * 256 + _bits[1]) * 0.1
-
-                temperature = ((_bits[2] &amp; 0x7F) * 256 + _bits[3]) * 0.1
-
-        error codes:
-        0 - OK
-        1 - DHTLIB_ERROR_TIMEOUT
-        2 - Checksum error
-
-        :param: data: [Report Type, pin, dht_type, validation_flag, humidity, temperature]
+        :param: data: [pin, dht_type, validation_flag,
+        humidity_positivity_flag, temperature_positivity_flag, humidity, temperature]
         &#34;&#34;&#34;
 
         # get the time of the report
@@ -1630,8 +1619,13 @@ class PymataExpress:
         humidity = temperature = 0
 
         if data[2] == 0:  # all is well
-            humidity = float(data[3] + data[4] / 10)
-            temperature = float(data[5] + data[6] / 10)
+            humidity = float(data[5] + data[6] / 100)
+            if data[3]:
+                humidity *= -1.0
+            temperature = float(data[7] + data[8] / 100)
+            if data[4]:
+                temperature *= -1.0
+
 
         self.digital_pins[pin].event_time = time_stamp
         reply_data.append(data[2])
@@ -1686,10 +1680,9 @@ class PymataExpress:
             # if self.legacy_mode:
             #     message = [pin, value, PrivateConstants.INPUT, time_stamp]
             # else:
-            if self.digital_pins[pin].pull_up:
-                message = [PrivateConstants.PULLUP, pin, value, time_stamp]
-            else:
-                message = [PrivateConstants.INPUT, pin, value, time_stamp]
+            pin_type = PrivateConstants.PULLUP if self.digital_pins[pin].pull_up else PrivateConstants.INPUT
+
+            message = [pin_type, pin, value, time_stamp]
 
             if last_value != value:
                 if self.digital_pins[pin].cb:
@@ -2069,22 +2062,19 @@ ip port of the device.</p></div>
                         ip port of the device.
         &#34;&#34;&#34;
         # check to make sure that Python interpreter is version 3.7 or greater
-        python_version = sys.version_info
+        python_version = sys.version_info[:3]
         if sys.platform == &#39;win32&#39;:
-            if python_version[0] &gt; 3:
-                if python_version[1] &gt;= 8:
-                    if python_version[2] &gt;= 3:
-                        pass
-                    else:
-                        raise RuntimeError(&#34;ERROR: Python 3.8.2 or greater is &#34;
-                                           &#34;required for use of this program on Windows.&#34;)
+            min_version = (3, 8, 2)
+        else:
+            min_version = (3, 7, 0)
 
-        elif python_version[0] &gt;= 3:
-            if python_version[1] &gt;= 7:
-                pass
-            else:
-                raise RuntimeError(&#34;ERROR: Python 3.7 or greater is &#34;
-                                   &#34;required for use of this program.&#34;)
+        for (v, mv) in zip(python_version, min_version):
+            if v &gt; mv:  # check if version is strictly greater (major first)
+                break
+        else:  # still need to check whether there is not exact equality
+            if not list(python_version) == list(min_version):
+                raise RuntimeError(&#34;ERROR: Python {} or greater is &#34;
+                                           &#34;required for use of this program&#34;.format(&#39;.&#39;.join([str(x) for x in min_version])))
 
         # save input parameters
         self.com_port = com_port
@@ -3157,13 +3147,13 @@ ip port of the device.</p></div>
 
     async def set_pin_mode_servo(self, pin, min_pulse=544, max_pulse=2400):
         &#34;&#34;&#34;
-        Configure a pin as a servo pin. Set pulse min, max in ms.
+        Configure a pin as a servo pin. Set pulse min, max in microseconds.
 
         :param pin: Servo Pin.
 
-        :param min_pulse: Min pulse width in ms.
+        :param min_pulse: Min pulse width in microseconds.
 
-        :param max_pulse: Max pulse width in ms.
+        :param max_pulse: Max pulse width in microseconds.
 
         &#34;&#34;&#34;
         command = [pin, min_pulse &amp; 0x7f, (min_pulse &gt;&gt; 7) &amp; 0x7f,
@@ -3507,6 +3497,7 @@ ip port of the device.</p></div>
         :param data: message data
 
         &#34;&#34;&#34;
+        pin_type = PrivateConstants.ANALOG
         pin = data[0]
         value = (data[PrivateConstants.MSB] &lt;&lt; 7) + data[PrivateConstants.LSB]
 
@@ -3518,7 +3509,7 @@ ip port of the device.</p></div>
             self.analog_pins[pin].event_time = time_stamp
 
             # append pin number, pin value, and pin type to return value and return as a list
-            message = [PrivateConstants.ANALOG, pin, value, time_stamp]
+            message = [pin_type, pin, value, time_stamp]
 
             if self.analog_pins[pin].cb:
                 # if self.analog_pins[pin].cb_type:
@@ -3538,17 +3529,8 @@ ip port of the device.</p></div>
         &#34;&#34;&#34;
         Process the dht response message.
 
-        Values are calculated using:
-                humidity = (_bits[0] * 256 + _bits[1]) * 0.1
-
-                temperature = ((_bits[2] &amp; 0x7F) * 256 + _bits[3]) * 0.1
-
-        error codes:
-        0 - OK
-        1 - DHTLIB_ERROR_TIMEOUT
-        2 - Checksum error
-
-        :param: data: [Report Type, pin, dht_type, validation_flag, humidity, temperature]
+        :param: data: [pin, dht_type, validation_flag,
+        humidity_positivity_flag, temperature_positivity_flag, humidity, temperature]
         &#34;&#34;&#34;
 
         # get the time of the report
@@ -3567,8 +3549,13 @@ ip port of the device.</p></div>
         humidity = temperature = 0
 
         if data[2] == 0:  # all is well
-            humidity = float(data[3] + data[4] / 10)
-            temperature = float(data[5] + data[6] / 10)
+            humidity = float(data[5] + data[6] / 100)
+            if data[3]:
+                humidity *= -1.0
+            temperature = float(data[7] + data[8] / 100)
+            if data[4]:
+                temperature *= -1.0
+
 
         self.digital_pins[pin].event_time = time_stamp
         reply_data.append(data[2])
@@ -3623,10 +3610,9 @@ ip port of the device.</p></div>
             # if self.legacy_mode:
             #     message = [pin, value, PrivateConstants.INPUT, time_stamp]
             # else:
-            if self.digital_pins[pin].pull_up:
-                message = [PrivateConstants.PULLUP, pin, value, time_stamp]
-            else:
-                message = [PrivateConstants.INPUT, pin, value, time_stamp]
+            pin_type = PrivateConstants.PULLUP if self.digital_pins[pin].pull_up else PrivateConstants.INPUT
+
+            message = [pin_type, pin, value, time_stamp]
 
             if last_value != value:
                 if self.digital_pins[pin].cb:
@@ -5109,23 +5095,23 @@ default is 0</p></div>
 <span>async def <span class="ident">set_pin_mode_servo</span></span>(<span>self, pin, min_pulse=544, max_pulse=2400)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Configure a pin as a servo pin. Set pulse min, max in ms.</p>
+<div class="desc"><p>Configure a pin as a servo pin. Set pulse min, max in microseconds.</p>
 <p>:param pin: Servo Pin.</p>
-<p>:param min_pulse: Min pulse width in ms.</p>
-<p>:param max_pulse: Max pulse width in ms.</p></div>
+<p>:param min_pulse: Min pulse width in microseconds.</p>
+<p>:param max_pulse: Max pulse width in microseconds.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">async def set_pin_mode_servo(self, pin, min_pulse=544, max_pulse=2400):
     &#34;&#34;&#34;
-    Configure a pin as a servo pin. Set pulse min, max in ms.
+    Configure a pin as a servo pin. Set pulse min, max in microseconds.
 
     :param pin: Servo Pin.
 
-    :param min_pulse: Min pulse width in ms.
+    :param min_pulse: Min pulse width in microseconds.
 
-    :param max_pulse: Max pulse width in ms.
+    :param max_pulse: Max pulse width in microseconds.
 
     &#34;&#34;&#34;
     command = [pin, min_pulse &amp; 0x7f, (min_pulse &gt;&gt; 7) &amp; 0x7f,
@@ -5372,7 +5358,9 @@ for that pin. If there is no data, the value is set to None.</p>
     &#34;&#34;&#34;
 
     sonar_pin_entry = self.active_sonar_map.get(trigger_pin)
-    return [sonar_pin_entry[1], sonar_pin_entry[2]]</code></pre>
+    return [sonar_pin_entry[1], sonar_pin_entry[2]]
+    # value = sonar_pin_entry[1]
+    # return value</code></pre>
 </details>
 </dd>
 <dt id="pymata_express.pymata_express.PymataExpress.start_aio"><code class="name flex">
@@ -5602,7 +5590,7 @@ positive is forward, negative is reverse</p></div>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
 </footer>
 </body>
 </html>
