@@ -1,6 +1,6 @@
 # pymata-express
 
-## Please note that the pymata4 feature set is now frozen and the project has been placed in maintenance mode.
+## Please note that the pymata-express feature set is now frozen and the project has been placed in maintenance mode.
 
 ## Please consider using [Telemetrix](https://mryslab.github.io/telemetrix/) instead. 
 
