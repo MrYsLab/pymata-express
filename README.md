@@ -1,6 +1,8 @@
 # pymata-express
 
+## Please note that the pymata4 feature set is now frozen and the project has been placed in maintenance mode.
 
+## Please consider using [Telemetrix](https://mryslab.github.io/telemetrix/) instead. 
 
 ### A high performance, Python asyncio client for the Arduino Firmata Protocol.
 Pymata-Express is a Firmata client that, like its conventional Python sibling,
