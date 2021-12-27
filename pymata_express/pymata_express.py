@@ -18,6 +18,10 @@
 import asyncio
 import sys
 import time
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import List
 
 # noinspection PyPackageRequirementscd
 from serial.serialutil import SerialException
@@ -164,6 +168,15 @@ class PymataExpress:
         # a list of pins assigned to DHT devices
         self.dht_list = []
 
+        # SPI read and write requests are recorded here until the SPI
+        # reply is received. A request consists of:
+        #   spi_request_id: {'callback': callback, 'skip_read': bool}
+        self.spi_requests: Dict[int, Dict[str, Any]] = {}
+
+        # Used to associate SPI read/write requests with SPI data replies.
+        # Incremented on each read request. Valid range is 0-127.
+        self.spi_request_id: int = 0
+
         # generic asyncio task holder
         self.the_task = None
         self.the_socket_receive_task = None
@@ -200,6 +213,8 @@ class PymataExpress:
                                        self._sonar_data,
                                    PrivateConstants.DHT_DATA:
                                        self._dht_read_response,
+                                   PrivateConstants.SPI_DATA:
+                                       self._spi_reply,
                                    }
 
         # report query results are stored in this dictionary
@@ -1276,6 +1291,22 @@ class PymataExpress:
                    PrivateConstants.TONE]
         await self._send_command(command)
 
+    async def set_pin_mode_spi(self, pin_number: int) -> None:
+        """
+        This is FirmataExpress feature.
+
+        Set an SPI pin to SPI mode.
+
+        :param pin_number: arduino pin number
+
+        """
+        command: List[int] = [
+            PrivateConstants.SET_PIN_MODE,
+            pin_number,
+            PrivateConstants.SPI
+        ]
+        await self._send_command(command)
+
     async def _set_pin_mode(self, pin_number, pin_state, callback=None,
                             differential=1):
         """
@@ -1440,6 +1471,331 @@ class PymataExpress:
                 abs_number_of_steps & 0x7f, (abs_number_of_steps >> 7) & 0x7f,
                 direction]
         await self._send_sysex(PrivateConstants.STEPPER_DATA, data)
+
+    async def spi_begin(self, device_channel: int) -> None:
+        """
+        This is a FirmataExpress feature
+
+        Initialize the SPI bus. This function must be called at least once
+        before calling any of the other SPI commands.
+
+        :param device_channel: The SPI port to use. Up to 8 SPI ports are
+        supported, where each port is identified by its channel number (0-7).
+
+        NOTE: Currently only channel 0 is supported by FirmataExpress
+        """
+        send_data: List[int] = [
+            PrivateConstants.SPI_BEGIN,
+            device_channel
+        ]
+        await self._send_sysex(PrivateConstants.SPI_DATA, send_data)
+
+    async def spi_device_config(self,
+                                device_id: int,
+                                device_channel: int,
+                                data_mode: int,  # TODO: Maybe encapsulate me?
+                                bit_order: int,  # TODO: Encapsulate me
+                                max_speed: int,
+                                word_size: int,  # TODO: Encapsulate me, only 8 bit words supported
+                                cs_pin_control: bool,
+                                cs_active_state: int,
+                                cs_pin: int,
+                                ) -> None:
+        """
+        This is a FirmataExpress feature
+
+        Configure an attached SPI device to initialize it before use.
+
+        :param device_id: The device ID may either be used as a specific
+        identifier (Linux) or as an arbitrary identifier (Arduino). Device
+        ID values range from 0 to 15 and can be specified separately for
+        each SPI channel. The device ID will also be returned with the
+        channel for each SPI_REPLY command so that it is clear which device
+        the data corresponds to.
+
+        :param device_channel: The SPI port to use. Up to 8 SPI ports are
+        supported, where each port is identified by its channel number (0-7).
+
+        :param data_mode: A 2-bit value that specifies the clock polarity
+        (CPOL) and clock phase (CPHA). See the table:
+
+            mode | CPOL | CPHA
+            -----|------|-----
+            0    | 0    | 0
+            1    | 0    | 1
+            2    | 1    | 0
+            3    | 1    | 1
+
+        :param bit_order: 0 for LSB, 1 for MSB (default)
+
+        :param max_speed: The maximum speed of communication with the SPI
+        device. For an SPI device rated up to 5 MHz, use 5000000.
+
+        :param word_size: The size of a word in bits. Typically 8-bits
+        (default). 0 = Default, 1 = 1 bit, 2 = 2 bits, etc. (limit is TBD)
+
+        :param cs_pin_control: True to enable the chip select pin (default),
+        false to disable. Some boards have SPI implementations that handle
+        the CS pin automatically (RaspberryPi boards for example).
+
+        :param cs_active_state: 0 to use LOW for the active state of the CS
+        pin (typical), 1 to use HIGH for the active state.
+
+        :param cs_pin: The pin to use for chip select (CS). Ignored if CS
+        pin control is disabled.
+        """
+        # (bits 3-6: device_id, bits 0-2: device_channel)
+        device_id_channel: int = (device_id << 3) | device_channel
+
+        # (bits 1-2: data_mode (0-3), bit 0: bit_order)
+        data_mode_bit_order: int = (data_mode << 1) | bit_order
+
+        max_speed_1: int = max_speed & 0b01111111  # Bits 0-6
+        max_speed_2: int = (max_speed >> 7) & 0b01111111  # Bits 7-14
+        max_speed_3: int = (max_speed >> 14) & 0b01111111  # Bits 15-21
+        max_speed_4: int = (max_speed >> 21) & 0b01111111  # Bits 22-28
+        max_speed_5: int = (max_speed >> 28) & 0b00001111  # Bits 29-32
+
+        cs_pin_options: int = 0
+        if cs_pin_control:
+            cs_pin_options |= (1 << 0)
+        if cs_active_state != 0:
+            cs_pin_options |= (1 << 1)
+        # Bits 2-6: reserved for future options
+
+        send_data: List[int] = [
+            PrivateConstants.SPI_DEVICE_CONFIG,
+            device_id_channel,
+            data_mode_bit_order,
+            max_speed_1,
+            max_speed_2,
+            max_speed_3,
+            max_speed_4,
+            max_speed_5,
+            word_size,
+            cs_pin_options,
+            cs_pin
+        ]
+        await self._send_sysex(PrivateConstants.SPI_DEVICE_CONFIG, send_data)
+
+    async def spi_read(self,
+                       device_id: int,
+                       device_channel: int,
+                       deselect_cs_pin: bool,  # TODO: Encapsulate me
+                       num_words: int,  # TODO: Change to num bytes
+                       data_callback: Callable[[List[Any]], None],
+                       ) -> None:
+        """
+        This is a FirmataExpress feature
+
+        Read data without specifying data to write.
+
+        To read data, a 0 is written for each word to be read. This is
+        provided as a convenience, as the same can be accomplished using
+        spi_transfer() and sending a 0 for each byte to be read.
+
+        :param device_id: The device ID (see spi_device_config())
+
+        :param device_channel: The device channel (see spi_device_config())
+
+        :param deselect_cs_pin: True to deselect the CS pin (default),
+        False to not deselect the CS pin.
+
+        :param num_words: The number of words to read (0-127)
+
+        :param data_callback: A callback to receive the SPI reply data.
+        Called with an empty array ([]) if the read fails.
+        """
+        # (bits 3-6: device_id, bits 0-2: device_channel)
+        device_id_channel: int = (device_id << 3) | device_channel
+
+        # Get the next request ID
+        next_request_id: int = self.spi_request_id
+
+        # Loop until we find an unused ID
+        while (next_request_id + 1) % 128 != self.spi_request_id:
+            # Check if request with same ID is already in progress:
+            if next_request_id in self.spi_requests:
+                # A read request with the ID is already in progress, try
+                # the next ID
+                next_request_id += 1
+                continue
+
+            # Set the callback for when data is returned
+            self.spi_requests[next_request_id] = {
+                'callback': data_callback,
+                'skip_read': False,
+            }
+
+            # Send the data
+            send_data: List[int] = [
+                PrivateConstants.SPI_READ,
+                device_id_channel,
+                next_request_id,
+                deselect_cs_pin,
+                num_words
+            ]
+            await self._send_sysex(PrivateConstants.SPI_DATA, send_data)
+
+            # Calculate the next request ID
+            self.spi_request_id = (next_request_id + 1) % 128
+        else:
+            # No request IDs are available, indicate the read failed with an
+            # empty array
+            data_callback([])
+
+    async def spi_write(self,
+                        device_id: int,
+                        device_channel: int,
+                        deselect_cs_pin: bool,
+                        data: List[int],  # TODO: Change to bytes
+                        write_callback: Callable[[bool], None],
+                        ) -> None:
+        """
+        This is a FirmataExpress feature
+
+        Only write data, and ignore any data returned by the SPI device.
+
+        Provided as a convenience. The same can be accomplished using
+        spi_transfer() and ignoring the reply.
+
+        :param device_id: The device ID (see spi_device_config())
+
+        :param device_channel: The device channel (see spi_device_config())
+
+        :param deselect_cs_pin: True to deselect the CS pin (default),
+        False to not deselect the CS pin.
+
+        :param num_words: The number of words to write (0-127)
+
+        :param data: An array of bytes to write
+
+        :param write_callback: Called with True if the write request
+        succeed, False if the write request failed
+        """
+        # (bits 3-6: device_id, bits 0-2: device_channel)
+        device_id_channel: int = (device_id << 3) | device_channel
+
+        data_words: List[int] = data  # TODO: Convert to 7-bit words
+        num_words: int = len(data_words)
+
+        # Get the next request ID
+        next_request_id: int = self.spi_request_id
+
+        # Loop until we find an unused ID
+        while (next_request_id + 1) % 128 != self.spi_request_id:
+            # Check if request with same ID is already in progress:
+            if next_request_id in self.spi_requests:
+                # A read request with the ID is already in progress, try
+                # the next ID
+                next_request_id += 1
+                continue
+
+            # Set the callback for when data is returned
+            # Set the callback for when data is returned
+            self.spi_requests[next_request_id] = {
+                'callback': write_callback,
+                'skip_read': True,
+            }
+
+            send_data: List[int] = [
+                PrivateConstants.SPI_WRITE,
+                device_id_channel,
+                next_request_id,
+                deselect_cs_pin,
+                num_words
+            ] + data_words
+            await self._send_sysex(PrivateConstants.SPI_DATA, send_data)
+
+            # Calculate the next request ID
+            self.spi_request_id = (next_request_id + 1) % 128
+        else:
+            # No request IDs are available, indicate the read failed with an
+            # empty array
+            write_callback(False)
+
+    async def spi_transfer(self,
+                           device_id: int,
+                           device_channel: int,
+                           deselect_cs_pin: bool,
+                           data: List[int],  # TODO: Change to bytes
+                           data_callback: Callable[[List[Any]], None],
+                           ) -> None:
+        """
+        This is a FirmataExpress feature
+
+        Write data to the SPI device. For each word written, a word
+        is read simultaneously. This is the normal SPI transfer mode.
+
+        Since transport (serial, ethernet, Wi-Fi, etc.) buffers tend to
+        be small on microcontroller platforms, it may be necessary to
+        send several spi_transfer() commands to complete a single SPI
+        transaction. Use the deselect_cs_pin parameter to ensure the
+        CS pin is not deselected in between transfer commands until the
+        transaction is complete.
+
+        :param device_id: The device ID (see spi_device_config())
+
+        :param device_channel: The device channel (see spi_device_config())
+
+        :param deselect_cs_pin: True to deselect the CS pin (default),
+        False to not deselect the CS pin.
+
+        :param data: An array of bytes to write
+
+        :param data_callback: A callback to receive the SPI reply data.
+        Called with an empty array ([]) if the read fails.
+        """
+        # (bits 3-6: device_id, bits 0-2: device_channel)
+        device_id_channel: int = (device_id << 3) | device_channel
+
+        data_words: List[int] = data  # TODO: Convert to 7-bit words
+        num_words: int = len(data_words)
+
+        # Get the next request ID
+        next_request_id: int = self.spi_request_id
+
+        # Loop until we find an unused ID
+        while (next_request_id + 1) % 128 != self.spi_request_id:
+            # Check if request with same ID is already in progress:
+            if next_request_id in self.spi_requests:
+                # A read request with the ID is already in progress, try
+                # the next ID
+                next_request_id += 1
+                continue
+
+            # Set the callback for when data is returned
+            # Set the callback for when data is returned
+            self.spi_requests[next_request_id] = {
+                'callback': data_callback,
+                'skip_read': False,
+            }
+
+            # Send the data
+            send_data: List[int] = [
+                PrivateConstants.SPI_TRANSFER,
+                device_id_channel,
+                next_request_id,
+                deselect_cs_pin,
+                num_words
+            ] + data_words
+            await self._send_sysex(PrivateConstants.SPI_DATA, send_data)
+
+            # Calculate the next request ID
+            self.spi_request_id = (next_request_id + 1) % 128
+        else:
+            # No request IDs are available, indicate the read failed with an
+            # empty array
+            data_callback([])
+
+    async def spi_end(self) -> None:
+        """
+        This is a FirmataExpress feature
+
+        Disable the SPI bus.
+        """
+        send_data: List[int] = [PrivateConstants.SPI_END]
+        await self._send_sysex(PrivateConstants.SPI_DATA, send_data)
 
     async def _arduino_report_dispatcher(self):
         """
@@ -1809,6 +2165,45 @@ class PymataExpress:
             self.active_sonar_map[pin_number] = sonar_pin_entry
 
         await asyncio.sleep(self.sleep_tune)
+
+    async def _spi_reply(self, data):
+        """
+        This method handles the incoming SPI message and stores the data
+        in the response table. SPI messages are received after a read
+        request or a transfer command.
+
+        :param data: Message data from Firmata
+        """
+        # Strip off sysex start and end
+        data = data[1:-1]
+
+        # TODO
+        request_id = data[0]
+        reply_data = [PrivateConstants.SPI]
+
+        # If we have an entry in the SPI request map, proceed
+        request_entry = self.spi_read_requests.get(request_id)
+        if request_entry is not None:
+            callback = request_entry['callback']
+            skip_read = request_entry['skip_read']
+
+            # Allow another request to use this ID
+            del self.spi_requests[request_id]
+
+            if skip_read:
+                # This was a write request, report the result instead
+                # of the data
+                reply_data.append(True)
+            else:
+                # Add the combined data to reply data list
+                combined_data = []  # TODO
+                reply_data.append(combined_data)
+
+            current_time = time.time()
+            reply_data.append(current_time)
+
+            # Send everything back to caller
+            await callback(reply_data)
 
     async def _send_command(self, command):
         """

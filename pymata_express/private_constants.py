@@ -44,6 +44,7 @@ class PrivateConstants:
     TONE_DATA = 0x5F  # play a tone at a specified frequency and duration
     SONAR_CONFIG = 0x62  # configure pins to control a sonar distance device
     SONAR_DATA = 0x63  # distance data returned
+    SPI_DATA = 0x68  # SPI Commands start with this byte
     # end of FirmataExpress defined SYSEX commands
 
     SERVO_CONFIG = 0x70  # set servo pin and max and min angles
@@ -110,6 +111,7 @@ class PrivateConstants:
     TONE = 0x0d  # Any pin in tone mode
     PIXY = 0x0e  # reserved for pixy camera mode
     DHT = 0x0f  # DHT sensor
+    SPI = 0x10  # Any pin in SPI mode
 
     IGNORE = 0x7f
 
@@ -131,3 +133,15 @@ class PrivateConstants:
     I2C_END_TX_MASK = 0B01000000
     I2C_STOP_TX = 1
     I2C_RESTART_TX = 0
+
+    # SPI constants
+    SPI_BEGIN = 0x00  # Initialize the SPI bus for the given channel
+    SPI_DEVICE_CONFIG = 0x01
+    SPI_TRANSFER = 0x02
+    SPI_WRITE = 0x03
+    SPI_READ = 0x04
+    SPI_REPLY = 0x05
+    SPI_END = 0x06
+
+    # TODO: Is this needed?
+    MAX_SPI_BUF_SIZE = 32
