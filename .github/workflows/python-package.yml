@@ -1,0 +1,57 @@
+#
+# This workflow will install Python dependencies, run tests and lint with a
+# variety of Python versions.
+#
+# For more information see:
+#
+#   https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+#
+
+name: Python package
+
+# Controls when the action will run
+on: [push, pull_request]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in
+# parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-20.04
+
+    steps:
+      - name: Build environment information
+        run: 'echo "Matrix OS: ${{ matrix.os }} on $HOSTNAME with $(getconf _NPROCESSORS_ONLN) cores"'
+
+      # Checks-out the repository under $GITHUB_WORKSPACE, so the job can
+      # access it
+      - uses: actions/checkout@v2
+
+      #
+      # Required on self-hosted workers: sudo apt install python3.10-dev
+      #
+      # Furthermore, on some platforms, Python 3.10 packages don't exist, so
+      # you can use the deadsnakes repository:
+      #
+      #   sudo add-apt-repository ppa:deadsnakes/ppa
+      #   sudo apt update
+      #   sudo apt install python3.10-dev
+      #
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install -r requirements-dev.txt
+
+      - name: Run mypy
+        run: mypy .
